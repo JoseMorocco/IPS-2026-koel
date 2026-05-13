@@ -1,40 +1,1933 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hito 1 - IPS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Koel · Scrum + DevOps · UNSA 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #080b10;
+    --surface: #0d1117;
+    --surface2: #161b22;
+    --surface3: #1c2330;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --accent: #58a6ff;
+    --accent2: #79c0ff;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #ffa657;
+    --red: #f85149;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --text3: #484f58;
+    --glow: rgba(88,166,255,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── Noise overlay ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ─── Scrollbar ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,11,16,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    background: rgba(88,166,255,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(88,166,255,0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--text2);
+  }
+
+  .nav-links a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: var(--bg) !important;
+    padding: 0.35rem 0.9rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* ─── Sections ─── */
+  section { position: relative; z-index: 1; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 60px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+    animation: orb-float 8s ease-in-out infinite;
+  }
+
+  .orb1 { width: 600px; height: 600px; background: #1a4a8a; top: -200px; right: -100px; animation-delay: 0s; }
+  .orb2 { width: 400px; height: 400px; background: #0d3b5e; bottom: -100px; left: -100px; animation-delay: 3s; }
+  .orb3 { width: 300px; height: 300px; background: #2d1f4a; top: 200px; left: 30%; animation-delay: 5s; }
+
+  @keyframes orb-float {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  /* Grid lines */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+    padding: 4rem 0;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--green);
+    background: rgba(63,185,80,0.08);
+    border: 1px solid rgba(63,185,80,0.25);
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+    animation: fade-up 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    animation: fade-up 0.6s 0.1s ease both;
+  }
+
+  h1 .accent-gradient {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    margin-top: 1.25rem;
+    font-size: 1.05rem;
+    color: var(--text2);
+    max-width: 480px;
+    line-height: 1.7;
+    animation: fade-up 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    animation: fade-up 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(88,166,255,0.3); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface2);
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 8px;
+    border: 1px solid var(--border2);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: var(--surface3); border-color: rgba(255,255,255,0.2); }
+
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    animation: fade-up 0.6s 0.4s ease both;
+  }
+
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--text3); letter-spacing: 0.03em; text-transform: uppercase; margin-top: 0.1rem; }
+
+  /* Hero right: terminal card */
+  .hero-terminal {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    overflow: hidden;
+    animation: fade-up 0.7s 0.2s ease both;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+
+  .terminal-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text3);
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateX(-1.5rem);
+  }
+
+  .terminal-body {
+    padding: 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+
+  .t-comment { color: var(--text3); }
+  .t-cmd { color: var(--green); }
+  .t-path { color: var(--accent); }
+  .t-str { color: var(--orange); }
+  .t-keyword { color: var(--purple); }
+  .t-ok { color: var(--green); }
+  .t-warn { color: var(--orange); }
+  .t-info { color: var(--text2); }
+
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--accent);
+    animation: blink 1s infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Section headers ─── */
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-tag::before {
+    content: '//';
+    color: var(--text3);
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-desc {
+    color: var(--text2);
+    font-size: 1rem;
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── Cards ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(88,166,255,0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .card:hover::before { opacity: 1; }
+
+  /* ─── ABOUT ─── */
+  #about { padding: 6rem 0; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .about-card-main {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .about-text h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .about-text p { color: var(--text2); line-height: 1.75; font-size: 0.95rem; }
+  .about-text p + p { margin-top: 0.75rem; }
+
+  .koel-info {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .koel-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+  }
+
+  .koel-info-row:last-child { border-bottom: none; }
+  .koel-info-label { color: var(--text3); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+  .koel-info-val { color: var(--text); font-weight: 500; }
+  .koel-info-val.green { color: var(--green); }
+
+  .criteria-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .crit-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color 0.2s;
+  }
+  .crit-card:hover { border-color: var(--border2); }
+
+  .crit-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .crit-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .crit-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+
+  /* ─── STACK ─── */
+  #stack { padding: 6rem 0; border-top: 1px solid var(--border); }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .stack-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    transition: all 0.25s;
+    cursor: default;
+  }
+
+  .stack-card:hover {
+    border-color: var(--border2);
+    background: var(--surface2);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  }
+
+  .stack-icon {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.6rem;
+  }
+
+  .stack-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .stack-role { font-size: 0.78rem; color: var(--text3); }
+
+  .layer-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    grid-column: span 4;
+    margin-top: 1.25rem;
+    margin-bottom: -0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .layer-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── ARCHITECTURE ─── */
+  #architecture { padding: 6rem 0; border-top: 1px solid var(--border); }
+
+  .arch-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    overflow-x: auto;
+  }
+
+  .arch-layer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .arch-layer:last-child { margin-bottom: 0; }
+
+  .arch-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text3);
+    width: 100px;
+    flex-shrink: 0;
+    text-align: right;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .arch-boxes {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  .arch-box {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .arch-box.blue { background: rgba(88,166,255,0.08); border-color: rgba(88,166,255,0.3); color: var(--accent); }
+  .arch-box.green { background: rgba(63,185,80,0.08); border-color: rgba(63,185,80,0.3); color: var(--green); }
+  .arch-box.purple { background: rgba(188,140,255,0.08); border-color: rgba(188,140,255,0.3); color: var(--purple); }
+  .arch-box.orange { background: rgba(255,166,87,0.08); border-color: rgba(255,166,87,0.3); color: var(--orange); }
+  .arch-box.red { background: rgba(248,81,73,0.08); border-color: rgba(248,81,73,0.3); color: var(--red); }
+
+  .arch-arrow {
+    color: var(--text3);
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.25rem 0;
+  }
+
+  .arch-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .arch-detail-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .arch-detail-card h4 {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .arch-detail-card p { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+
+  /* ─── SCRUM + DEVOPS ─── */
+  #devops { padding: 6rem 0; border-top: 1px solid var(--border); }
+
+  .devops-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .tool-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .tool-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .tool-item:hover { border-color: var(--border2); }
+
+  .tool-icon {
+    width: 36px; height: 36px;
+    background: var(--surface3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .tool-info h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .tool-info p { font-size: 0.8rem; color: var(--text2); line-height: 1.5; }
+
+  .pipeline-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .pipeline-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .pipeline-steps { display: flex; flex-direction: column; gap: 0; }
+
+  .pipeline-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .pipeline-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 32px;
+    bottom: -16px;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .p-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    border: 2px solid;
+    background: var(--surface2);
+    position: relative;
+    z-index: 1;
+  }
+
+  .p-dot.done { border-color: var(--green); color: var(--green); }
+  .p-dot.active { border-color: var(--accent); color: var(--accent); }
+  .p-dot.pending { border-color: var(--text3); color: var(--text3); }
+
+  .p-content { padding-bottom: 1.5rem; padding-top: 0.25rem; }
+  .p-content h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .p-content p { font-size: 0.8rem; color: var(--text2); line-height: 1.5; }
+
+  .badge-status {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+
+  .badge-status.done { background: rgba(63,185,80,0.12); color: var(--green); }
+  .badge-status.active { background: rgba(88,166,255,0.12); color: var(--accent); }
+  .badge-status.pending { background: rgba(72,79,88,0.3); color: var(--text3); }
+
+  /* ─── TIMELINE ─── */
+  #timeline { padding: 6rem 0; border-top: 1px solid var(--border); }
+
+  .timeline-wrapper {
+    position: relative;
+    margin-top: 2rem;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 120px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .tl-date {
+    width: 120px;
+    flex-shrink: 0;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text3);
+    padding-top: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .tl-dot-wrapper {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 2px;
+    margin-top: 0.85rem;
+  }
+
+  .tl-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid;
+    background: var(--bg);
+    margin-left: -5px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tl-dot.done { border-color: var(--green); box-shadow: 0 0 0 4px rgba(63,185,80,0.12); }
+  .tl-dot.active { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(88,166,255,0.12); animation: dot-pulse 2s infinite; }
+  .tl-dot.pending { border-color: var(--text3); }
+
+  @keyframes dot-pulse {
+    0%,100% { box-shadow: 0 0 0 4px rgba(88,166,255,0.12); }
+    50% { box-shadow: 0 0 0 8px rgba(88,166,255,0.05); }
+  }
+
+  .tl-content {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color 0.2s;
+    margin-left: 1.25rem;
+  }
+  .tl-content:hover { border-color: var(--border2); }
+
+  .tl-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tl-sprint {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .tl-hito {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    background: rgba(88,166,255,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(88,166,255,0.25);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .tl-tasks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+  }
+
+  .tl-task {
+    font-size: 0.75rem;
+    background: var(--surface2);
+    color: var(--text2);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 5px;
+  }
+
+  /* ─── RESULTADOS ─── */
+  #resultados { padding: 6rem 0; border-top: 1px solid var(--border); }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.25s;
+  }
+
+  .result-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+  .result-card.featured {
+    grid-column: span 2;
+    background: linear-gradient(135deg, rgba(88,166,255,0.05) 0%, rgba(188,140,255,0.05) 100%);
+    border-color: rgba(88,166,255,0.2);
+  }
+
+  .result-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    width: 44px; height: 44px;
+    background: var(--surface2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .result-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-desc { font-size: 0.83rem; color: var(--text2); line-height: 1.6; }
+
+  .result-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    margin-top: 0.75rem;
+  }
+
+  .hu-table {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .hu-table-header {
+    display: grid;
+    grid-template-columns: 80px 1fr 140px;
+    background: var(--surface2);
+    padding: 0.75rem 1.25rem;
+    font-size: 0.75rem;
+    color: var(--text3);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hu-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 140px;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.83rem;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    transition: background 0.15s;
+  }
+  .hu-row:last-child { border-bottom: none; }
+  .hu-row:hover { background: var(--surface2); }
+
+  .hu-code { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); }
+  .hu-story { color: var(--text2); }
+  .hu-who { font-size: 0.75rem; color: var(--text3); }
+
+  /* ─── TEAM ─── */
+  #equipo { padding: 6rem 0; border-top: 1px solid var(--border); }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+
+  .team-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.25s;
+  }
+
+  .team-card:hover { border-color: var(--border2); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+
+  .avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    border: 2px solid var(--border2);
+  }
+
+  .member-name {
+    font-weight: 600;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    margin-bottom: 0.35rem;
+  }
+
+  .member-role {
+    font-size: 0.72rem;
+    color: var(--text3);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ─── LINKS ─── */
+  #enlaces { padding: 4rem 0; border-top: 1px solid var(--border); }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .link-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .link-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(88,166,255,0.12); }
+
+  .link-icon { font-size: 1.4rem; }
+  .link-title { font-weight: 600; font-size: 0.9rem; }
+  .link-url { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text3); margin-top: auto; }
+
+  .link-arrow { color: var(--text3); font-size: 0.85rem; margin-top: 0.25rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-left {
+    font-size: 0.82rem;
+    color: var(--text3);
+    line-height: 1.6;
+  }
+
+  .footer-left strong { color: var(--text2); }
+
+  .footer-right {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-link {
+    font-size: 0.8rem;
+    color: var(--text3);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .footer-link:hover { color: var(--accent); }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border2), transparent);
+    margin: 1rem 0;
+  }
+
+  /* ─── Scroll animations ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-terminal { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-card-main { grid-template-columns: 1fr; }
+    .stack-grid { grid-template-columns: repeat(2, 1fr); }
+    .layer-label { grid-column: span 2; }
+    .arch-cards { grid-template-columns: 1fr 1fr; }
+    .devops-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .result-card.featured { grid-column: span 2; }
+    .team-grid { grid-template-columns: repeat(3, 1fr); }
+    .links-grid { grid-template-columns: repeat(2, 1fr); }
+    .timeline-line { left: 90px; }
+    .tl-date { width: 90px; }
+    nav .nav-links { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.6rem; }
+    .stack-grid { grid-template-columns: 1fr 1fr; }
+    .layer-label { grid-column: span 2; }
+    .criteria-cards { grid-template-columns: 1fr; }
+    .arch-cards { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .result-card.featured { grid-column: span 1; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .links-grid { grid-template-columns: 1fr 1fr; }
+    .hu-table-header, .hu-row { grid-template-columns: 60px 1fr; }
+    .hu-who { display: none; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .tl-date { display: none; }
+    .timeline-line { left: 0; }
+    .tl-dot-wrapper { margin-left: 0; }
+    .tl-content { margin-left: 0.75rem; }
+  }
+</style>
 </head>
-<body class="bg-white text-gray-900 p-8">
-    <div class="max-w-3xl mx-auto border-l-4 border-red-800 pl-6">
-        <h1 class="text-2xl font-bold uppercase tracking-tight">Ingeniería y Procesos de Software</h1>
-        <p class="text-gray-500 mb-8 text-lg">Hito N°01 - Proyecto Koel</p>
+<body>
 
-        <section class="mb-8">
-            <h2 class="text-xl font-semibold mb-3 border-b pb-1">Equipo de Trabajo</h2>
-            <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-gray-700">
-                <li>• Morocco Saico, Jose Manuel (Líder)</li>
-                <li>• Camargo Hilachoque, Romina</li>
-                <li>• Hatches Curo, José León</li>
-                <li>• Mayta Quispe, Paola</li>
-                <li>• Cutimbo Quispe, Keneth</li>
-            </ul>
-        </section>
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-logo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#58a6ff" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="#58a6ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Koel <span>DevOps</span>
+    <span class="nav-pill">Sprint 0</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">Proyecto</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#architecture">Arquitectura</a></li>
+    <li><a href="#devops">DevOps</a></li>
+    <li><a href="#timeline">Cronograma</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="https://github.com/koel/koel" target="_blank" class="nav-cta">GitHub →</a></li>
+  </ul>
+</nav>
 
-        <section class="mb-8">
-            <h2 class="text-xl font-semibold mb-3 border-b pb-1">Detalles del Software</h2>
-            <div class="space-y-2">
-                <p><strong>Producto:</strong> Koel (Music Streaming Solution)</p>
-                <p><strong>Stack:</strong> Laravel (PHP) + Vue.js (JavaScript)</p>
-                <p><strong>Líneas de Código:</strong> 120,465 (KLOC)</p>
-                <p><strong>Licencia:</strong> MIT</p>
-            </div>
-        </section>
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">UNSA · INGENIERÍA Y PROCESOS DE SOFTWARE · 2026-A</div>
+        <h1>
+          Scrum + DevOps<br/>
+          aplicado a <span class="accent-gradient">Koel</span><br/>
+          Open Source
+        </h1>
+        <p class="hero-sub">
+          Implementación de un proceso ágil completo sobre Koel, un servidor de streaming musical open source con licencia MIT. Pipeline CI/CD automatizado, sprints reales, documentación técnica y despliegue en GitHub Pages.
+        </p>
+        <div class="hero-actions">
+          <a href="https://github.com/koel/koel" target="_blank" class="btn-primary">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            Ver Repositorio
+          </a>
+          <a href="#about" class="btn-secondary">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+            Documentación
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-num">120K+</span>
+            <span class="stat-label">Líneas de código</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">5</span>
+            <span class="stat-label">Subsistemas</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">4</span>
+            <span class="stat-label">Sprints</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">MIT</span>
+            <span class="stat-label">Licencia</span>
+          </div>
+        </div>
+      </div>
 
-        <footer class="mt-12 pt-4 border-t text-sm text-gray-400">
-            UNSA - Arequipa, 2026
-        </footer>
+      <!-- Terminal card -->
+      <div class="hero-terminal">
+        <div class="terminal-header">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+          <span class="terminal-title">koel-devops · sprint-0</span>
+        </div>
+        <div class="terminal-body">
+          <div class="t-comment"># Sprint 0 — Análisis y configuración inicial</div>
+          <br/>
+          <div><span class="t-cmd">$</span> <span class="t-path">git clone</span> koel/koel</div>
+          <div class="t-info">&nbsp; Cloning into 'koel'...</div>
+          <div class="t-ok">&nbsp; ✓ Done (120,465 LOC)</div>
+          <br/>
+          <div><span class="t-cmd">$</span> cloc --include-lang=PHP,Vue,JS .</div>
+          <div class="t-info">&nbsp; Files: 847 | Blank: 18,412</div>
+          <div class="t-ok">&nbsp; ✓ SUM: 120,465 lines</div>
+          <br/>
+          <div><span class="t-cmd">$</span> <span class="t-keyword">cat</span> LICENSE</div>
+          <div class="t-ok">&nbsp; ✓ MIT License — Free to use</div>
+          <br/>
+          <div><span class="t-cmd">$</span> docker compose up -d</div>
+          <div class="t-info">&nbsp; Starting koel-db     ... </div>
+          <div class="t-ok">&nbsp; ✓ koel-db    Up</div>
+          <div class="t-ok">&nbsp; ✓ koel-app   Up (port 80)</div>
+          <br/>
+          <div><span class="t-cmd">$</span> gh project list</div>
+          <div class="t-ok">&nbsp; ✓ Sprint 0 board created</div>
+          <div class="t-ok">&nbsp; ✓ 12 issues registered</div>
+          <br/>
+          <div><span class="t-cmd">$</span> <span class="t-warn">▶</span> github-actions deploy<span class="cursor"></span></div>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="container">
+    <div class="section-tag">Proyecto</div>
+    <h2>¿Por qué Koel?</h2>
+    <p class="section-desc">Seleccionamos Koel como base del proyecto por cumplir todos los criterios técnicos y académicos requeridos: licencia MIT, stack moderno, complejidad real y soporte Docker nativo.</p>
+
+    <div class="about-card-main card reveal">
+      <div class="about-text">
+        <h3>Objetivo Académico</h3>
+        <p>Implementar un proceso de desarrollo de software que integre la metodología ágil <strong style="color:var(--text)">Scrum</strong> con prácticas <strong style="color:var(--text)">DevOps</strong> automatizadas, aplicado sobre Koel, un proyecto open source con licencia MIT.</p>
+        <p>El equipo analizará el estado actual del proyecto, identificará funcionalidades y arquitectura, definirá un alcance de mejora y aplicará un modelo de proceso que integre Scrum con buenas prácticas de automatización CI/CD.</p>
+        <p>Curso: <strong style="color:var(--accent)">Ingeniería y Procesos de Software</strong> · UNSA 2026-A</p>
+      </div>
+      <div>
+        <div class="koel-info">
+          <div class="koel-info-row">
+            <span class="koel-info-label">Proyecto</span>
+            <span class="koel-info-val">Koel Music Server</span>
+          </div>
+          <div class="koel-info-row">
+            <span class="koel-info-label">Licencia</span>
+            <span class="koel-info-val green">✓ MIT</span>
+          </div>
+          <div class="koel-info-row">
+            <span class="koel-info-label">Dominio</span>
+            <span class="koel-info-val">Personal Media Server</span>
+          </div>
+          <div class="koel-info-row">
+            <span class="koel-info-label">Backend</span>
+            <span class="koel-info-val">Laravel (PHP)</span>
+          </div>
+          <div class="koel-info-row">
+            <span class="koel-info-label">Frontend</span>
+            <span class="koel-info-val">Vue.js</span>
+          </div>
+          <div class="koel-info-row">
+            <span class="koel-info-label">LOC</span>
+            <span class="koel-info-val green">120,465 líneas</span>
+          </div>
+          <div class="koel-info-row">
+            <span class="koel-info-label">Módulos</span>
+            <span class="koel-info-val">5 subsistemas</span>
+          </div>
+          <div class="koel-info-row">
+            <span class="koel-info-label">Docker</span>
+            <span class="koel-info-val green">✓ Docker Compose</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="criteria-cards" style="margin-top:1.5rem;">
+      <div class="crit-card reveal reveal-delay-1">
+        <div class="crit-icon">📄</div>
+        <div class="crit-title">Licencia MIT verificada</div>
+        <div class="crit-desc">Permite fork, modificación y uso libre sin restricciones académicas. Verificado en el repositorio oficial de GitHub.</div>
+      </div>
+      <div class="crit-card reveal reveal-delay-2">
+        <div class="crit-icon">🎵</div>
+        <div class="crit-title">Dominio conocido</div>
+        <div class="crit-desc">Personal Media Server (PMS) y gestión de bibliotecas musicales. Subcategoría especializada de Media Asset Management.</div>
+      </div>
+      <div class="crit-card reveal reveal-delay-3">
+        <div class="crit-icon">⚡</div>
+        <div class="crit-title">Stack moderno</div>
+        <div class="crit-desc">Laravel + Vue.js + Docker Compose. Tecnologías open source vigentes y ampliamente usadas en la industria actual.</div>
+      </div>
+      <div class="crit-card reveal reveal-delay-1">
+        <div class="crit-icon">📦</div>
+        <div class="crit-title">Alta complejidad</div>
+        <div class="crit-desc">5 subsistemas identificados y más de 120,000 líneas de código fuente medidas con la herramienta <code style="font-size:0.8rem;color:var(--accent)">cloc</code>.</div>
+      </div>
+      <div class="crit-card reveal reveal-delay-2">
+        <div class="crit-icon">🐳</div>
+        <div class="crit-title">Infraestructura DevOps</div>
+        <div class="crit-desc">Repositorio oficial koel/docker con Docker Compose para levantar la app con MySQL, MariaDB o PostgreSQL.</div>
+      </div>
+      <div class="crit-card reveal reveal-delay-3">
+        <div class="crit-icon">🔗</div>
+        <div class="crit-title">APIs externas</div>
+        <div class="crit-desc">Integración con Last.fm, YouTube, Spotify e iTunes para enriquecer metadatos y mejorar la experiencia del usuario.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STACK ─── -->
+<section id="stack">
+  <div class="container">
+    <div class="section-tag">Tecnologías</div>
+    <h2>Stack Tecnológico</h2>
+    <p class="section-desc">Koel utiliza tecnologías modernas y open source que son estándar en la industria del desarrollo web actual.</p>
+
+    <div class="stack-grid reveal">
+      <div class="layer-label">Backend</div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(255,87,34,0.12);">🐘</div>
+        <div class="stack-name">PHP</div>
+        <div class="stack-role">Lenguaje de servidor</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(248,50,69,0.12);">🔴</div>
+        <div class="stack-name">Laravel</div>
+        <div class="stack-role">Framework MVC</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(88,166,255,0.12);">🗄️</div>
+        <div class="stack-name">MySQL / PgSQL</div>
+        <div class="stack-role">Base de datos relacional</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(63,185,80,0.12);">📦</div>
+        <div class="stack-name">Composer</div>
+        <div class="stack-role">Gestión de dependencias</div>
+      </div>
+
+      <div class="layer-label">Frontend</div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(65,184,131,0.12);">💚</div>
+        <div class="stack-name">Vue.js</div>
+        <div class="stack-role">Framework reactivo JS</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(255,200,0,0.1);">⚡</div>
+        <div class="stack-name">Vite</div>
+        <div class="stack-role">Build tool moderno</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(100,200,100,0.1);">🟢</div>
+        <div class="stack-name">Node.js / pnpm</div>
+        <div class="stack-role">Runtime y paquetes</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(188,140,255,0.1);">🎨</div>
+        <div class="stack-name">TypeScript</div>
+        <div class="stack-role">Tipado estático</div>
+      </div>
+
+      <div class="layer-label">DevOps & CI/CD</div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(30,136,229,0.12);">🐳</div>
+        <div class="stack-name">Docker</div>
+        <div class="stack-role">Contenedores</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(88,166,255,0.12);">⚙️</div>
+        <div class="stack-name">GitHub Actions</div>
+        <div class="stack-role">Automatización CI/CD</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(88,166,255,0.12);">📊</div>
+        <div class="stack-name">GitHub Projects</div>
+        <div class="stack-role">Tablero Scrum/Kanban</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:rgba(88,166,255,0.12);">🌐</div>
+        <div class="stack-name">GitHub Pages</div>
+        <div class="stack-role">Despliegue estático</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ARCHITECTURE ─── -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-tag">Arquitectura</div>
+    <h2>Arquitectura del Sistema</h2>
+    <p class="section-desc">Koel sigue una arquitectura cliente-servidor moderna con separación clara de capas y soporte para almacenamiento externo e integraciones.</p>
+
+    <div class="arch-diagram reveal">
+      <div class="arch-layer">
+        <div class="arch-label">Cliente</div>
+        <div class="arch-boxes">
+          <div class="arch-box blue">Navegador Web</div>
+          <div class="arch-box blue">App Móvil</div>
+          <div class="arch-box blue">REST Client</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;color:var(--text3);font-size:1.2rem;margin:0.4rem 0 0.4rem 130px;">↕</div>
+      <div class="arch-layer">
+        <div class="arch-label">Frontend</div>
+        <div class="arch-boxes">
+          <div class="arch-box purple">Vue.js SPA</div>
+          <div class="arch-box purple">Vite Build</div>
+          <div class="arch-box purple">Pinia Store</div>
+          <div class="arch-box purple">Audio Player</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;color:var(--text3);font-size:1.2rem;margin:0.4rem 0 0.4rem 130px;">↕</div>
+      <div class="arch-layer">
+        <div class="arch-label">Backend</div>
+        <div class="arch-boxes">
+          <div class="arch-box green">Laravel API</div>
+          <div class="arch-box green">Auth Service</div>
+          <div class="arch-box green">Queue Worker</div>
+          <div class="arch-box green">Media Scanner</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;color:var(--text3);font-size:1.2rem;margin:0.4rem 0 0.4rem 130px;">↕</div>
+      <div class="arch-layer">
+        <div class="arch-label">Datos</div>
+        <div class="arch-boxes">
+          <div class="arch-box orange">MySQL / MariaDB</div>
+          <div class="arch-box orange">PostgreSQL</div>
+          <div class="arch-box orange">SQLite</div>
+          <div class="arch-box orange">Almacenamiento Local</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;color:var(--text3);font-size:1.2rem;margin:0.4rem 0 0.4rem 130px;">↕</div>
+      <div class="arch-layer">
+        <div class="arch-label">Externo</div>
+        <div class="arch-boxes">
+          <div class="arch-box red">Last.fm API</div>
+          <div class="arch-box red">YouTube</div>
+          <div class="arch-box red">Spotify</div>
+          <div class="arch-box red">iTunes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-cards">
+      <div class="arch-detail-card reveal reveal-delay-1">
+        <h4><span style="color:var(--purple)">◈</span> Frontend — Vue.js</h4>
+        <p>SPA con componentes como App.vue, MainWrapper, AudioPlayer, AppFooter y menús contextuales. Gestión de estado con songStore, albumStore, artistStore, queueStore y playbackService.</p>
+      </div>
+      <div class="arch-detail-card reveal reveal-delay-2">
+        <h4><span style="color:var(--green)">◈</span> Backend — Laravel</h4>
+        <p>Gestiona lógica de negocio, autenticación, rutas API y procesamiento de metadatos. Expone endpoints para canciones, álbumes y artistas, y maneja colas de trabajo complejas.</p>
+      </div>
+      <div class="arch-detail-card reveal reveal-delay-3">
+        <h4><span style="color:var(--orange)">◈</span> Media & Database</h4>
+        <p>Archivos multimedia en local o Dropbox. La BD almacena usuarios, canciones, artistas, álbumes, listas de reproducción y favoritos. Compatible con MySQL, MariaDB, PostgreSQL y SQLite.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DEVOPS ─── -->
+<section id="devops">
+  <div class="container">
+    <div class="section-tag">Metodología</div>
+    <h2>Scrum + DevOps</h2>
+    <p class="section-desc">Integramos el marco ágil Scrum con automatización DevOps usando las herramientas nativas de GitHub para un flujo de trabajo moderno y eficiente.</p>
+
+    <div class="devops-grid">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:1rem;">🏗️ Herramientas del Proyecto</div>
+        <div class="tool-list">
+          <div class="tool-item reveal">
+            <div class="tool-icon">📊</div>
+            <div class="tool-info">
+              <h4>GitHub Projects</h4>
+              <p>Tablero Kanban/Scrum para gestionar Product Backlog, armar Sprints, asignar historias de usuario y ver el progreso en tiempo real.</p>
+            </div>
+          </div>
+          <div class="tool-item reveal reveal-delay-1">
+            <div class="tool-icon">⚙️</div>
+            <div class="tool-info">
+              <h4>GitHub Actions</h4>
+              <p>Automatización CI/CD. Compila código, corre pruebas, detecta errores y despliega a staging de forma automática en cada push.</p>
+            </div>
+          </div>
+          <div class="tool-item reveal reveal-delay-2">
+            <div class="tool-icon">🌐</div>
+            <div class="tool-info">
+              <h4>GitHub Pages</h4>
+              <p>Publica el entorno de staging, documentación técnica y el burndown chart generado automáticamente por GitHub Actions.</p>
+            </div>
+          </div>
+          <div class="tool-item reveal reveal-delay-3">
+            <div class="tool-icon">🎫</div>
+            <div class="tool-info">
+              <h4>GitHub Issues</h4>
+              <p>Sistema de tickets para registrar historias de usuario del Product Backlog, reportar bugs y documentar decisiones técnicas del sprint.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-card reveal">
+        <div class="pipeline-title">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+          Pipeline CI/CD
+        </div>
+        <div class="pipeline-steps">
+          <div class="pipeline-step">
+            <div class="p-dot done">✓</div>
+            <div class="p-content">
+              <h4>Push to GitHub <span class="badge-status done">done</span></h4>
+              <p>El equipo sube cambios al repositorio usando ramas por feature o sprint.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="p-dot done">✓</div>
+            <div class="p-content">
+              <h4>GitHub Actions trigger <span class="badge-status done">done</span></h4>
+              <p>Se activa automáticamente el workflow definido en <code style="color:var(--orange);font-size:0.78rem">.github/workflows/</code></p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="p-dot active">▶</div>
+            <div class="p-content">
+              <h4>Build & Test <span class="badge-status active">en curso</span></h4>
+              <p>Instalación de dependencias, compilación del frontend con Vite y ejecución de pruebas unitarias PHP.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="p-dot pending">○</div>
+            <div class="p-content">
+              <h4>Deploy Staging <span class="badge-status pending">sprint 1</span></h4>
+              <p>Despliegue automático a GitHub Pages o entorno Docker para revisión del equipo.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="p-dot pending">○</div>
+            <div class="p-content">
+              <h4>Sprint Review <span class="badge-status pending">sprint 1</span></h4>
+              <p>Revisión de resultados, burndown chart y planificación del siguiente sprint.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TIMELINE ─── -->
+<section id="timeline">
+  <div class="container">
+    <div class="section-tag">Planificación</div>
+    <h2>Cronograma de Sprints</h2>
+    <p class="section-desc">Cuatro sprints de 15 días calendario cada uno, con tres hitos de entrega evaluados a lo largo del semestre.</p>
+
+    <div class="timeline-wrapper">
+      <div class="timeline-line"></div>
+
+      <div class="timeline-item reveal">
+        <div class="tl-date">Hasta<br/>13 MAY<br/>2026</div>
+        <div class="tl-dot-wrapper"><div class="tl-dot done"></div></div>
+        <div class="tl-content">
+          <div class="tl-header">
+            <span class="tl-sprint">🚀 Sprint 0 — Análisis y Planificación</span>
+            <span class="tl-hito">Hito 1 · 15%</span>
+          </div>
+          <p style="font-size:0.83rem;color:var(--text2);">Selección y análisis del software Koel, configuración de herramientas GitHub, cronograma general y publicación en GitHub Pages.</p>
+          <div class="tl-tasks">
+            <span class="tl-task">✓ Software seleccionado</span>
+            <span class="tl-task">✓ Licencia MIT verificada</span>
+            <span class="tl-task">✓ Stack analizado</span>
+            <span class="tl-task">✓ GitHub Projects</span>
+            <span class="tl-task">✓ 12 Issues creados</span>
+            <span class="tl-task">✓ GitHub Pages</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="tl-date">14-29<br/>MAY<br/>2026</div>
+        <div class="tl-dot-wrapper"><div class="tl-dot active"></div></div>
+        <div class="tl-content">
+          <div class="tl-header">
+            <span class="tl-sprint">⚙️ Sprint 1 — Configuración e Integración</span>
+          </div>
+          <p style="font-size:0.83rem;color:var(--text2);">Configuración del entorno Docker, GitHub Actions inicial, pruebas básicas funcionales y CI/CD básico operativo.</p>
+          <div class="tl-tasks">
+            <span class="tl-task">Docker Compose</span>
+            <span class="tl-task">GitHub Actions workflow</span>
+            <span class="tl-task">Pruebas de instalación</span>
+            <span class="tl-task">CI/CD inicial</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="tl-date">30 MAY-<br/>10 JUN<br/>2026</div>
+        <div class="tl-dot-wrapper"><div class="tl-dot pending"></div></div>
+        <div class="tl-content">
+          <div class="tl-header">
+            <span class="tl-sprint">🔧 Sprint 2 — Producto Funcional</span>
+            <span class="tl-hito">Hito 2 · 60%</span>
+          </div>
+          <p style="font-size:0.83rem;color:var(--text2);">Producto funcionando con integración CI/CD completa, implementación del marco Scrum con todos los artefactos.</p>
+          <div class="tl-tasks">
+            <span class="tl-task">Koel desplegado</span>
+            <span class="tl-task">Pipeline completo</span>
+            <span class="tl-task">Pruebas funcionales</span>
+            <span class="tl-task">Burndown chart</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="tl-date">JUN<br/>2026</div>
+        <div class="tl-dot-wrapper"><div class="tl-dot pending"></div></div>
+        <div class="tl-content">
+          <div class="tl-header">
+            <span class="tl-sprint">✨ Sprint 3 — Mejoras y Automatización</span>
+          </div>
+          <p style="font-size:0.83rem;color:var(--text2);">Mejoras al producto, automatización avanzada del pipeline CI/CD y documentación técnica del proceso completo.</p>
+          <div class="tl-tasks">
+            <span class="tl-task">Refactorización</span>
+            <span class="tl-task">Deploy automatizado</span>
+            <span class="tl-task">Documentación técnica</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="tl-date">Hasta<br/>13 JUL<br/>2026</div>
+        <div class="tl-dot-wrapper"><div class="tl-dot pending"></div></div>
+        <div class="tl-content">
+          <div class="tl-header">
+            <span class="tl-sprint">📄 Sprint 4 — Documentación y Entrega Final</span>
+            <span class="tl-hito">Hito 3 · 100%</span>
+          </div>
+          <p style="font-size:0.83rem;color:var(--text2);">Documentación técnica completa del proceso ágil Scrum + DevOps, artículo formato IEEE y presentación final del proyecto.</p>
+          <div class="tl-tasks">
+            <span class="tl-task">Artículo IEEE</span>
+            <span class="tl-task">Informe completo</span>
+            <span class="tl-task">Presentación final</span>
+            <span class="tl-task">GitHub Pages final</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESULTADOS ─── -->
+<section id="resultados">
+  <div class="container">
+    <div class="section-tag">Resultados</div>
+    <h2>Sprint 0 — Entregables</h2>
+    <p class="section-desc">Resultados obtenidos tras la ejecución del Sprint 0, enfocados en el establecimiento de la infraestructura de gestión ágil.</p>
+
+    <div class="results-grid">
+      <div class="result-card featured reveal">
+        <div class="result-icon">📊</div>
+        <div class="result-title">GitHub Projects — Tablero Kanban</div>
+        <div class="result-desc">Se implementó un tablero Kanban con GitHub Projects para gestionar el Product Backlog y el Sprint Backlog. Se estructuraron todas las historias de usuario y se asignaron responsabilidades entre los miembros del equipo.</div>
+        <div class="result-num">12 HU</div>
+      </div>
+      <div class="result-card reveal reveal-delay-1">
+        <div class="result-icon">🎫</div>
+        <div class="result-title">GitHub Issues</div>
+        <div class="result-desc">Todas las historias de usuario registradas como Issues con etiquetas, hitos y asignación de responsables.</div>
+        <div class="result-num">12</div>
+      </div>
+      <div class="result-card reveal reveal-delay-1">
+        <div class="result-icon">🌐</div>
+        <div class="result-title">GitHub Pages</div>
+        <div class="result-desc">Página web publicada que centraliza el plan de trabajo, stack tecnológico y cronograma.</div>
+        <div class="result-num">✓ Live</div>
+      </div>
+      <div class="result-card reveal reveal-delay-2">
+        <div class="result-icon">🐳</div>
+        <div class="result-title">Docker Compose</div>
+        <div class="result-desc">Infraestructura Docker identificada y verificada. koel/docker con soporte MySQL/PostgreSQL.</div>
+        <div class="result-num">✓ Ready</div>
+      </div>
+      <div class="result-card reveal reveal-delay-2">
+        <div class="result-icon">📐</div>
+        <div class="result-title">Arquitectura</div>
+        <div class="result-desc">5 subsistemas identificados y documentados. Diagrama de componentes elaborado.</div>
+        <div class="result-num">5</div>
+      </div>
+      <div class="result-card reveal reveal-delay-3">
+        <div class="result-icon">📏</div>
+        <div class="result-title">Análisis CLOC</div>
+        <div class="result-desc">Medición de complejidad verificada con herramienta cloc sobre el repositorio principal.</div>
+        <div class="result-num">120K</div>
+      </div>
+    </div>
+
+    <!-- HU Table -->
+    <div class="hu-table reveal" style="margin-top:2rem;">
+      <div class="hu-table-header">
+        <div>Código</div>
+        <div>Historia de Usuario</div>
+        <div>Responsable</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU01</div>
+        <div class="hu-story">Seleccionar el producto open source Koel</div>
+        <div class="hu-who">Equipo</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU02</div>
+        <div class="hu-story">Verificar licencia MIT del repositorio</div>
+        <div class="hu-who">Integrante 1</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU03</div>
+        <div class="hu-story">Identificar el dominio del sistema</div>
+        <div class="hu-who">Integrante 2</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU04</div>
+        <div class="hu-story">Analizar el stack tecnológico de Koel</div>
+        <div class="hu-who">Integrante 3</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU05</div>
+        <div class="hu-story">Identificar módulos o subsistemas principales</div>
+        <div class="hu-who">Integrante 4</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU06</div>
+        <div class="hu-story">Medir complejidad del proyecto con CLOC</div>
+        <div class="hu-who">Integrante 5</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU07</div>
+        <div class="hu-story">Revisar infraestructura Docker del proyecto</div>
+        <div class="hu-who">Integrante 1</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU08</div>
+        <div class="hu-story">Elaborar cronograma general de sprints</div>
+        <div class="hu-who">Integrante 2</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU09</div>
+        <div class="hu-story">Crear Product Backlog inicial</div>
+        <div class="hu-who">Equipo</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU10</div>
+        <div class="hu-story">Crear página informativa en GitHub Pages</div>
+        <div class="hu-who">Equipo</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU11</div>
+        <div class="hu-story">Redactar informe del Hito 1</div>
+        <div class="hu-who">Equipo</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU12</div>
+        <div class="hu-story">Revisar evidencias y capturas del Sprint 0</div>
+        <div class="hu-who">Equipo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TEAM ─── -->
+<section id="equipo">
+  <div class="container">
+    <div class="section-tag">Equipo</div>
+    <h2>Integrantes del Grupo</h2>
+    <p class="section-desc">Cinco estudiantes de Ingeniería de Sistemas e Informática — UNSA, con roles rotativos por sprint.</p>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="avatar" style="background:linear-gradient(135deg,rgba(88,166,255,0.2),rgba(188,140,255,0.2));border-color:rgba(88,166,255,0.4);">RC</div>
+        <div class="member-name">Romina Giuliana Camargo Hilachoque</div>
+        <div class="member-role">Integrante 1</div>
+      </div>
+      <div class="team-card reveal reveal-delay-1">
+        <div class="avatar" style="background:linear-gradient(135deg,rgba(63,185,80,0.2),rgba(88,166,255,0.2));border-color:rgba(63,185,80,0.4);">JH</div>
+        <div class="member-name">José León Enrique Hatches Curo</div>
+        <div class="member-role">Integrante 2</div>
+      </div>
+      <div class="team-card reveal reveal-delay-2">
+        <div class="avatar" style="background:linear-gradient(135deg,rgba(188,140,255,0.2),rgba(63,185,80,0.2));border-color:rgba(188,140,255,0.4);">PM</div>
+        <div class="member-name">Paola Adamari Mayta Quispe</div>
+        <div class="member-role">Integrante 3</div>
+      </div>
+      <div class="team-card reveal reveal-delay-3">
+        <div class="avatar" style="background:linear-gradient(135deg,rgba(255,166,87,0.2),rgba(188,140,255,0.2));border-color:rgba(255,166,87,0.4);">KC</div>
+        <div class="member-name">Keneth Sebastian Cutimbo Quispe</div>
+        <div class="member-role">Integrante 4</div>
+      </div>
+      <div class="team-card reveal reveal-delay-3">
+        <div class="avatar" style="background:linear-gradient(135deg,rgba(248,81,73,0.2),rgba(255,166,87,0.2));border-color:rgba(248,81,73,0.4);">JM</div>
+        <div class="member-name">Jose Manuel Morocco Saico</div>
+        <div class="member-role">Integrante 5</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ENLACES ─── -->
+<section id="enlaces">
+  <div class="container">
+    <div class="section-tag">Referencias</div>
+    <h2>Enlaces del Proyecto</h2>
+    <p class="section-desc">Accede a todos los recursos del proyecto directamente desde aquí.</p>
+
+    <div class="links-grid">
+      <a href="https://github.com/koel/koel" target="_blank" class="link-card reveal">
+        <div class="link-icon">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </div>
+        <div class="link-title">Repositorio Koel</div>
+        <div style="font-size:0.8rem;color:var(--text2);">Código fuente original con licencia MIT</div>
+        <div class="link-url">github.com/koel/koel →</div>
+      </a>
+      <a href="https://github.com/koel/docker" target="_blank" class="link-card reveal reveal-delay-1">
+        <div class="link-icon">🐳</div>
+        <div class="link-title">Docker Image</div>
+        <div style="font-size:0.8rem;color:var(--text2);">Imagen oficial Docker con Compose para Koel</div>
+        <div class="link-url">github.com/koel/docker →</div>
+      </a>
+      <a href="#" class="link-card reveal reveal-delay-2">
+        <div class="link-icon">📊</div>
+        <div class="link-title">GitHub Projects</div>
+        <div style="font-size:0.8rem;color:var(--text2);">Tablero Scrum del equipo con Sprint Backlog</div>
+        <div class="link-url">Tablero del equipo →</div>
+      </a>
+      <a href="#" class="link-card reveal reveal-delay-3">
+        <div class="link-icon">🎫</div>
+        <div class="link-title">GitHub Issues</div>
+        <div style="font-size:0.8rem;color:var(--text2);">12 historias de usuario registradas y en seguimiento</div>
+        <div class="link-url">Issues del sprint →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <strong>Koel · Scrum + DevOps · UNSA 2026-A</strong><br/>
+        Ingeniería y Procesos de Software · Facultad de Ingeniería de Producción y Servicios<br/>
+        Departamento Académico de Ingeniería de Sistemas e Informática
+      </div>
+      <div class="footer-right">
+        <a href="https://github.com/koel/koel" target="_blank" class="footer-link">GitHub</a>
+        <a href="https://koel.dev" target="_blank" class="footer-link">koel.dev</a>
+        <a href="https://mit-license.org" target="_blank" class="footer-link">MIT License</a>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div style="text-align:center;font-size:0.75rem;color:var(--text3);font-family:'JetBrains Mono',monospace;">
+      Sprint 0 · Hito 1 · 13.MAY.2026 · Universidad Nacional de San Agustín de Arequipa
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 80;
+      if (window.scrollY >= sectionTop) current = section.getAttribute('id');
+    });
+    navLinks.forEach(link => {
+      link.style.color = '';
+      if (link.getAttribute('href') === `#${current}`) {
+        link.style.color = 'var(--text)';
+      }
+    });
+  });
+
+  // Typing animation for terminal
+  const lines = document.querySelectorAll('.terminal-body > div');
+  lines.forEach((line, i) => {
+    line.style.opacity = '0';
+    line.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => { line.style.opacity = '1'; }, i * 120 + 500);
+  });
+</script>
 </body>
 </html>
