@@ -3,1244 +3,1132 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Koel · Scrum + DevOps · UNSA 2026</title>
+<title>IPS-2026-koel · Scrum + DevOps · UNSA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --bg: #080b10;
-    --surface: #0d1117;
-    --surface2: #161b22;
-    --surface3: #1c2330;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.12);
-    --accent: #58a6ff;
-    --accent2: #79c0ff;
-    --green: #3fb950;
-    --purple: #bc8cff;
-    --orange: #ffa657;
-    --red: #f85149;
-    --text: #e6edf3;
-    --text2: #8b949e;
-    --text3: #484f58;
-    --glow: rgba(88,166,255,0.15);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* ─── Noise overlay ─── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.6;
-  }
-
-  /* ─── Scrollbar ─── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
-
-  /* ─── NAV ─── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 0 2rem;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-    background: rgba(8,11,16,0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.1rem;
-    letter-spacing: -0.02em;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .nav-logo span { color: var(--accent); }
-
-  .nav-pill {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    background: rgba(88,166,255,0.1);
-    color: var(--accent);
-    border: 1px solid rgba(88,166,255,0.3);
-    padding: 0.2rem 0.6rem;
-    border-radius: 20px;
-    letter-spacing: 0.05em;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-    font-size: 0.875rem;
-    color: var(--text2);
-  }
-
-  .nav-links a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
-
-  .nav-cta {
-    background: var(--accent);
-    color: var(--bg) !important;
-    padding: 0.35rem 0.9rem;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.8rem;
-    transition: opacity 0.2s !important;
-  }
-  .nav-cta:hover { opacity: 0.85; }
-
-  /* ─── Sections ─── */
-  section { position: relative; z-index: 1; }
-
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  /* ─── HERO ─── */
-  #hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding-top: 60px;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .hero-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.18;
-    animation: orb-float 8s ease-in-out infinite;
-  }
-
-  .orb1 { width: 600px; height: 600px; background: #1a4a8a; top: -200px; right: -100px; animation-delay: 0s; }
-  .orb2 { width: 400px; height: 400px; background: #0d3b5e; bottom: -100px; left: -100px; animation-delay: 3s; }
-  .orb3 { width: 300px; height: 300px; background: #2d1f4a; top: 200px; left: 30%; animation-delay: 5s; }
-
-  @keyframes orb-float {
-    0%,100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-30px) scale(1.05); }
-  }
-
-  /* Grid lines */
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
-  }
-
-  .hero-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-    width: 100%;
-    padding: 4rem 0;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--green);
-    background: rgba(63,185,80,0.08);
-    border: 1px solid rgba(63,185,80,0.25);
-    padding: 0.3rem 0.75rem;
-    border-radius: 20px;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.04em;
-    animation: fade-up 0.6s ease both;
-  }
-
-  .hero-badge::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%,100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.8); }
-  }
-
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.6rem, 5vw, 4.2rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    animation: fade-up 0.6s 0.1s ease both;
-  }
-
-  h1 .accent-gradient {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-sub {
-    margin-top: 1.25rem;
-    font-size: 1.05rem;
-    color: var(--text2);
-    max-width: 480px;
-    line-height: 1.7;
-    animation: fade-up 0.6s 0.2s ease both;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 2rem;
-    flex-wrap: wrap;
-    animation: fade-up 0.6s 0.3s ease both;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--accent);
-    color: var(--bg);
-    font-weight: 600;
-    font-size: 0.9rem;
-    padding: 0.65rem 1.4rem;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(88,166,255,0.3); }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--surface2);
-    color: var(--text);
-    font-weight: 500;
-    font-size: 0.9rem;
-    padding: 0.65rem 1.4rem;
-    border-radius: 8px;
-    border: 1px solid var(--border2);
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  .btn-secondary:hover { background: var(--surface3); border-color: rgba(255,255,255,0.2); }
-
-  .hero-stats {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2.5rem;
-    animation: fade-up 0.6s 0.4s ease both;
-  }
-
-  .stat-item { display: flex; flex-direction: column; }
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: var(--text);
-    letter-spacing: -0.02em;
-  }
-  .stat-label { font-size: 0.78rem; color: var(--text3); letter-spacing: 0.03em; text-transform: uppercase; margin-top: 0.1rem; }
-
-  /* Hero right: terminal card */
-  .hero-terminal {
-    background: var(--surface);
-    border: 1px solid var(--border2);
-    border-radius: 12px;
-    overflow: hidden;
-    animation: fade-up 0.7s 0.2s ease both;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
-  }
-
-  .terminal-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .dot { width: 12px; height: 12px; border-radius: 50%; }
-  .dot-red { background: #ff5f57; }
-  .dot-yellow { background: #febc2e; }
-  .dot-green { background: #28c840; }
-
-  .terminal-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--text3);
-    margin-left: auto;
-    margin-right: auto;
-    transform: translateX(-1.5rem);
-  }
-
-  .terminal-body {
-    padding: 1.25rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    line-height: 1.8;
-  }
-
-  .t-comment { color: var(--text3); }
-  .t-cmd { color: var(--green); }
-  .t-path { color: var(--accent); }
-  .t-str { color: var(--orange); }
-  .t-keyword { color: var(--purple); }
-  .t-ok { color: var(--green); }
-  .t-warn { color: var(--orange); }
-  .t-info { color: var(--text2); }
-
-  .cursor {
-    display: inline-block;
-    width: 8px;
-    height: 14px;
-    background: var(--accent);
-    animation: blink 1s infinite;
-    vertical-align: middle;
-    margin-left: 2px;
-  }
-  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
-
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ─── Section headers ─── */
-  .section-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .section-tag::before {
-    content: '//';
-    color: var(--text3);
-  }
-
-  h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin-bottom: 0.75rem;
-  }
-
-  .section-desc {
-    color: var(--text2);
-    font-size: 1rem;
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 3rem;
-  }
-
-  /* ─── Cards ─── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: all 0.25s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(88,166,255,0.4), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .card:hover {
-    border-color: var(--border2);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-  }
-  .card:hover::before { opacity: 1; }
-
-  /* ─── ABOUT ─── */
-  #about { padding: 6rem 0; }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 1rem;
-  }
-
-  .about-card-main {
-    grid-column: span 2;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: center;
-  }
-
-  .about-text h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    letter-spacing: -0.02em;
-  }
-
-  .about-text p { color: var(--text2); line-height: 1.75; font-size: 0.95rem; }
-  .about-text p + p { margin-top: 0.75rem; }
-
-  .koel-info {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.25rem;
-  }
-
-  .koel-info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.875rem;
-  }
-
-  .koel-info-row:last-child { border-bottom: none; }
-  .koel-info-label { color: var(--text3); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
-  .koel-info-val { color: var(--text); font-weight: 500; }
-  .koel-info-val.green { color: var(--green); }
-
-  .criteria-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-
-  .crit-card {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.25rem;
-    transition: border-color 0.2s;
-  }
-  .crit-card:hover { border-color: var(--border2); }
-
-  .crit-icon {
-    font-size: 1.4rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .crit-title {
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .crit-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
-
-  /* ─── STACK ─── */
-  #stack { padding: 6rem 0; border-top: 1px solid var(--border); }
-
-  .stack-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-
-  .stack-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem 1.25rem;
-    text-align: center;
-    transition: all 0.25s;
-    cursor: default;
-  }
-
-  .stack-card:hover {
-    border-color: var(--border2);
-    background: var(--surface2);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
-  }
-
-  .stack-icon {
-    width: 48px; height: 48px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-size: 1.6rem;
-  }
-
-  .stack-name {
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .stack-role { font-size: 0.78rem; color: var(--text3); }
-
-  .layer-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    grid-column: span 4;
-    margin-top: 1.25rem;
-    margin-bottom: -0.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .layer-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* ─── ARCHITECTURE ─── */
-  #architecture { padding: 6rem 0; border-top: 1px solid var(--border); }
-
-  .arch-diagram {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2.5rem;
-    overflow-x: auto;
-  }
-
-  .arch-layer {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .arch-layer:last-child { margin-bottom: 0; }
-
-  .arch-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--text3);
-    width: 100px;
-    flex-shrink: 0;
-    text-align: right;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .arch-boxes {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    flex: 1;
-  }
-
-  .arch-box {
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-size: 0.82rem;
-    font-weight: 500;
-    border: 1px solid;
-    white-space: nowrap;
-  }
-
-  .arch-box.blue { background: rgba(88,166,255,0.08); border-color: rgba(88,166,255,0.3); color: var(--accent); }
-  .arch-box.green { background: rgba(63,185,80,0.08); border-color: rgba(63,185,80,0.3); color: var(--green); }
-  .arch-box.purple { background: rgba(188,140,255,0.08); border-color: rgba(188,140,255,0.3); color: var(--purple); }
-  .arch-box.orange { background: rgba(255,166,87,0.08); border-color: rgba(255,166,87,0.3); color: var(--orange); }
-  .arch-box.red { background: rgba(248,81,73,0.08); border-color: rgba(248,81,73,0.3); color: var(--red); }
-
-  .arch-arrow {
-    color: var(--text3);
-    font-size: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0.25rem 0;
-  }
-
-  .arch-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .arch-detail-card {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.25rem;
-  }
-
-  .arch-detail-card h4 {
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .arch-detail-card p { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
-
-  /* ─── SCRUM + DEVOPS ─── */
-  #devops { padding: 6rem 0; border-top: 1px solid var(--border); }
-
-  .devops-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-
-  .tool-list { display: flex; flex-direction: column; gap: 0.75rem; }
-
-  .tool-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.85rem;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem;
-    transition: border-color 0.2s;
-  }
-
-  .tool-item:hover { border-color: var(--border2); }
-
-  .tool-icon {
-    width: 36px; height: 36px;
-    background: var(--surface3);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-  }
-
-  .tool-info h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.2rem; }
-  .tool-info p { font-size: 0.8rem; color: var(--text2); line-height: 1.5; }
-
-  .pipeline-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-  }
-
-  .pipeline-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .pipeline-steps { display: flex; flex-direction: column; gap: 0; }
-
-  .pipeline-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    position: relative;
-  }
-
-  .pipeline-step:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: 15px;
-    top: 32px;
-    bottom: -16px;
-    width: 2px;
-    background: var(--border);
-  }
-
-  .p-dot {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    font-weight: 700;
-    flex-shrink: 0;
-    border: 2px solid;
-    background: var(--surface2);
-    position: relative;
-    z-index: 1;
-  }
-
-  .p-dot.done { border-color: var(--green); color: var(--green); }
-  .p-dot.active { border-color: var(--accent); color: var(--accent); }
-  .p-dot.pending { border-color: var(--text3); color: var(--text3); }
-
-  .p-content { padding-bottom: 1.5rem; padding-top: 0.25rem; }
-  .p-content h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.2rem; }
-  .p-content p { font-size: 0.8rem; color: var(--text2); line-height: 1.5; }
-
-  .badge-status {
-    display: inline-block;
-    font-size: 0.68rem;
-    font-family: 'JetBrains Mono', monospace;
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-    margin-left: 0.4rem;
-    vertical-align: middle;
-  }
-
-  .badge-status.done { background: rgba(63,185,80,0.12); color: var(--green); }
-  .badge-status.active { background: rgba(88,166,255,0.12); color: var(--accent); }
-  .badge-status.pending { background: rgba(72,79,88,0.3); color: var(--text3); }
-
-  /* ─── TIMELINE ─── */
-  #timeline { padding: 6rem 0; border-top: 1px solid var(--border); }
-
-  .timeline-wrapper {
-    position: relative;
-    margin-top: 2rem;
-  }
-
-  .timeline-line {
-    position: absolute;
-    left: 120px;
-    top: 0; bottom: 0;
-    width: 2px;
-    background: var(--border);
-  }
-
-  .timeline-item {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    position: relative;
-  }
-
-  .tl-date {
-    width: 120px;
-    flex-shrink: 0;
-    text-align: right;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--text3);
-    padding-top: 0.85rem;
-    line-height: 1.4;
-  }
-
-  .tl-dot-wrapper {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    width: 2px;
-    margin-top: 0.85rem;
-  }
-
-  .tl-dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    border: 2px solid;
-    background: var(--bg);
-    margin-left: -5px;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-  }
-
-  .tl-dot.done { border-color: var(--green); box-shadow: 0 0 0 4px rgba(63,185,80,0.12); }
-  .tl-dot.active { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(88,166,255,0.12); animation: dot-pulse 2s infinite; }
-  .tl-dot.pending { border-color: var(--text3); }
-
-  @keyframes dot-pulse {
-    0%,100% { box-shadow: 0 0 0 4px rgba(88,166,255,0.12); }
-    50% { box-shadow: 0 0 0 8px rgba(88,166,255,0.05); }
-  }
-
-  .tl-content {
-    flex: 1;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.25rem;
-    transition: border-color 0.2s;
-    margin-left: 1.25rem;
-  }
-  .tl-content:hover { border-color: var(--border2); }
-
-  .tl-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .tl-sprint {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-  }
-
-  .tl-hito {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    background: rgba(88,166,255,0.1);
-    color: var(--accent);
-    border: 1px solid rgba(88,166,255,0.25);
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-  }
-
-  .tl-tasks {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.75rem;
-  }
-
-  .tl-task {
-    font-size: 0.75rem;
-    background: var(--surface2);
-    color: var(--text2);
-    border: 1px solid var(--border);
-    padding: 0.2rem 0.6rem;
-    border-radius: 5px;
-  }
-
-  /* ─── RESULTADOS ─── */
-  #resultados { padding: 6rem 0; border-top: 1px solid var(--border); }
-
-  .results-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .result-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: all 0.25s;
-  }
-
-  .result-card:hover { border-color: var(--border2); transform: translateY(-2px); }
-
-  .result-card.featured {
-    grid-column: span 2;
-    background: linear-gradient(135deg, rgba(88,166,255,0.05) 0%, rgba(188,140,255,0.05) 100%);
-    border-color: rgba(88,166,255,0.2);
-  }
-
-  .result-icon {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    width: 44px; height: 44px;
-    background: var(--surface2);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .result-title {
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .result-desc { font-size: 0.83rem; color: var(--text2); line-height: 1.6; }
-
-  .result-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--accent);
-    letter-spacing: -0.03em;
-    margin-top: 0.75rem;
-  }
-
-  .hu-table {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    margin-top: 2rem;
-  }
-
-  .hu-table-header {
-    display: grid;
-    grid-template-columns: 80px 1fr 140px;
-    background: var(--surface2);
-    padding: 0.75rem 1.25rem;
-    font-size: 0.75rem;
-    color: var(--text3);
-    font-family: 'JetBrains Mono', monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .hu-row {
-    display: grid;
-    grid-template-columns: 80px 1fr 140px;
-    padding: 0.65rem 1.25rem;
-    font-size: 0.83rem;
-    border-bottom: 1px solid var(--border);
-    align-items: center;
-    transition: background 0.15s;
-  }
-  .hu-row:last-child { border-bottom: none; }
-  .hu-row:hover { background: var(--surface2); }
-
-  .hu-code { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); }
-  .hu-story { color: var(--text2); }
-  .hu-who { font-size: 0.75rem; color: var(--text3); }
-
-  /* ─── TEAM ─── */
-  #equipo { padding: 6rem 0; border-top: 1px solid var(--border); }
-
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
-  }
-
-  .team-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem 1rem;
-    text-align: center;
-    transition: all 0.25s;
-  }
-
-  .team-card:hover { border-color: var(--border2); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
-
-  .avatar {
-    width: 64px; height: 64px;
-    border-radius: 50%;
-    margin: 0 auto 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.3rem;
-    border: 2px solid var(--border2);
-  }
-
-  .member-name {
-    font-weight: 600;
-    font-size: 0.82rem;
-    line-height: 1.4;
-    margin-bottom: 0.35rem;
-  }
-
-  .member-role {
-    font-size: 0.72rem;
-    color: var(--text3);
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  /* ─── LINKS ─── */
-  #enlaces { padding: 4rem 0; border-top: 1px solid var(--border); }
-
-  .links-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-
-  .link-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.25s;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .link-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(88,166,255,0.12); }
-
-  .link-icon { font-size: 1.4rem; }
-  .link-title { font-weight: 600; font-size: 0.9rem; }
-  .link-url { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text3); margin-top: auto; }
-
-  .link-arrow { color: var(--text3); font-size: 0.85rem; margin-top: 0.25rem; }
-
-  /* ─── FOOTER ─── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2.5rem 0;
-  }
-
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .footer-left {
-    font-size: 0.82rem;
-    color: var(--text3);
-    line-height: 1.6;
-  }
-
-  .footer-left strong { color: var(--text2); }
-
-  .footer-right {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .footer-link {
-    font-size: 0.8rem;
-    color: var(--text3);
-    text-decoration: none;
-    transition: color 0.2s;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .footer-link:hover { color: var(--accent); }
-
-  /* ─── DIVIDER ─── */
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border2), transparent);
-    margin: 1rem 0;
-  }
-
-  /* ─── Scroll animations ─── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .reveal.visible { opacity: 1; transform: none; }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 900px) {
-    .hero-inner { grid-template-columns: 1fr; }
-    .hero-terminal { display: none; }
-    .about-grid { grid-template-columns: 1fr; }
-    .about-card-main { grid-template-columns: 1fr; }
-    .stack-grid { grid-template-columns: repeat(2, 1fr); }
-    .layer-label { grid-column: span 2; }
-    .arch-cards { grid-template-columns: 1fr 1fr; }
-    .devops-grid { grid-template-columns: 1fr; }
-    .results-grid { grid-template-columns: 1fr 1fr; }
-    .result-card.featured { grid-column: span 2; }
-    .team-grid { grid-template-columns: repeat(3, 1fr); }
-    .links-grid { grid-template-columns: repeat(2, 1fr); }
-    .timeline-line { left: 90px; }
-    .tl-date { width: 90px; }
-    nav .nav-links { display: none; }
-  }
-
-  @media (max-width: 600px) {
-    h1 { font-size: 2rem; }
-    h2 { font-size: 1.6rem; }
-    .stack-grid { grid-template-columns: 1fr 1fr; }
-    .layer-label { grid-column: span 2; }
-    .criteria-cards { grid-template-columns: 1fr; }
-    .arch-cards { grid-template-columns: 1fr; }
-    .results-grid { grid-template-columns: 1fr; }
-    .result-card.featured { grid-column: span 1; }
-    .team-grid { grid-template-columns: repeat(2, 1fr); }
-    .links-grid { grid-template-columns: 1fr 1fr; }
-    .hu-table-header, .hu-row { grid-template-columns: 60px 1fr; }
-    .hu-who { display: none; }
-    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
-    .tl-date { display: none; }
-    .timeline-line { left: 0; }
-    .tl-dot-wrapper { margin-left: 0; }
-    .tl-content { margin-left: 0.75rem; }
-  }
+/* ─────────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────────── */
+:root {
+  --bg:       #060809;
+  --bg1:      #0b0f12;
+  --bg2:      #111519;
+  --bg3:      #171c22;
+  --bg4:      #1c222b;
+  --line:     rgba(255,255,255,0.055);
+  --line2:    rgba(255,255,255,0.1);
+  --text:     #e2e8f0;
+  --text2:    #7d8fa3;
+  --text3:    #3d4d5c;
+  --accent:   #4f8ef7;
+  --accent2:  #6ba3f9;
+  --green:    #2ea84d;
+  --green2:   #3dc75f;
+  --purple:   #9b72f0;
+  --amber:    #d4943a;
+  --red:      #e05252;
+  --cyan:     #22b8cf;
+  --r:        6px;
+  --r2:       10px;
+  --r3:       14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Geist', -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* grain */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 10px; }
+
+/* ─── TYPE ─── */
+.mono { font-family: 'IBM Plex Mono', monospace; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(6,8,9,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.nav-left { display: flex; align-items: center; gap: 16px; }
+
+.nav-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 13.5px; letter-spacing: -0.01em;
+  color: var(--text); text-decoration: none;
+}
+
+.nav-logo svg { flex-shrink: 0; }
+
+.nav-sep { width: 1px; height: 16px; background: var(--line2); }
+
+.nav-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px; color: var(--text3);
+  letter-spacing: 0.05em;
+}
+
+.nav-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(79,142,247,0.1);
+  border: 1px solid rgba(79,142,247,0.25);
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.nav-right { display: flex; align-items: center; gap: 6px; }
+
+.nav-link {
+  font-size: 13px; color: var(--text2); text-decoration: none;
+  padding: 5px 10px; border-radius: var(--r);
+  transition: color 0.15s, background 0.15s;
+}
+.nav-link:hover { color: var(--text); background: var(--bg3); }
+
+.nav-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; font-weight: 500;
+  padding: 5px 12px; border-radius: var(--r);
+  background: var(--bg3); border: 1px solid var(--line2);
+  color: var(--text); text-decoration: none;
+  transition: all 0.15s;
+}
+.nav-btn:hover { background: var(--bg4); border-color: rgba(255,255,255,0.16); }
+
+/* ─── LAYOUT ─── */
+.container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+section { position: relative; z-index: 1; }
+
+/* ─── SECTION HEADER ─── */
+.sh { margin-bottom: 40px; }
+.sh-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px; color: var(--text3);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.sh-eyebrow::before { content: '//'; color: var(--text3); margin-right: 2px; }
+.sh h2 {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 700; letter-spacing: -0.025em;
+  line-height: 1.15; color: var(--text);
+}
+.sh p { margin-top: 10px; font-size: 14px; color: var(--text2); max-width: 520px; line-height: 1.7; }
+
+/* ─── HERO ─── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding-top: 52px;
+  overflow: hidden;
+}
+
+.hero-aurora {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 900px 500px at 60% -10%, rgba(79,142,247,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 600px 400px at 10% 80%, rgba(155,114,240,0.05) 0%, transparent 60%);
+}
+
+.hero-grid-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 100% 70% at 50% 50%, black 0%, transparent 80%);
+}
+
+.hero-inner {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 56px;
+  align-items: center;
+  padding: 80px 0;
+}
+
+.hero-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--green2);
+  background: rgba(46,168,77,0.07);
+  border: 1px solid rgba(46,168,77,0.2);
+  padding: 4px 10px; border-radius: 4px;
+  margin-bottom: 20px;
+  letter-spacing: 0.05em;
+}
+
+.hero-kicker-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--green2);
+  animation: kpulse 2.5s ease-in-out infinite;
+}
+
+@keyframes kpulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(61,199,95,0.4); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(61,199,95,0); }
+}
+
+h1 {
+  font-size: clamp(32px, 5.5vw, 54px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  color: var(--text);
+}
+
+h1 .grad {
+  background: linear-gradient(130deg, #6ba3f9 0%, #a78bf9 60%, #f97b7b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-desc {
+  margin-top: 18px;
+  font-size: 14.5px; color: var(--text2);
+  max-width: 460px; line-height: 1.75;
+}
+
+.hero-actions {
+  display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--accent); color: #fff;
+  font-size: 13px; font-weight: 600;
+  padding: 8px 16px; border-radius: var(--r);
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+.btn-primary:hover { background: var(--accent2); box-shadow: 0 6px 20px rgba(79,142,247,0.25); transform: translateY(-1px); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--bg3); color: var(--text);
+  font-size: 13px; font-weight: 500;
+  padding: 8px 16px; border-radius: var(--r);
+  text-decoration: none; border: 1px solid var(--line2);
+  transition: all 0.2s;
+}
+.btn-ghost:hover { background: var(--bg4); }
+
+.hero-meta {
+  display: flex; gap: 28px; margin-top: 36px;
+}
+
+.meta-item {}
+.meta-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 20px; font-weight: 600;
+  color: var(--text); letter-spacing: -0.02em;
+  line-height: 1;
+}
+.meta-label { font-size: 11px; color: var(--text3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* Terminal panel */
+.hero-terminal {
+  background: var(--bg1);
+  border: 1px solid var(--line2);
+  border-radius: var(--r3);
+  overflow: hidden;
+  box-shadow: 0 32px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.term-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 14px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line);
+}
+
+.term-dot { width: 10px; height: 10px; border-radius: 50%; }
+.td1 { background: #ff5f57; } .td2 { background: #febc2e; } .td3 { background: #28c840; }
+
+.term-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px; color: var(--text3);
+  margin: 0 auto; transform: translateX(-16px);
+}
+
+.term-body {
+  padding: 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  line-height: 1.9;
+}
+
+.tc { color: var(--text3); }
+.tg { color: var(--green2); }
+.ta { color: var(--accent); }
+.tw { color: var(--amber); }
+.tp { color: var(--purple); }
+.tt { color: var(--text2); }
+
+.tcursor {
+  display: inline-block; width: 7px; height: 13px;
+  background: var(--accent); vertical-align: middle; margin-left: 2px;
+  animation: cblink 1.1s steps(1) infinite;
+}
+@keyframes cblink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+
+/* ─── DIVIDER ─── */
+.sec-divider { border: none; border-top: 1px solid var(--line); }
+
+/* ─── ABOUT / WHY ─── */
+#about { padding: 80px 0; }
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.about-prose h3 {
+  font-size: 18px; font-weight: 700; letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.about-prose p { font-size: 13.5px; color: var(--text2); line-height: 1.8; }
+.about-prose p + p { margin-top: 12px; }
+
+.about-prose strong { color: var(--text); font-weight: 600; }
+
+.info-panel {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r3);
+  overflow: hidden;
+}
+
+.info-panel-header {
+  padding: 12px 16px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.info-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+}
+.info-row:last-child { border-bottom: none; }
+
+.info-key {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--text3);
+}
+.info-val { color: var(--text); font-weight: 500; }
+.info-val.ok { color: var(--green2); }
+.info-val.accent { color: var(--accent); }
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.why-card {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  padding: 18px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.why-card:hover { border-color: var(--line2); background: var(--bg2); }
+
+.why-icon {
+  width: 32px; height: 32px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+}
+
+.why-title { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+.why-desc { font-size: 12px; color: var(--text2); line-height: 1.65; }
+
+/* ─── STACK ─── */
+#stack { padding: 80px 0; border-top: 1px solid var(--line); }
+
+.stack-section { margin-bottom: 32px; }
+
+.stack-section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.12em;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.stack-section-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: var(--line);
+}
+
+.stack-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.stack-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  font-size: 12.5px; font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.15s;
+  cursor: default;
+}
+.stack-chip:hover { background: var(--bg2); border-color: var(--line2); }
+.stack-chip a { color: inherit; text-decoration: none; }
+
+.stack-chip-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.chip-sub {
+  font-size: 10.5px; color: var(--text3);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* SVG icon within chip */
+.chip-icon { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* ─── ARCHITECTURE ─── */
+#architecture { padding: 80px 0; border-top: 1px solid var(--line); }
+
+.arch-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Component diagram recreation */
+.comp-diagram {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r3);
+  padding: 20px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.comp-layer {
+  border: 1px solid;
+  border-radius: var(--r2);
+  padding: 12px;
+  margin-bottom: 6px;
+  position: relative;
+}
+
+.comp-layer-label {
+  font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em;
+  position: absolute; top: -1px; left: 8px;
+  background: var(--bg1);
+  padding: 0 4px;
+  transform: translateY(-50%);
+}
+
+.comp-layer.frontend { border-color: rgba(155,114,240,0.35); }
+.comp-layer.frontend .comp-layer-label { color: var(--purple); }
+.comp-layer.backend { border-color: rgba(79,142,247,0.35); }
+.comp-layer.backend .comp-layer-label { color: var(--accent); }
+.comp-layer.database { border-color: rgba(214,148,58,0.35); }
+.comp-layer.database .comp-layer-label { color: var(--amber); }
+.comp-layer.external { border-color: rgba(229,82,82,0.35); }
+.comp-layer.external .comp-layer-label { color: var(--red); }
+.comp-layer.media { border-color: rgba(34,184,207,0.35); }
+.comp-layer.media .comp-layer-label { color: var(--cyan); }
+
+.comp-nodes { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+
+.comp-node {
+  font-size: 10px; padding: 3px 8px;
+  border-radius: 4px; border: 1px solid;
+  white-space: nowrap;
+}
+
+.comp-node.purple { border-color: rgba(155,114,240,0.4); color: var(--purple); background: rgba(155,114,240,0.06); }
+.comp-node.blue { border-color: rgba(79,142,247,0.4); color: var(--accent); background: rgba(79,142,247,0.06); }
+.comp-node.amber { border-color: rgba(214,148,58,0.4); color: var(--amber); background: rgba(214,148,58,0.06); }
+.comp-node.red { border-color: rgba(229,82,82,0.4); color: var(--red); background: rgba(229,82,82,0.06); }
+.comp-node.cyan { border-color: rgba(34,184,207,0.4); color: var(--cyan); background: rgba(34,184,207,0.06); }
+
+.comp-arrow {
+  text-align: center; color: var(--text3); font-size: 11px;
+  margin: 3px 0; letter-spacing: 0.05em;
+}
+
+/* Right side: detail cards */
+.arch-detail-col { display: flex; flex-direction: column; gap: 10px; }
+
+.arch-card {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  padding: 16px;
+  transition: border-color 0.2s;
+}
+.arch-card:hover { border-color: var(--line2); }
+
+.arch-card-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 8px;
+}
+.arch-card-dot { width: 8px; height: 8px; border-radius: 50%; }
+.arch-card-title { font-size: 13px; font-weight: 600; }
+.arch-card p { font-size: 12.5px; color: var(--text2); line-height: 1.65; }
+
+.arch-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.arch-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--bg3); color: var(--text3);
+  border: 1px solid var(--line);
+}
+
+/* ─── CLOC terminal ─── */
+.cloc-terminal {
+  background: #0a0d10;
+  border: 1px solid var(--line);
+  border-radius: var(--r3);
+  overflow: hidden;
+  margin-top: 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.cloc-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 14px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line);
+}
+
+.cloc-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--text3);
+  margin-left: auto; transform: translateX(-12px);
+}
+
+.cloc-body {
+  padding: 14px 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  line-height: 1.85;
+  overflow-x: auto;
+}
+
+.cloc-header-row { color: var(--text3); border-bottom: 1px solid var(--line); padding-bottom: 4px; margin-bottom: 4px; }
+.cloc-row { display: grid; grid-template-columns: 130px 55px 55px 55px 60px; gap: 0; }
+.cloc-lang { color: var(--accent2); }
+.cloc-num { color: var(--text2); text-align: right; padding-right: 8px; }
+.cloc-num.highlight { color: var(--green2); font-weight: 600; }
+.cloc-sum-row { border-top: 1px solid var(--line); margin-top: 4px; padding-top: 4px; }
+.cloc-sum-label { color: var(--amber); font-weight: 600; }
+
+/* ─── DEVOPS / SCRUM ─── */
+#devops { padding: 80px 0; border-top: 1px solid var(--line); }
+
+.devops-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.tool-panel {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r3);
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 12px 16px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.panel-body { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+
+.tool-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 12px;
+  transition: border-color 0.15s;
+}
+.tool-row:hover { border-color: var(--line2); }
+
+.tool-row-icon {
+  width: 30px; height: 30px;
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.tool-row-info h4 { font-size: 12.5px; font-weight: 600; margin-bottom: 3px; }
+.tool-row-info p { font-size: 11.5px; color: var(--text2); line-height: 1.5; }
+
+/* Pipeline */
+.pipeline-panel {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r3);
+  overflow: hidden;
+}
+
+.pipe-body { padding: 20px 18px; }
+
+.pipe-step {
+  display: flex; gap: 14px;
+  position: relative;
+  margin-bottom: 0;
+}
+.pipe-step:not(:last-child) .pipe-connector {
+  position: absolute; left: 11px; top: 24px;
+  width: 2px; height: calc(100% - 4px);
+  background: var(--line);
+  z-index: 0;
+}
+
+.pipe-dot-wrap { flex-shrink: 0; padding-top: 2px; z-index: 1; }
+
+.pipe-dot {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid; background: var(--bg1);
+  font-size: 9px; font-weight: 700;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.pipe-dot.done { border-color: var(--green2); color: var(--green2); }
+.pipe-dot.active { border-color: var(--accent); color: var(--accent); }
+.pipe-dot.pending { border-color: var(--text3); color: var(--text3); }
+
+.pipe-content { padding-bottom: 20px; flex: 1; }
+.pipe-content:last-child { padding-bottom: 0; }
+
+.pipe-head { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+.pipe-name { font-size: 12.5px; font-weight: 600; }
+
+.badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px; padding: 1px 6px; border-radius: 3px;
+}
+.badge.done { background: rgba(46,168,77,0.1); color: var(--green2); border: 1px solid rgba(46,168,77,0.25); }
+.badge.active { background: rgba(79,142,247,0.1); color: var(--accent); border: 1px solid rgba(79,142,247,0.25); }
+.badge.pending { background: rgba(61,77,92,0.3); color: var(--text3); border: 1px solid var(--line); }
+
+.pipe-desc { font-size: 11.5px; color: var(--text2); line-height: 1.55; }
+
+/* ─── KANBAN ─── */
+#kanban { padding: 80px 0; border-top: 1px solid var(--line); }
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.kb-col {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  overflow: hidden;
+}
+
+.kb-col-header {
+  padding: 9px 12px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11.5px; font-weight: 600;
+}
+
+.kb-col-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--text3);
+  margin-left: auto;
+}
+
+.kb-col-status {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+}
+
+.kb-items { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+
+.kb-item {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 9px 10px;
+  transition: border-color 0.15s;
+  cursor: default;
+}
+.kb-item:hover { border-color: var(--line2); }
+
+.kb-item-code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px; color: var(--text3);
+  margin-bottom: 3px;
+}
+.kb-item-title { font-size: 11px; color: var(--text2); line-height: 1.4; }
+
+/* ─── TIMELINE ─── */
+#timeline { padding: 80px 0; border-top: 1px solid var(--line); }
+
+.tl-wrapper { position: relative; }
+
+.tl-track {
+  position: absolute;
+  left: 100px; top: 0; bottom: 0;
+  width: 1px; background: var(--line);
+}
+
+.tl-item {
+  display: flex; gap: 0; margin-bottom: 4px;
+  position: relative;
+}
+
+.tl-date {
+  width: 100px; flex-shrink: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--text3);
+  text-align: right; padding-right: 14px; padding-top: 14px;
+  line-height: 1.4;
+}
+
+.tl-node {
+  flex-shrink: 0;
+  width: 20px;
+  display: flex; align-items: flex-start;
+  justify-content: center;
+  padding-top: 14px;
+}
+
+.tl-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  border: 1.5px solid; background: var(--bg);
+  position: relative; z-index: 1;
+  margin-top: 2px;
+}
+.tl-dot.done { border-color: var(--green2); box-shadow: 0 0 0 3px rgba(61,199,95,0.1); }
+.tl-dot.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,142,247,0.12); animation: tlpulse 2.5s infinite; }
+.tl-dot.pending { border-color: var(--text3); }
+
+@keyframes tlpulse {
+  0%,100% { box-shadow: 0 0 0 3px rgba(79,142,247,0.12); }
+  50% { box-shadow: 0 0 0 6px rgba(79,142,247,0.04); }
+}
+
+.tl-card {
+  flex: 1; margin-left: 16px;
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  transition: border-color 0.2s;
+}
+.tl-card:hover { border-color: var(--line2); }
+
+.tl-card-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px; gap: 12px; flex-wrap: wrap;
+}
+.tl-card-title { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; }
+
+.tl-milestone {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px; padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(79,142,247,0.08);
+  border: 1px solid rgba(79,142,247,0.2);
+  color: var(--accent);
+}
+
+.tl-desc { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
+
+.tl-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tl-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--bg2); color: var(--text3);
+  border: 1px solid var(--line);
+}
+.tl-tag.done { color: var(--green2); background: rgba(46,168,77,0.07); border-color: rgba(46,168,77,0.2); }
+
+/* ─── RESULTS ─── */
+#resultados { padding: 80px 0; border-top: 1px solid var(--line); }
+
+.results-layout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.metric-card {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  padding: 18px;
+  transition: all 0.2s;
+}
+.metric-card:hover { border-color: var(--line2); background: var(--bg2); }
+.metric-card.wide { grid-column: span 2; }
+
+.metric-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.metric-val {
+  font-size: 28px; font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text); line-height: 1;
+}
+.metric-val.accent { color: var(--accent); }
+.metric-val.green { color: var(--green2); }
+.metric-desc { font-size: 11.5px; color: var(--text2); margin-top: 6px; line-height: 1.55; }
+
+/* HU table */
+.hu-table {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r3);
+  overflow: hidden;
+}
+
+.hu-thead {
+  display: grid;
+  grid-template-columns: 70px 1fr 130px;
+  padding: 8px 16px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+.hu-row {
+  display: grid;
+  grid-template-columns: 70px 1fr 130px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+  font-size: 12.5px;
+  transition: background 0.12s;
+}
+.hu-row:last-child { border-bottom: none; }
+.hu-row:hover { background: var(--bg2); }
+
+.hu-code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px; color: var(--accent);
+}
+.hu-story { color: var(--text2); }
+.hu-resp { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text3); }
+
+/* ─── TEAM ─── */
+#equipo { padding: 80px 0; border-top: 1px solid var(--line); }
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.member-card {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  padding: 20px 14px;
+  text-align: center;
+  transition: all 0.2s;
+}
+.member-card:hover { border-color: var(--line2); background: var(--bg2); transform: translateY(-2px); }
+
+.member-avatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800;
+  font-family: 'IBM Plex Mono', monospace;
+  border: 1px solid;
+}
+
+.member-name { font-size: 12px; font-weight: 600; line-height: 1.4; margin-bottom: 5px; }
+.member-role {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--text3); display: block;
+}
+
+.member-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; margin-top: 8px; }
+.member-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; padding: 1px 5px;
+  border-radius: 3px; background: var(--bg3);
+  border: 1px solid var(--line); color: var(--text3);
+}
+
+/* ─── LINKS ─── */
+#enlaces { padding: 60px 0; border-top: 1px solid var(--line); }
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.link-tile {
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: all 0.2s;
+}
+.link-tile:hover { border-color: var(--accent); background: rgba(79,142,247,0.03); transform: translateY(-1px); }
+
+.link-tile-icon {
+  width: 30px; height: 30px;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.link-tile-title { font-size: 13px; font-weight: 600; }
+.link-tile-desc { font-size: 11.5px; color: var(--text2); line-height: 1.5; flex: 1; }
+.link-tile-url {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--text3);
+  margin-top: 2px;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 0;
+}
+.footer-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-left { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text3); line-height: 1.7; }
+.footer-right { display: flex; gap: 16px; align-items: center; }
+.footer-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--text3); text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-link:hover { color: var(--accent); }
+
+/* ─── SCROLL REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.rd1 { transition-delay: 0.07s; }
+.rd2 { transition-delay: 0.14s; }
+.rd3 { transition-delay: 0.21s; }
+.rd4 { transition-delay: 0.28s; }
+.rd5 { transition-delay: 0.35s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-terminal { display: none; }
+  .about-layout { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .arch-layout { grid-template-columns: 1fr; }
+  .devops-layout { grid-template-columns: 1fr; }
+  .kanban-board { grid-template-columns: repeat(3, 1fr); }
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+  .links-grid { grid-template-columns: repeat(2, 1fr); }
+  .results-layout { grid-template-columns: 1fr 1fr; }
+  .metric-card.wide { grid-column: span 2; }
+  nav .nav-right .nav-link { display: none; }
+}
+
+@media (max-width: 600px) {
+  .why-grid { grid-template-columns: 1fr; }
+  .kanban-board { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .links-grid { grid-template-columns: 1fr 1fr; }
+  .results-layout { grid-template-columns: 1fr; }
+  .metric-card.wide { grid-column: span 1; }
+  .tl-date { display: none; }
+  .tl-track { left: 20px; }
+  .tl-card { margin-left: 8px; }
+  .hu-thead, .hu-row { grid-template-columns: 65px 1fr; }
+  .hu-resp { display: none; }
+  .hero-meta { gap: 18px; flex-wrap: wrap; }
+}
 </style>
 </head>
 <body>
 
 <!-- ─── NAV ─── -->
 <nav>
-  <div class="nav-logo">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#58a6ff" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="#58a6ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Koel <span>DevOps</span>
-    <span class="nav-pill">Sprint 0</span>
+  <div class="nav-left">
+    <a href="#hero" class="nav-logo">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <rect width="18" height="18" rx="4" fill="rgba(79,142,247,0.12)" stroke="rgba(79,142,247,0.35)" stroke-width="1"/>
+        <path d="M5 9.5l2.5 2.5L13 6" stroke="#4f8ef7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      IPS-2026-koel
+    </a>
+    <div class="nav-sep"></div>
+    <span class="nav-tag">UNSA · 2026-A</span>
+    <span class="nav-badge">Sprint 0</span>
   </div>
-  <ul class="nav-links">
-    <li><a href="#about">Proyecto</a></li>
-    <li><a href="#stack">Stack</a></li>
-    <li><a href="#architecture">Arquitectura</a></li>
-    <li><a href="#devops">DevOps</a></li>
-    <li><a href="#timeline">Cronograma</a></li>
-    <li><a href="#equipo">Equipo</a></li>
-    <li><a href="https://github.com/koel/koel" target="_blank" class="nav-cta">GitHub →</a></li>
-  </ul>
+  <div class="nav-right">
+    <a href="#about" class="nav-link">Proyecto</a>
+    <a href="#stack" class="nav-link">Stack</a>
+    <a href="#architecture" class="nav-link">Arquitectura</a>
+    <a href="#devops" class="nav-link">DevOps</a>
+    <a href="#timeline" class="nav-link">Sprints</a>
+    <a href="#equipo" class="nav-link">Equipo</a>
+    <a href="https://github.com/JoseMorocco/IPS-2026-koel" target="_blank" class="nav-btn">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+  </div>
 </nav>
 
 <!-- ─── HERO ─── -->
 <section id="hero">
-  <div class="hero-bg">
-    <div class="hero-orb orb1"></div>
-    <div class="hero-orb orb2"></div>
-    <div class="hero-orb orb3"></div>
-    <div class="hero-grid"></div>
-  </div>
+  <div class="hero-aurora"></div>
+  <div class="hero-grid-bg"></div>
   <div class="container">
     <div class="hero-inner">
       <div>
-        <div class="hero-badge">UNSA · INGENIERÍA Y PROCESOS DE SOFTWARE · 2026-A</div>
-        <h1>
-          Scrum + DevOps<br/>
-          aplicado a <span class="accent-gradient">Koel</span><br/>
-          Open Source
-        </h1>
-        <p class="hero-sub">
-          Implementación de un proceso ágil completo sobre Koel, un servidor de streaming musical open source con licencia MIT. Pipeline CI/CD automatizado, sprints reales, documentación técnica y despliegue en GitHub Pages.
+        <div class="hero-kicker">
+          <span class="hero-kicker-dot"></span>
+          Sprint 0 · Hito 1 · 13 Mayo 2026
+        </div>
+        <h1>Scrum + DevOps<br/>aplicado a <span class="grad">Koel</span></h1>
+        <p class="hero-desc">
+          Implementación de un proceso ágil completo sobre Koel, un servidor de streaming musical open source con licencia MIT. Pipeline CI/CD automatizado, sprints reales y despliegue en GitHub Pages.
         </p>
         <div class="hero-actions">
-          <a href="https://github.com/koel/koel" target="_blank" class="btn-primary">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            Ver Repositorio
+          <a href="https://github.com/JoseMorocco/IPS-2026-koel" target="_blank" class="btn-primary">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            Repositorio del Proyecto
           </a>
-          <a href="#about" class="btn-secondary">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
-            Documentación
+          <a href="https://github.com/users/JoseMorocco/projects/1" target="_blank" class="btn-ghost">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="14" height="14" rx="2"/><path d="M5 5h6M5 8h6M5 11h4" stroke-linecap="round"/></svg>
+            Tablero Kanban
           </a>
+          <a href="#about" class="btn-ghost">Ver documentación</a>
         </div>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-num">120K+</span>
-            <span class="stat-label">Líneas de código</span>
+        <div class="hero-meta">
+          <div class="meta-item">
+            <div class="meta-val mono">120K+</div>
+            <div class="meta-label">Líneas de código</div>
           </div>
-          <div class="stat-item">
-            <span class="stat-num">5</span>
-            <span class="stat-label">Subsistemas</span>
+          <div class="meta-item">
+            <div class="meta-val mono">5</div>
+            <div class="meta-label">Subsistemas</div>
           </div>
-          <div class="stat-item">
-            <span class="stat-num">4</span>
-            <span class="stat-label">Sprints</span>
+          <div class="meta-item">
+            <div class="meta-val mono">4</div>
+            <div class="meta-label">Sprints</div>
           </div>
-          <div class="stat-item">
-            <span class="stat-num">MIT</span>
-            <span class="stat-label">Licencia</span>
+          <div class="meta-item">
+            <div class="meta-val mono">MIT</div>
+            <div class="meta-label">Licencia</div>
           </div>
         </div>
       </div>
 
       <!-- Terminal card -->
       <div class="hero-terminal">
-        <div class="terminal-header">
-          <div class="dot dot-red"></div>
-          <div class="dot dot-yellow"></div>
-          <div class="dot dot-green"></div>
-          <span class="terminal-title">koel-devops · sprint-0</span>
+        <div class="term-bar">
+          <div class="term-dot td1"></div>
+          <div class="term-dot td2"></div>
+          <div class="term-dot td3"></div>
+          <span class="term-title">ips-2026-koel · sprint-0</span>
         </div>
-        <div class="terminal-body">
-          <div class="t-comment"># Sprint 0 — Análisis y configuración inicial</div>
-          <br/>
-          <div><span class="t-cmd">$</span> <span class="t-path">git clone</span> koel/koel</div>
-          <div class="t-info">&nbsp; Cloning into 'koel'...</div>
-          <div class="t-ok">&nbsp; ✓ Done (120,465 LOC)</div>
-          <br/>
-          <div><span class="t-cmd">$</span> cloc --include-lang=PHP,Vue,JS .</div>
-          <div class="t-info">&nbsp; Files: 847 | Blank: 18,412</div>
-          <div class="t-ok">&nbsp; ✓ SUM: 120,465 lines</div>
-          <br/>
-          <div><span class="t-cmd">$</span> <span class="t-keyword">cat</span> LICENSE</div>
-          <div class="t-ok">&nbsp; ✓ MIT License — Free to use</div>
-          <br/>
-          <div><span class="t-cmd">$</span> docker compose up -d</div>
-          <div class="t-info">&nbsp; Starting koel-db     ... </div>
-          <div class="t-ok">&nbsp; ✓ koel-db    Up</div>
-          <div class="t-ok">&nbsp; ✓ koel-app   Up (port 80)</div>
-          <br/>
-          <div><span class="t-cmd">$</span> gh project list</div>
-          <div class="t-ok">&nbsp; ✓ Sprint 0 board created</div>
-          <div class="t-ok">&nbsp; ✓ 12 issues registered</div>
-          <br/>
-          <div><span class="t-cmd">$</span> <span class="t-warn">▶</span> github-actions deploy<span class="cursor"></span></div>
+        <div class="term-body">
+          <div class="tc"># Sprint 0 — Análisis y configuración inicial</div>
+          <div>&nbsp;</div>
+          <div><span class="tg">$</span> <span class="ta">git clone</span> github.com/koel/koel</div>
+          <div class="tt">&nbsp; Cloning into 'koel'...</div>
+          <div class="tg">&nbsp; ✓ Done — 120,465 LOC detected</div>
+          <div>&nbsp;</div>
+          <div><span class="tg">$</span> cloc --include-lang=PHP,Vue,TS .</div>
+          <div class="tt">&nbsp; PHP:        1079 files · 41,670 loc</div>
+          <div class="tt">&nbsp; TypeScript:  538 files · 27,565 loc</div>
+          <div class="tt">&nbsp; Vue:         307 files · 18,574 loc</div>
+          <div class="tg">&nbsp; ✓ SUM: 2376 files · 120,465 lines</div>
+          <div>&nbsp;</div>
+          <div><span class="tg">$</span> <span class="tp">cat</span> LICENSE <span class="tc">| head -1</span></div>
+          <div class="tg">&nbsp; ✓ MIT License — Free to use</div>
+          <div>&nbsp;</div>
+          <div><span class="tg">$</span> docker compose up -d</div>
+          <div class="tg">&nbsp; ✓ koel-db    Up (mysql:8)</div>
+          <div class="tg">&nbsp; ✓ koel-app   Up (port 80)</div>
+          <div>&nbsp;</div>
+          <div><span class="tg">$</span> gh project list</div>
+          <div class="tg">&nbsp; ✓ Sprint 0 board — 12 issues</div>
+          <div>&nbsp;</div>
+          <div><span class="tg">$</span> <span class="tw">▶</span> gh workflow run deploy.yml<span class="tcursor"></span></div>
         </div>
       </div>
     </div>
@@ -1250,85 +1138,83 @@
 <!-- ─── ABOUT ─── -->
 <section id="about">
   <div class="container">
-    <div class="section-tag">Proyecto</div>
-    <h2>¿Por qué Koel?</h2>
-    <p class="section-desc">Seleccionamos Koel como base del proyecto por cumplir todos los criterios técnicos y académicos requeridos: licencia MIT, stack moderno, complejidad real y soporte Docker nativo.</p>
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Proyecto</div>
+      <h2>¿Por qué Koel?</h2>
+      <p>Seleccionamos Koel como base del proyecto por cumplir todos los criterios técnicos y académicos: licencia MIT, stack moderno, complejidad real y soporte Docker nativo.</p>
+    </div>
 
-    <div class="about-card-main card reveal">
-      <div class="about-text">
+    <div class="about-layout">
+      <div class="about-prose reveal">
         <h3>Objetivo Académico</h3>
-        <p>Implementar un proceso de desarrollo de software que integre la metodología ágil <strong style="color:var(--text)">Scrum</strong> con prácticas <strong style="color:var(--text)">DevOps</strong> automatizadas, aplicado sobre Koel, un proyecto open source con licencia MIT.</p>
-        <p>El equipo analizará el estado actual del proyecto, identificará funcionalidades y arquitectura, definirá un alcance de mejora y aplicará un modelo de proceso que integre Scrum con buenas prácticas de automatización CI/CD.</p>
-        <p>Curso: <strong style="color:var(--accent)">Ingeniería y Procesos de Software</strong> · UNSA 2026-A</p>
+        <p>Implementar un proceso de desarrollo de software que integre la metodología ágil <strong>Scrum</strong> con prácticas <strong>DevOps</strong> automatizadas, aplicado sobre Koel, un proyecto open source con licencia MIT.</p>
+        <p>El equipo analizará el estado actual del proyecto, identificará funcionalidades y arquitectura, definirá un alcance de mejora y aplicará un modelo de proceso que integre Scrum con CI/CD automatizado.</p>
+        <p style="margin-top:14px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);">Curso</span><br/>
+          <strong style="color:var(--accent);">Ingeniería y Procesos de Software</strong>
+          <span style="color:var(--text3);font-size:12px;"> · UNSA 2026-A</span>
+        </p>
       </div>
-      <div>
-        <div class="koel-info">
-          <div class="koel-info-row">
-            <span class="koel-info-label">Proyecto</span>
-            <span class="koel-info-val">Koel Music Server</span>
-          </div>
-          <div class="koel-info-row">
-            <span class="koel-info-label">Licencia</span>
-            <span class="koel-info-val green">✓ MIT</span>
-          </div>
-          <div class="koel-info-row">
-            <span class="koel-info-label">Dominio</span>
-            <span class="koel-info-val">Personal Media Server</span>
-          </div>
-          <div class="koel-info-row">
-            <span class="koel-info-label">Backend</span>
-            <span class="koel-info-val">Laravel (PHP)</span>
-          </div>
-          <div class="koel-info-row">
-            <span class="koel-info-label">Frontend</span>
-            <span class="koel-info-val">Vue.js</span>
-          </div>
-          <div class="koel-info-row">
-            <span class="koel-info-label">LOC</span>
-            <span class="koel-info-val green">120,465 líneas</span>
-          </div>
-          <div class="koel-info-row">
-            <span class="koel-info-label">Módulos</span>
-            <span class="koel-info-val">5 subsistemas</span>
-          </div>
-          <div class="koel-info-row">
-            <span class="koel-info-label">Docker</span>
-            <span class="koel-info-val green">✓ Docker Compose</span>
-          </div>
+
+      <div class="info-panel reveal rd1">
+        <div class="info-panel-header">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.4"/><path d="M4 6l1.5 1.5L8 4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          koel/koel · Ficha técnica
         </div>
+        <div class="info-row"><span class="info-key">project</span><span class="info-val">Koel Music Server</span></div>
+        <div class="info-row"><span class="info-key">license</span><span class="info-val ok">MIT ✓</span></div>
+        <div class="info-row"><span class="info-key">domain</span><span class="info-val">Personal Media Server</span></div>
+        <div class="info-row"><span class="info-key">backend</span><span class="info-val">Laravel (PHP 8)</span></div>
+        <div class="info-row"><span class="info-key">frontend</span><span class="info-val">Vue.js 3 + Vite</span></div>
+        <div class="info-row"><span class="info-key">loc</span><span class="info-val ok">120,465 líneas</span></div>
+        <div class="info-row"><span class="info-key">modules</span><span class="info-val">5 subsistemas</span></div>
+        <div class="info-row"><span class="info-key">infra</span><span class="info-val ok">Docker Compose ✓</span></div>
+        <div class="info-row"><span class="info-key">repo</span><span class="info-val accent">github.com/koel/koel</span></div>
       </div>
     </div>
 
-    <div class="criteria-cards" style="margin-top:1.5rem;">
-      <div class="crit-card reveal reveal-delay-1">
-        <div class="crit-icon">📄</div>
-        <div class="crit-title">Licencia MIT verificada</div>
-        <div class="crit-desc">Permite fork, modificación y uso libre sin restricciones académicas. Verificado en el repositorio oficial de GitHub.</div>
+    <div class="why-grid" style="margin-top:32px;">
+      <div class="why-card reveal">
+        <div class="why-icon" style="background:rgba(46,168,77,0.1);border:1px solid rgba(46,168,77,0.2);">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 7.5l3.5 3.5 7.5-7.5" stroke="#2ea84d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="why-title">Licencia MIT verificada</div>
+        <div class="why-desc">Permite fork, modificación y uso libre sin restricciones académicas. Verificado en el repositorio oficial de GitHub.</div>
       </div>
-      <div class="crit-card reveal reveal-delay-2">
-        <div class="crit-icon">🎵</div>
-        <div class="crit-title">Dominio conocido</div>
-        <div class="crit-desc">Personal Media Server (PMS) y gestión de bibliotecas musicales. Subcategoría especializada de Media Asset Management.</div>
+      <div class="why-card reveal rd1">
+        <div class="why-icon" style="background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.2);">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="9" rx="1.5" stroke="#4f8ef7" stroke-width="1.3"/><path d="M5 3V2a2 2 0 014 0v1" stroke="#4f8ef7" stroke-width="1.3"/></svg>
+        </div>
+        <div class="why-title">Dominio conocido</div>
+        <div class="why-desc">Personal Media Server y gestión de bibliotecas musicales. Subcategoría de Media Asset Management con APIs bien documentadas.</div>
       </div>
-      <div class="crit-card reveal reveal-delay-3">
-        <div class="crit-icon">⚡</div>
-        <div class="crit-title">Stack moderno</div>
-        <div class="crit-desc">Laravel + Vue.js + Docker Compose. Tecnologías open source vigentes y ampliamente usadas en la industria actual.</div>
+      <div class="why-card reveal rd2">
+        <div class="why-icon" style="background:rgba(155,114,240,0.1);border:1px solid rgba(155,114,240,0.2);">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1L9.5 5.5H14L10.5 8.5L12 13L7.5 10.5L3 13L4.5 8.5L1 5.5H5.5L7.5 1Z" stroke="#9b72f0" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="why-title">Stack moderno</div>
+        <div class="why-desc">Laravel + Vue.js 3 + TypeScript + Docker. Tecnologías open source vigentes y ampliamente usadas en la industria actual.</div>
       </div>
-      <div class="crit-card reveal reveal-delay-1">
-        <div class="crit-icon">📦</div>
-        <div class="crit-title">Alta complejidad</div>
-        <div class="crit-desc">5 subsistemas identificados y más de 120,000 líneas de código fuente medidas con la herramienta <code style="font-size:0.8rem;color:var(--accent)">cloc</code>.</div>
+      <div class="why-card reveal rd1">
+        <div class="why-icon" style="background:rgba(212,148,58,0.1);border:1px solid rgba(212,148,58,0.2);">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1v13M1 7.5h13" stroke="#d4943a" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="why-title">Alta complejidad</div>
+        <div class="why-desc">5 subsistemas identificados y más de 120,000 líneas de código fuente medidas con la herramienta <span class="mono" style="font-size:11px;color:var(--accent);">cloc</span>.</div>
       </div>
-      <div class="crit-card reveal reveal-delay-2">
-        <div class="crit-icon">🐳</div>
-        <div class="crit-title">Infraestructura DevOps</div>
-        <div class="crit-desc">Repositorio oficial koel/docker con Docker Compose para levantar la app con MySQL, MariaDB o PostgreSQL.</div>
+      <div class="why-card reveal rd2">
+        <div class="why-icon" style="background:rgba(34,184,207,0.1);border:1px solid rgba(34,184,207,0.2);">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="4" width="13" height="9" rx="1.5" stroke="#22b8cf" stroke-width="1.3"/><path d="M5 4V3a2 2 0 014 0v1" stroke="#22b8cf" stroke-width="1.3"/></svg>
+        </div>
+        <div class="why-title">Infraestructura DevOps</div>
+        <div class="why-desc">Repositorio oficial koel/docker con Docker Compose para levantar la app con MySQL, MariaDB o PostgreSQL.</div>
       </div>
-      <div class="crit-card reveal reveal-delay-3">
-        <div class="crit-icon">🔗</div>
-        <div class="crit-title">APIs externas</div>
-        <div class="crit-desc">Integración con Last.fm, YouTube, Spotify e iTunes para enriquecer metadatos y mejorar la experiencia del usuario.</div>
+      <div class="why-card reveal rd3">
+        <div class="why-icon" style="background:rgba(229,82,82,0.1);border:1px solid rgba(229,82,82,0.2);">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="#e05252" stroke-width="1.3"/><path d="M5 7.5h5M7.5 5v5" stroke="#e05252" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </div>
+        <div class="why-title">APIs externas</div>
+        <div class="why-desc">Integración con Last.fm, YouTube, Spotify e iTunes para enriquecer metadatos y mejorar la experiencia del usuario.</div>
       </div>
     </div>
   </div>
@@ -1337,75 +1223,130 @@
 <!-- ─── STACK ─── -->
 <section id="stack">
   <div class="container">
-    <div class="section-tag">Tecnologías</div>
-    <h2>Stack Tecnológico</h2>
-    <p class="section-desc">Koel utiliza tecnologías modernas y open source que son estándar en la industria del desarrollo web actual.</p>
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Tecnologías</div>
+      <h2>Stack Tecnológico</h2>
+      <p>Koel utiliza tecnologías modernas y open source estándar en la industria. El stack integra backend robusto, frontend reactivo e infraestructura DevOps completa.</p>
+    </div>
 
-    <div class="stack-grid reveal">
-      <div class="layer-label">Backend</div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(255,87,34,0.12);">🐘</div>
-        <div class="stack-name">PHP</div>
-        <div class="stack-role">Lenguaje de servidor</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(248,50,69,0.12);">🔴</div>
-        <div class="stack-name">Laravel</div>
-        <div class="stack-role">Framework MVC</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(88,166,255,0.12);">🗄️</div>
-        <div class="stack-name">MySQL / PgSQL</div>
-        <div class="stack-role">Base de datos relacional</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(63,185,80,0.12);">📦</div>
-        <div class="stack-name">Composer</div>
-        <div class="stack-role">Gestión de dependencias</div>
-      </div>
-
-      <div class="layer-label">Frontend</div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(65,184,131,0.12);">💚</div>
-        <div class="stack-name">Vue.js</div>
-        <div class="stack-role">Framework reactivo JS</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(255,200,0,0.1);">⚡</div>
-        <div class="stack-name">Vite</div>
-        <div class="stack-role">Build tool moderno</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(100,200,100,0.1);">🟢</div>
-        <div class="stack-name">Node.js / pnpm</div>
-        <div class="stack-role">Runtime y paquetes</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(188,140,255,0.1);">🎨</div>
-        <div class="stack-name">TypeScript</div>
-        <div class="stack-role">Tipado estático</div>
+    <div class="reveal">
+      <div class="stack-section">
+        <div class="stack-section-label">Backend</div>
+        <div class="stack-row">
+          <a href="https://laravel.com/" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#f9322c;"></span>
+            Laravel
+            <span class="chip-sub">PHP Framework</span>
+          </a>
+          <div class="stack-chip">
+            <span class="stack-chip-dot" style="background:#8892BF;"></span>
+            PHP 8.x
+            <span class="chip-sub">Servidor</span>
+          </div>
+          <a href="https://getcomposer.org/" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#885630;"></span>
+            Composer
+            <span class="chip-sub">Dependencias</span>
+          </a>
+          <div class="stack-chip">
+            <span class="stack-chip-dot" style="background:#2ea84d;"></span>
+            REST API
+            <span class="chip-sub">Protocolo</span>
+          </div>
+          <div class="stack-chip">
+            <span class="stack-chip-dot" style="background:#4f8ef7;"></span>
+            Queue Workers
+            <span class="chip-sub">Async jobs</span>
+          </div>
+        </div>
       </div>
 
-      <div class="layer-label">DevOps & CI/CD</div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(30,136,229,0.12);">🐳</div>
-        <div class="stack-name">Docker</div>
-        <div class="stack-role">Contenedores</div>
+      <div class="stack-section">
+        <div class="stack-section-label">Frontend</div>
+        <div class="stack-row">
+          <a href="https://vuejs.org/" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#41b883;"></span>
+            Vue.js 3
+            <span class="chip-sub">Framework JS</span>
+          </a>
+          <div class="stack-chip">
+            <span class="stack-chip-dot" style="background:#3178c6;"></span>
+            TypeScript
+            <span class="chip-sub">Tipado estático</span>
+          </div>
+          <div class="stack-chip">
+            <span class="stack-chip-dot" style="background:#fbc700;"></span>
+            Vite
+            <span class="chip-sub">Build tool</span>
+          </div>
+          <a href="https://nodejs.org/" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#5fa04e;"></span>
+            Node.js
+            <span class="chip-sub">Runtime</span>
+          </a>
+          <div class="stack-chip">
+            <span class="stack-chip-dot" style="background:#9b72f0;"></span>
+            Pinia
+            <span class="chip-sub">State management</span>
+          </div>
+        </div>
       </div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(88,166,255,0.12);">⚙️</div>
-        <div class="stack-name">GitHub Actions</div>
-        <div class="stack-role">Automatización CI/CD</div>
+
+      <div class="stack-section">
+        <div class="stack-section-label">Base de datos</div>
+        <div class="stack-row">
+          <div class="stack-chip">
+            <span class="stack-chip-dot" style="background:#4479a1;"></span>
+            MySQL 8
+            <span class="chip-sub">Principal</span>
+          </div>
+          <a href="https://mariadb.org/" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#c0765a;"></span>
+            MariaDB
+            <span class="chip-sub">Alternativa</span>
+          </a>
+          <a href="https://www.postgresql.org/" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#336791;"></span>
+            PostgreSQL
+            <span class="chip-sub">Alternativa</span>
+          </a>
+          <a href="https://sqlite.org/" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#0f80cc;"></span>
+            SQLite
+            <span class="chip-sub">Desarrollo</span>
+          </a>
+        </div>
       </div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(88,166,255,0.12);">📊</div>
-        <div class="stack-name">GitHub Projects</div>
-        <div class="stack-role">Tablero Scrum/Kanban</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-icon" style="background:rgba(88,166,255,0.12);">🌐</div>
-        <div class="stack-name">GitHub Pages</div>
-        <div class="stack-role">Despliegue estático</div>
+
+      <div class="stack-section">
+        <div class="stack-section-label">DevOps &amp; CI/CD</div>
+        <div class="stack-row">
+          <a href="https://www.docker.com/" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#2496ed;"></span>
+            Docker
+            <span class="chip-sub">Contenedores</span>
+          </a>
+          <a href="https://github.com/features/actions" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#2088ff;"></span>
+            GitHub Actions
+            <span class="chip-sub">CI/CD</span>
+          </a>
+          <a href="https://pages.github.com/" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#4f8ef7;"></span>
+            GitHub Pages
+            <span class="chip-sub">Despliegue</span>
+          </a>
+          <a href="https://github.com/features/issues" target="_blank" class="stack-chip">
+            <span class="stack-chip-dot" style="background:#2ea84d;"></span>
+            GitHub Issues
+            <span class="chip-sub">Backlog</span>
+          </a>
+          <div class="stack-chip">
+            <span class="stack-chip-dot" style="background:#9b72f0;"></span>
+            GitHub Projects
+            <span class="chip-sub">Kanban/Scrum</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1414,74 +1355,268 @@
 <!-- ─── ARCHITECTURE ─── -->
 <section id="architecture">
   <div class="container">
-    <div class="section-tag">Arquitectura</div>
-    <h2>Arquitectura del Sistema</h2>
-    <p class="section-desc">Koel sigue una arquitectura cliente-servidor moderna con separación clara de capas y soporte para almacenamiento externo e integraciones.</p>
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Arquitectura</div>
+      <h2>Arquitectura del Sistema</h2>
+      <p>Koel sigue una arquitectura cliente-servidor con separación clara de capas: frontend SPA, backend Laravel API, capa de datos y APIs externas de enriquecimiento.</p>
+    </div>
 
-    <div class="arch-diagram reveal">
-      <div class="arch-layer">
-        <div class="arch-label">Cliente</div>
-        <div class="arch-boxes">
-          <div class="arch-box blue">Navegador Web</div>
-          <div class="arch-box blue">App Móvil</div>
-          <div class="arch-box blue">REST Client</div>
+    <div class="arch-layout">
+      <!-- Left: Component diagram -->
+      <div class="comp-diagram reveal">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Diagrama de componentes</div>
+
+        <div class="comp-layer frontend">
+          <div class="comp-layer-label">Frontend (Vue.js)</div>
+          <div class="comp-nodes">
+            <div class="comp-node purple">Enrutador Vue</div>
+          </div>
+          <div class="comp-nodes" style="margin-top:5px;">
+            <div class="comp-node purple">Componentes Vue</div>
+          </div>
+          <div class="comp-nodes" style="margin-top:5px;">
+            <div class="comp-node purple">Gestión de Estado</div>
+            <div class="comp-node purple">Servicios de Cliente</div>
+          </div>
+        </div>
+
+        <div class="comp-arrow">↓ Llamadas a la API ↓</div>
+
+        <div class="comp-layer backend">
+          <div class="comp-layer-label">Backend (Laravel)</div>
+          <div class="comp-nodes">
+            <div class="comp-node blue">Controladores</div>
+          </div>
+          <div class="comp-nodes" style="margin-top:5px;">
+            <div class="comp-node blue">Servicios</div>
+          </div>
+          <div class="comp-nodes" style="margin-top:5px;">
+            <div class="comp-node blue">Repositorios</div>
+            <div class="comp-node blue">Adapt. Almacenamiento</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:6px;margin:4px 0;">
+          <div style="flex:1;">
+            <div class="comp-arrow">↓</div>
+            <div class="comp-layer database">
+              <div class="comp-layer-label">Base de Datos</div>
+              <div class="comp-nodes">
+                <div class="comp-node amber">Modelos</div>
+              </div>
+              <div class="comp-nodes" style="margin-top:5px;">
+                <div class="comp-node amber">MySQL / SQLite / PgSQL</div>
+              </div>
+            </div>
+          </div>
+          <div style="flex:1;">
+            <div class="comp-arrow">↓</div>
+            <div class="comp-layer media">
+              <div class="comp-layer-label">Multimedia</div>
+              <div class="comp-nodes">
+                <div class="comp-node cyan">Archivos de Audio</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-layer external" style="margin-top:6px;">
+          <div class="comp-layer-label">APIs Externas</div>
+          <div class="comp-nodes">
+            <div class="comp-node red">Last.fm</div>
+            <div class="comp-node red">YouTube</div>
+            <div class="comp-node red">Spotify</div>
+            <div class="comp-node red">iTunes</div>
+          </div>
         </div>
       </div>
-      <div style="display:flex;justify-content:center;color:var(--text3);font-size:1.2rem;margin:0.4rem 0 0.4rem 130px;">↕</div>
-      <div class="arch-layer">
-        <div class="arch-label">Frontend</div>
-        <div class="arch-boxes">
-          <div class="arch-box purple">Vue.js SPA</div>
-          <div class="arch-box purple">Vite Build</div>
-          <div class="arch-box purple">Pinia Store</div>
-          <div class="arch-box purple">Audio Player</div>
+
+      <!-- Right: Detail cards -->
+      <div class="arch-detail-col">
+        <div class="arch-card reveal rd1">
+          <div class="arch-card-header">
+            <div class="arch-card-dot" style="background:var(--purple);"></div>
+            <div class="arch-card-title">Frontend — Vue.js SPA</div>
+          </div>
+          <p>Aplicación de página única con componentes como App.vue, MainWrapper, AudioPlayer y AppFooter. Gestión de estado con stores de Pinia: songStore, albumStore, artistStore, queueStore.</p>
+          <div class="arch-tags">
+            <span class="arch-tag">Vue.js 3</span>
+            <span class="arch-tag">Pinia</span>
+            <span class="arch-tag">TypeScript</span>
+            <span class="arch-tag">Vite</span>
+            <span class="arch-tag">AudioPlayer</span>
+          </div>
+        </div>
+        <div class="arch-card reveal rd2">
+          <div class="arch-card-header">
+            <div class="arch-card-dot" style="background:var(--accent);"></div>
+            <div class="arch-card-title">Backend — Laravel REST API</div>
+          </div>
+          <p>Gestiona lógica de negocio, autenticación, rutas API y procesamiento de metadatos. Expone endpoints para canciones, álbumes y artistas. Queue workers para tareas asíncronas.</p>
+          <div class="arch-tags">
+            <span class="arch-tag">Laravel 10</span>
+            <span class="arch-tag">PHP 8</span>
+            <span class="arch-tag">Auth service</span>
+            <span class="arch-tag">Media Scanner</span>
+            <span class="arch-tag">Queue</span>
+          </div>
+        </div>
+        <div class="arch-card reveal rd3">
+          <div class="arch-card-header">
+            <div class="arch-card-dot" style="background:var(--amber);"></div>
+            <div class="arch-card-title">Datos y Almacenamiento</div>
+          </div>
+          <p>Archivos multimedia en local o Dropbox. La BD almacena usuarios, canciones, artistas, álbumes, playlists y favoritos. Compatible con MySQL, MariaDB, PostgreSQL y SQLite.</p>
+          <div class="arch-tags">
+            <span class="arch-tag">MySQL 8</span>
+            <span class="arch-tag">MariaDB</span>
+            <span class="arch-tag">PostgreSQL</span>
+            <span class="arch-tag">SQLite</span>
+            <span class="arch-tag">Dropbox</span>
+          </div>
+        </div>
+
+        <!-- CLOC results styled terminal -->
+        <div class="cloc-terminal reveal rd2">
+          <div class="cloc-bar">
+            <div class="term-dot td1"></div>
+            <div class="term-dot td2"></div>
+            <div class="term-dot td3"></div>
+            <span class="cloc-title">cloc · koel/koel · v1.98</span>
+          </div>
+          <div class="cloc-body">
+            <div class="cloc-row cloc-header-row"><span>Language</span><span class="cloc-num">files</span><span class="cloc-num">blank</span><span class="cloc-num">comment</span><span class="cloc-num">code</span></div>
+            <div class="cloc-row"><span class="cloc-lang">PHP</span><span class="cloc-num">1079</span><span class="cloc-num">9746</span><span class="cloc-num">4424</span><span class="cloc-num highlight">41670</span></div>
+            <div class="cloc-row"><span class="cloc-lang">TypeScript</span><span class="cloc-num">538</span><span class="cloc-num">6440</span><span class="cloc-num">539</span><span class="cloc-num highlight">27565</span></div>
+            <div class="cloc-row"><span class="cloc-lang">Vuejs Component</span><span class="cloc-num">307</span><span class="cloc-num">3446</span><span class="cloc-num">206</span><span class="cloc-num highlight">18574</span></div>
+            <div class="cloc-row"><span class="cloc-lang">JavaScript</span><span class="cloc-num">232</span><span class="cloc-num">367</span><span class="cloc-num">105</span><span class="cloc-num">13293</span></div>
+            <div class="cloc-row"><span class="cloc-lang">YAML</span><span class="cloc-num">12</span><span class="cloc-num">1665</span><span class="cloc-num">1</span><span class="cloc-num">7962</span></div>
+            <div class="cloc-row"><span class="cloc-lang">JSON</span><span class="cloc-num">40</span><span class="cloc-num">3</span><span class="cloc-num">0</span><span class="cloc-num">7060</span></div>
+            <div class="cloc-row"><span class="cloc-lang">Markdown</span><span class="cloc-num">41</span><span class="cloc-num">939</span><span class="cloc-num">5</span><span class="cloc-num">2421</span></div>
+            <div class="cloc-row cloc-sum-row"><span class="cloc-sum-label">SUM:</span><span class="cloc-num">2376</span><span class="cloc-num">23400</span><span class="cloc-num">9398</span><span class="cloc-num highlight">120465</span></div>
+          </div>
         </div>
       </div>
-      <div style="display:flex;justify-content:center;color:var(--text3);font-size:1.2rem;margin:0.4rem 0 0.4rem 130px;">↕</div>
-      <div class="arch-layer">
-        <div class="arch-label">Backend</div>
-        <div class="arch-boxes">
-          <div class="arch-box green">Laravel API</div>
-          <div class="arch-box green">Auth Service</div>
-          <div class="arch-box green">Queue Worker</div>
-          <div class="arch-box green">Media Scanner</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── KANBAN ─── -->
+<section id="kanban">
+  <div class="container">
+    <div class="sh reveal">
+      <div class="sh-eyebrow">GitHub Projects</div>
+      <h2>Tablero Scrum · Sprint 0</h2>
+      <p>Sprint 0 gestionado en GitHub Projects con tablero Kanban. 12 historias de usuario distribuidas en cinco columnas de estado.</p>
+    </div>
+
+    <div class="kanban-board reveal">
+      <!-- Backlog -->
+      <div class="kb-col">
+        <div class="kb-col-header">
+          <div class="kb-col-status" style="background:var(--green2);"></div>
+          Backlog
+          <span class="kb-col-count">2/5</span>
+        </div>
+        <div class="kb-items">
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #5</div>
+            <div class="kb-item-title">HU09 - Crear Product Backlog inicial</div>
+          </div>
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #6</div>
+            <div class="kb-item-title">HU10 - Crear página informativa en GitHub Pages</div>
+          </div>
         </div>
       </div>
-      <div style="display:flex;justify-content:center;color:var(--text3);font-size:1.2rem;margin:0.4rem 0 0.4rem 130px;">↕</div>
-      <div class="arch-layer">
-        <div class="arch-label">Datos</div>
-        <div class="arch-boxes">
-          <div class="arch-box orange">MySQL / MariaDB</div>
-          <div class="arch-box orange">PostgreSQL</div>
-          <div class="arch-box orange">SQLite</div>
-          <div class="arch-box orange">Almacenamiento Local</div>
+
+      <!-- Ready -->
+      <div class="kb-col">
+        <div class="kb-col-header">
+          <div class="kb-col-status" style="background:var(--accent);"></div>
+          Ready
+          <span class="kb-col-count">2</span>
+        </div>
+        <div class="kb-items">
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #7</div>
+            <div class="kb-item-title">HU08 - Elaborar cronograma general de sprints</div>
+          </div>
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #8</div>
+            <div class="kb-item-title">HU12 - Revisar evidencias y capturas del Sprint 0</div>
+          </div>
         </div>
       </div>
-      <div style="display:flex;justify-content:center;color:var(--text3);font-size:1.2rem;margin:0.4rem 0 0.4rem 130px;">↕</div>
-      <div class="arch-layer">
-        <div class="arch-label">Externo</div>
-        <div class="arch-boxes">
-          <div class="arch-box red">Last.fm API</div>
-          <div class="arch-box red">YouTube</div>
-          <div class="arch-box red">Spotify</div>
-          <div class="arch-box red">iTunes</div>
+
+      <!-- In Progress -->
+      <div class="kb-col">
+        <div class="kb-col-header">
+          <div class="kb-col-status" style="background:var(--amber);"></div>
+          In progress
+          <span class="kb-col-count">4/3</span>
+        </div>
+        <div class="kb-items">
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #12</div>
+            <div class="kb-item-title">HU11 - Redactar informe del Hito 1</div>
+          </div>
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #11</div>
+            <div class="kb-item-title">HU07 - Revisar infraestructura Docker del proyecto</div>
+          </div>
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #9</div>
+            <div class="kb-item-title">HU04 - Analizar el stack tecnológico de Koel</div>
+          </div>
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #10</div>
+            <div class="kb-item-title">HU05 - Identificar módulos o subsistemas principales</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- In Review -->
+      <div class="kb-col">
+        <div class="kb-col-header">
+          <div class="kb-col-status" style="background:var(--purple);"></div>
+          In review
+          <span class="kb-col-count">1/5</span>
+        </div>
+        <div class="kb-items">
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #13</div>
+            <div class="kb-item-title">HU03 - Identificar el dominio del sistema</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div class="kb-col">
+        <div class="kb-col-header">
+          <div class="kb-col-status" style="background:var(--red);"></div>
+          Done
+          <span class="kb-col-count">3</span>
+        </div>
+        <div class="kb-items">
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #15</div>
+            <div class="kb-item-title">HU02 - Verificar licencia MIT del repositorio</div>
+          </div>
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #16</div>
+            <div class="kb-item-title">HU06 - Medir complejidad del proyecto con CLOC</div>
+          </div>
+          <div class="kb-item">
+            <div class="kb-item-code">IPS-2026-koel #14</div>
+            <div class="kb-item-title">HU01 - Seleccionar el producto open source Koel</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="arch-cards">
-      <div class="arch-detail-card reveal reveal-delay-1">
-        <h4><span style="color:var(--purple)">◈</span> Frontend — Vue.js</h4>
-        <p>SPA con componentes como App.vue, MainWrapper, AudioPlayer, AppFooter y menús contextuales. Gestión de estado con songStore, albumStore, artistStore, queueStore y playbackService.</p>
-      </div>
-      <div class="arch-detail-card reveal reveal-delay-2">
-        <h4><span style="color:var(--green)">◈</span> Backend — Laravel</h4>
-        <p>Gestiona lógica de negocio, autenticación, rutas API y procesamiento de metadatos. Expone endpoints para canciones, álbumes y artistas, y maneja colas de trabajo complejas.</p>
-      </div>
-      <div class="arch-detail-card reveal reveal-delay-3">
-        <h4><span style="color:var(--orange)">◈</span> Media & Database</h4>
-        <p>Archivos multimedia en local o Dropbox. La BD almacena usuarios, canciones, artistas, álbumes, listas de reproducción y favoritos. Compatible con MySQL, MariaDB, PostgreSQL y SQLite.</p>
-      </div>
+    <div style="margin-top:10px;text-align:right;">
+      <a href="https://github.com/users/JoseMorocco/projects/1" target="_blank" class="btn-ghost" style="font-size:12px;">Ver tablero completo en GitHub Projects →</a>
     </div>
   </div>
 </section>
@@ -1489,84 +1624,103 @@
 <!-- ─── DEVOPS ─── -->
 <section id="devops">
   <div class="container">
-    <div class="section-tag">Metodología</div>
-    <h2>Scrum + DevOps</h2>
-    <p class="section-desc">Integramos el marco ágil Scrum con automatización DevOps usando las herramientas nativas de GitHub para un flujo de trabajo moderno y eficiente.</p>
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Metodología</div>
+      <h2>Scrum + DevOps</h2>
+      <p>Integramos el marco ágil Scrum con automatización DevOps usando las herramientas nativas de GitHub para un flujo de trabajo moderno y trazable.</p>
+    </div>
 
-    <div class="devops-grid">
-      <div>
-        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:1rem;">🏗️ Herramientas del Proyecto</div>
-        <div class="tool-list">
-          <div class="tool-item reveal">
-            <div class="tool-icon">📊</div>
-            <div class="tool-info">
+    <div class="devops-layout">
+      <!-- Left: tools -->
+      <div class="tool-panel reveal">
+        <div class="panel-header">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="0.5" y="0.5" width="12" height="12" rx="2" stroke="currentColor" stroke-opacity="0.4"/><path d="M3 6.5l2 2L10 4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Herramientas del Proyecto
+        </div>
+        <div class="panel-body">
+          <div class="tool-row">
+            <div class="tool-row-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="12" rx="2" stroke="#4f8ef7" stroke-width="1.2"/><path d="M5 6h6M5 9h4" stroke="#4f8ef7" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="tool-row-info">
               <h4>GitHub Projects</h4>
-              <p>Tablero Kanban/Scrum para gestionar Product Backlog, armar Sprints, asignar historias de usuario y ver el progreso en tiempo real.</p>
+              <p>Tablero Kanban para gestionar Product Backlog, armar Sprints, asignar historias de usuario y ver el progreso en tiempo real.</p>
             </div>
           </div>
-          <div class="tool-item reveal reveal-delay-1">
-            <div class="tool-icon">⚙️</div>
-            <div class="tool-info">
+          <div class="tool-row">
+            <div class="tool-row-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#2ea84d" stroke-width="1.2"/><path d="M5.5 8l1.5 1.5 4-4" stroke="#2ea84d" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="tool-row-info">
               <h4>GitHub Actions</h4>
               <p>Automatización CI/CD. Compila código, corre pruebas, detecta errores y despliega a staging de forma automática en cada push.</p>
             </div>
           </div>
-          <div class="tool-item reveal reveal-delay-2">
-            <div class="tool-icon">🌐</div>
-            <div class="tool-info">
+          <div class="tool-row">
+            <div class="tool-row-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5L2 4.5v4c0 3.5 2.5 5.5 6 6 3.5-.5 6-2.5 6-6v-4L8 1.5z" stroke="#9b72f0" stroke-width="1.2"/></svg>
+            </div>
+            <div class="tool-row-info">
               <h4>GitHub Pages</h4>
               <p>Publica el entorno de staging, documentación técnica y el burndown chart generado automáticamente por GitHub Actions.</p>
             </div>
           </div>
-          <div class="tool-item reveal reveal-delay-3">
-            <div class="tool-icon">🎫</div>
-            <div class="tool-info">
+          <div class="tool-row">
+            <div class="tool-row-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#d4943a" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="#d4943a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="tool-row-info">
               <h4>GitHub Issues</h4>
-              <p>Sistema de tickets para registrar historias de usuario del Product Backlog, reportar bugs y documentar decisiones técnicas del sprint.</p>
+              <p>Sistema de tickets para registrar historias de usuario del Product Backlog, reportar bugs y documentar decisiones técnicas.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="pipeline-card reveal">
-        <div class="pipeline-title">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+      <!-- Right: pipeline -->
+      <div class="pipeline-panel reveal rd1">
+        <div class="panel-header">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 10L6.5 2L11 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 7.5h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
           Pipeline CI/CD
         </div>
-        <div class="pipeline-steps">
-          <div class="pipeline-step">
-            <div class="p-dot done">✓</div>
-            <div class="p-content">
-              <h4>Push to GitHub <span class="badge-status done">done</span></h4>
-              <p>El equipo sube cambios al repositorio usando ramas por feature o sprint.</p>
+        <div class="pipe-body">
+          <div class="pipe-step">
+            <div class="pipe-connector"></div>
+            <div class="pipe-dot-wrap"><div class="pipe-dot done">✓</div></div>
+            <div class="pipe-content">
+              <div class="pipe-head"><span class="pipe-name">Push to GitHub</span><span class="badge done">done</span></div>
+              <div class="pipe-desc">El equipo sube cambios al repositorio usando ramas por feature o sprint.</div>
             </div>
           </div>
-          <div class="pipeline-step">
-            <div class="p-dot done">✓</div>
-            <div class="p-content">
-              <h4>GitHub Actions trigger <span class="badge-status done">done</span></h4>
-              <p>Se activa automáticamente el workflow definido en <code style="color:var(--orange);font-size:0.78rem">.github/workflows/</code></p>
+          <div class="pipe-step">
+            <div class="pipe-connector"></div>
+            <div class="pipe-dot-wrap"><div class="pipe-dot done">✓</div></div>
+            <div class="pipe-content">
+              <div class="pipe-head"><span class="pipe-name">Actions Trigger</span><span class="badge done">done</span></div>
+              <div class="pipe-desc">Workflow en <span class="mono" style="font-size:11px;color:var(--amber);">.github/workflows/</span> activado automáticamente.</div>
             </div>
           </div>
-          <div class="pipeline-step">
-            <div class="p-dot active">▶</div>
-            <div class="p-content">
-              <h4>Build & Test <span class="badge-status active">en curso</span></h4>
-              <p>Instalación de dependencias, compilación del frontend con Vite y ejecución de pruebas unitarias PHP.</p>
+          <div class="pipe-step">
+            <div class="pipe-connector"></div>
+            <div class="pipe-dot-wrap"><div class="pipe-dot active">▶</div></div>
+            <div class="pipe-content">
+              <div class="pipe-head"><span class="pipe-name">Build &amp; Test</span><span class="badge active">en curso</span></div>
+              <div class="pipe-desc">Instalación de dependencias, compilación con Vite y ejecución de pruebas unitarias PHP.</div>
             </div>
           </div>
-          <div class="pipeline-step">
-            <div class="p-dot pending">○</div>
-            <div class="p-content">
-              <h4>Deploy Staging <span class="badge-status pending">sprint 1</span></h4>
-              <p>Despliegue automático a GitHub Pages o entorno Docker para revisión del equipo.</p>
+          <div class="pipe-step">
+            <div class="pipe-connector"></div>
+            <div class="pipe-dot-wrap"><div class="pipe-dot pending">○</div></div>
+            <div class="pipe-content">
+              <div class="pipe-head"><span class="pipe-name">Deploy Staging</span><span class="badge pending">sprint 1</span></div>
+              <div class="pipe-desc">Despliegue automático a GitHub Pages o entorno Docker para revisión del equipo.</div>
             </div>
           </div>
-          <div class="pipeline-step">
-            <div class="p-dot pending">○</div>
-            <div class="p-content">
-              <h4>Sprint Review <span class="badge-status pending">sprint 1</span></h4>
-              <p>Revisión de resultados, burndown chart y planificación del siguiente sprint.</p>
+          <div class="pipe-step">
+            <div class="pipe-dot-wrap"><div class="pipe-dot pending">○</div></div>
+            <div class="pipe-content" style="padding-bottom:0;">
+              <div class="pipe-head"><span class="pipe-name">Sprint Review</span><span class="badge pending">sprint 1</span></div>
+              <div class="pipe-desc">Revisión de resultados, burndown chart y planificación del siguiente sprint.</div>
             </div>
           </div>
         </div>
@@ -1578,98 +1732,100 @@
 <!-- ─── TIMELINE ─── -->
 <section id="timeline">
   <div class="container">
-    <div class="section-tag">Planificación</div>
-    <h2>Cronograma de Sprints</h2>
-    <p class="section-desc">Cuatro sprints de 15 días calendario cada uno, con tres hitos de entrega evaluados a lo largo del semestre.</p>
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Planificación</div>
+      <h2>Cronograma de Sprints</h2>
+      <p>Cuatro sprints de 15 días calendario cada uno, con tres hitos de entrega evaluados a lo largo del semestre 2026-A.</p>
+    </div>
 
-    <div class="timeline-wrapper">
-      <div class="timeline-line"></div>
+    <div class="tl-wrapper">
+      <div class="tl-track"></div>
 
-      <div class="timeline-item reveal">
+      <div class="tl-item reveal">
         <div class="tl-date">Hasta<br/>13 MAY<br/>2026</div>
-        <div class="tl-dot-wrapper"><div class="tl-dot done"></div></div>
-        <div class="tl-content">
-          <div class="tl-header">
-            <span class="tl-sprint">🚀 Sprint 0 — Análisis y Planificación</span>
-            <span class="tl-hito">Hito 1 · 15%</span>
+        <div class="tl-node"><div class="tl-dot done"></div></div>
+        <div class="tl-card">
+          <div class="tl-card-top">
+            <span class="tl-card-title">Sprint 0 — Análisis y Planificación</span>
+            <span class="tl-milestone">Hito 1 · 15%</span>
           </div>
-          <p style="font-size:0.83rem;color:var(--text2);">Selección y análisis del software Koel, configuración de herramientas GitHub, cronograma general y publicación en GitHub Pages.</p>
-          <div class="tl-tasks">
-            <span class="tl-task">✓ Software seleccionado</span>
-            <span class="tl-task">✓ Licencia MIT verificada</span>
-            <span class="tl-task">✓ Stack analizado</span>
-            <span class="tl-task">✓ GitHub Projects</span>
-            <span class="tl-task">✓ 12 Issues creados</span>
-            <span class="tl-task">✓ GitHub Pages</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="tl-date">14-29<br/>MAY<br/>2026</div>
-        <div class="tl-dot-wrapper"><div class="tl-dot active"></div></div>
-        <div class="tl-content">
-          <div class="tl-header">
-            <span class="tl-sprint">⚙️ Sprint 1 — Configuración e Integración</span>
-          </div>
-          <p style="font-size:0.83rem;color:var(--text2);">Configuración del entorno Docker, GitHub Actions inicial, pruebas básicas funcionales y CI/CD básico operativo.</p>
-          <div class="tl-tasks">
-            <span class="tl-task">Docker Compose</span>
-            <span class="tl-task">GitHub Actions workflow</span>
-            <span class="tl-task">Pruebas de instalación</span>
-            <span class="tl-task">CI/CD inicial</span>
+          <div class="tl-desc">Selección y análisis del software Koel, configuración de herramientas GitHub, cronograma general y publicación en GitHub Pages.</div>
+          <div class="tl-tags">
+            <span class="tl-tag done">✓ Software seleccionado</span>
+            <span class="tl-tag done">✓ Licencia MIT verificada</span>
+            <span class="tl-tag done">✓ Stack analizado</span>
+            <span class="tl-tag done">✓ GitHub Projects</span>
+            <span class="tl-tag done">✓ 12 Issues creados</span>
+            <span class="tl-tag done">✓ GitHub Pages</span>
           </div>
         </div>
       </div>
 
-      <div class="timeline-item reveal">
-        <div class="tl-date">30 MAY-<br/>10 JUN<br/>2026</div>
-        <div class="tl-dot-wrapper"><div class="tl-dot pending"></div></div>
-        <div class="tl-content">
-          <div class="tl-header">
-            <span class="tl-sprint">🔧 Sprint 2 — Producto Funcional</span>
-            <span class="tl-hito">Hito 2 · 60%</span>
+      <div class="tl-item reveal">
+        <div class="tl-date">14–29<br/>MAY<br/>2026</div>
+        <div class="tl-node"><div class="tl-dot active"></div></div>
+        <div class="tl-card">
+          <div class="tl-card-top">
+            <span class="tl-card-title">Sprint 1 — Configuración e Integración</span>
           </div>
-          <p style="font-size:0.83rem;color:var(--text2);">Producto funcionando con integración CI/CD completa, implementación del marco Scrum con todos los artefactos.</p>
-          <div class="tl-tasks">
-            <span class="tl-task">Koel desplegado</span>
-            <span class="tl-task">Pipeline completo</span>
-            <span class="tl-task">Pruebas funcionales</span>
-            <span class="tl-task">Burndown chart</span>
+          <div class="tl-desc">Configuración del entorno Docker, GitHub Actions inicial, pruebas básicas funcionales y CI/CD operativo.</div>
+          <div class="tl-tags">
+            <span class="tl-tag">Docker Compose</span>
+            <span class="tl-tag">GitHub Actions workflow</span>
+            <span class="tl-tag">Pruebas de instalación</span>
+            <span class="tl-tag">CI/CD inicial</span>
           </div>
         </div>
       </div>
 
-      <div class="timeline-item reveal">
+      <div class="tl-item reveal">
+        <div class="tl-date">30 MAY–<br/>10 JUN<br/>2026</div>
+        <div class="tl-node"><div class="tl-dot pending"></div></div>
+        <div class="tl-card">
+          <div class="tl-card-top">
+            <span class="tl-card-title">Sprint 2 — Producto Funcional</span>
+            <span class="tl-milestone">Hito 2 · 60%</span>
+          </div>
+          <div class="tl-desc">Producto funcionando con integración CI/CD completa, implementación del marco Scrum con todos sus artefactos.</div>
+          <div class="tl-tags">
+            <span class="tl-tag">Koel desplegado</span>
+            <span class="tl-tag">Pipeline completo</span>
+            <span class="tl-tag">Pruebas funcionales</span>
+            <span class="tl-tag">Burndown chart</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
         <div class="tl-date">JUN<br/>2026</div>
-        <div class="tl-dot-wrapper"><div class="tl-dot pending"></div></div>
-        <div class="tl-content">
-          <div class="tl-header">
-            <span class="tl-sprint">✨ Sprint 3 — Mejoras y Automatización</span>
+        <div class="tl-node"><div class="tl-dot pending"></div></div>
+        <div class="tl-card">
+          <div class="tl-card-top">
+            <span class="tl-card-title">Sprint 3 — Mejoras y Automatización</span>
           </div>
-          <p style="font-size:0.83rem;color:var(--text2);">Mejoras al producto, automatización avanzada del pipeline CI/CD y documentación técnica del proceso completo.</p>
-          <div class="tl-tasks">
-            <span class="tl-task">Refactorización</span>
-            <span class="tl-task">Deploy automatizado</span>
-            <span class="tl-task">Documentación técnica</span>
+          <div class="tl-desc">Mejoras al producto, automatización avanzada del pipeline CI/CD y documentación técnica del proceso completo.</div>
+          <div class="tl-tags">
+            <span class="tl-tag">Refactorización</span>
+            <span class="tl-tag">Deploy automatizado</span>
+            <span class="tl-tag">Documentación técnica</span>
           </div>
         </div>
       </div>
 
-      <div class="timeline-item reveal">
+      <div class="tl-item reveal">
         <div class="tl-date">Hasta<br/>13 JUL<br/>2026</div>
-        <div class="tl-dot-wrapper"><div class="tl-dot pending"></div></div>
-        <div class="tl-content">
-          <div class="tl-header">
-            <span class="tl-sprint">📄 Sprint 4 — Documentación y Entrega Final</span>
-            <span class="tl-hito">Hito 3 · 100%</span>
+        <div class="tl-node"><div class="tl-dot pending"></div></div>
+        <div class="tl-card">
+          <div class="tl-card-top">
+            <span class="tl-card-title">Sprint 4 — Documentación y Entrega Final</span>
+            <span class="tl-milestone">Hito 3 · 100%</span>
           </div>
-          <p style="font-size:0.83rem;color:var(--text2);">Documentación técnica completa del proceso ágil Scrum + DevOps, artículo formato IEEE y presentación final del proyecto.</p>
-          <div class="tl-tasks">
-            <span class="tl-task">Artículo IEEE</span>
-            <span class="tl-task">Informe completo</span>
-            <span class="tl-task">Presentación final</span>
-            <span class="tl-task">GitHub Pages final</span>
+          <div class="tl-desc">Documentación técnica completa del proceso ágil Scrum + DevOps, artículo formato IEEE y presentación final del proyecto.</div>
+          <div class="tl-tags">
+            <span class="tl-tag">Artículo IEEE</span>
+            <span class="tl-tag">Informe completo</span>
+            <span class="tl-tag">Presentación final</span>
+            <span class="tl-tag">GitHub Pages final</span>
           </div>
         </div>
       </div>
@@ -1680,152 +1836,117 @@
 <!-- ─── RESULTADOS ─── -->
 <section id="resultados">
   <div class="container">
-    <div class="section-tag">Resultados</div>
-    <h2>Sprint 0 — Entregables</h2>
-    <p class="section-desc">Resultados obtenidos tras la ejecución del Sprint 0, enfocados en el establecimiento de la infraestructura de gestión ágil.</p>
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Resultados</div>
+      <h2>Sprint 0 — Entregables</h2>
+      <p>Resultados obtenidos tras la ejecución del Sprint 0, enfocados en el establecimiento de la infraestructura de gestión ágil y el análisis técnico del proyecto.</p>
+    </div>
 
-    <div class="results-grid">
-      <div class="result-card featured reveal">
-        <div class="result-icon">📊</div>
-        <div class="result-title">GitHub Projects — Tablero Kanban</div>
-        <div class="result-desc">Se implementó un tablero Kanban con GitHub Projects para gestionar el Product Backlog y el Sprint Backlog. Se estructuraron todas las historias de usuario y se asignaron responsabilidades entre los miembros del equipo.</div>
-        <div class="result-num">12 HU</div>
+    <div class="results-layout">
+      <div class="metric-card wide reveal">
+        <div class="metric-label">GitHub Projects · Product Backlog</div>
+        <div class="metric-val accent">12 HU</div>
+        <div class="metric-desc">Tablero Kanban implementado con GitHub Projects. Todas las historias de usuario del Sprint 0 registradas como Issues con etiquetas, hitos y asignación de responsables.</div>
       </div>
-      <div class="result-card reveal reveal-delay-1">
-        <div class="result-icon">🎫</div>
-        <div class="result-title">GitHub Issues</div>
-        <div class="result-desc">Todas las historias de usuario registradas como Issues con etiquetas, hitos y asignación de responsables.</div>
-        <div class="result-num">12</div>
+      <div class="metric-card reveal rd1">
+        <div class="metric-label">Complejidad del proyecto</div>
+        <div class="metric-val green">120K</div>
+        <div class="metric-desc">Líneas de código medidas con <span class="mono" style="font-size:11px;">cloc</span> sobre el repositorio principal.</div>
       </div>
-      <div class="result-card reveal reveal-delay-1">
-        <div class="result-icon">🌐</div>
-        <div class="result-title">GitHub Pages</div>
-        <div class="result-desc">Página web publicada que centraliza el plan de trabajo, stack tecnológico y cronograma.</div>
-        <div class="result-num">✓ Live</div>
+      <div class="metric-card reveal rd1">
+        <div class="metric-label">GitHub Pages</div>
+        <div class="metric-val" style="color:var(--green2);font-size:20px;margin-top:4px;">Live ✓</div>
+        <div class="metric-desc">Página del proyecto desplegada y accesible públicamente desde GitHub Pages.</div>
       </div>
-      <div class="result-card reveal reveal-delay-2">
-        <div class="result-icon">🐳</div>
-        <div class="result-title">Docker Compose</div>
-        <div class="result-desc">Infraestructura Docker identificada y verificada. koel/docker con soporte MySQL/PostgreSQL.</div>
-        <div class="result-num">✓ Ready</div>
+      <div class="metric-card reveal rd2">
+        <div class="metric-label">Docker Infrastructure</div>
+        <div class="metric-val" style="color:var(--cyan);font-size:20px;margin-top:4px;">Ready ✓</div>
+        <div class="metric-desc">Infraestructura Docker identificada. koel/docker con soporte MySQL y PostgreSQL.</div>
       </div>
-      <div class="result-card reveal reveal-delay-2">
-        <div class="result-icon">📐</div>
-        <div class="result-title">Arquitectura</div>
-        <div class="result-desc">5 subsistemas identificados y documentados. Diagrama de componentes elaborado.</div>
-        <div class="result-num">5</div>
+      <div class="metric-card reveal rd2">
+        <div class="metric-label">Subsistemas identificados</div>
+        <div class="metric-val">5</div>
+        <div class="metric-desc">Diagrama de componentes elaborado con 5 capas bien definidas.</div>
       </div>
-      <div class="result-card reveal reveal-delay-3">
-        <div class="result-icon">📏</div>
-        <div class="result-title">Análisis CLOC</div>
-        <div class="result-desc">Medición de complejidad verificada con herramienta cloc sobre el repositorio principal.</div>
-        <div class="result-num">120K</div>
+      <div class="metric-card reveal rd3">
+        <div class="metric-label">Issues registrados</div>
+        <div class="metric-val accent">12</div>
+        <div class="metric-desc">Todas las HU registradas con etiquetas y responsables asignados.</div>
       </div>
     </div>
 
     <!-- HU Table -->
-    <div class="hu-table reveal" style="margin-top:2rem;">
-      <div class="hu-table-header">
+    <div class="hu-table reveal" style="margin-top:8px;">
+      <div class="hu-thead">
         <div>Código</div>
         <div>Historia de Usuario</div>
         <div>Responsable</div>
       </div>
-      <div class="hu-row">
-        <div class="hu-code">HU01</div>
-        <div class="hu-story">Seleccionar el producto open source Koel</div>
-        <div class="hu-who">Equipo</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU02</div>
-        <div class="hu-story">Verificar licencia MIT del repositorio</div>
-        <div class="hu-who">Integrante 1</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU03</div>
-        <div class="hu-story">Identificar el dominio del sistema</div>
-        <div class="hu-who">Integrante 2</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU04</div>
-        <div class="hu-story">Analizar el stack tecnológico de Koel</div>
-        <div class="hu-who">Integrante 3</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU05</div>
-        <div class="hu-story">Identificar módulos o subsistemas principales</div>
-        <div class="hu-who">Integrante 4</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU06</div>
-        <div class="hu-story">Medir complejidad del proyecto con CLOC</div>
-        <div class="hu-who">Integrante 5</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU07</div>
-        <div class="hu-story">Revisar infraestructura Docker del proyecto</div>
-        <div class="hu-who">Integrante 1</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU08</div>
-        <div class="hu-story">Elaborar cronograma general de sprints</div>
-        <div class="hu-who">Integrante 2</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU09</div>
-        <div class="hu-story">Crear Product Backlog inicial</div>
-        <div class="hu-who">Equipo</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU10</div>
-        <div class="hu-story">Crear página informativa en GitHub Pages</div>
-        <div class="hu-who">Equipo</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU11</div>
-        <div class="hu-story">Redactar informe del Hito 1</div>
-        <div class="hu-who">Equipo</div>
-      </div>
-      <div class="hu-row">
-        <div class="hu-code">HU12</div>
-        <div class="hu-story">Revisar evidencias y capturas del Sprint 0</div>
-        <div class="hu-who">Equipo</div>
-      </div>
+      <div class="hu-row"><div class="hu-code">HU01</div><div class="hu-story">Seleccionar el producto open source Koel</div><div class="hu-resp">Equipo</div></div>
+      <div class="hu-row"><div class="hu-code">HU02</div><div class="hu-story">Verificar licencia MIT del repositorio</div><div class="hu-resp">Integrante 1</div></div>
+      <div class="hu-row"><div class="hu-code">HU03</div><div class="hu-story">Identificar el dominio del sistema</div><div class="hu-resp">Integrante 2</div></div>
+      <div class="hu-row"><div class="hu-code">HU04</div><div class="hu-story">Analizar el stack tecnológico de Koel</div><div class="hu-resp">Integrante 3</div></div>
+      <div class="hu-row"><div class="hu-code">HU05</div><div class="hu-story">Identificar módulos o subsistemas principales</div><div class="hu-resp">Integrante 4</div></div>
+      <div class="hu-row"><div class="hu-code">HU06</div><div class="hu-story">Medir complejidad del proyecto con CLOC</div><div class="hu-resp">Integrante 5</div></div>
+      <div class="hu-row"><div class="hu-code">HU07</div><div class="hu-story">Revisar infraestructura Docker del proyecto</div><div class="hu-resp">Integrante 1</div></div>
+      <div class="hu-row"><div class="hu-code">HU08</div><div class="hu-story">Elaborar cronograma general de sprints</div><div class="hu-resp">Integrante 2</div></div>
+      <div class="hu-row"><div class="hu-code">HU09</div><div class="hu-story">Crear Product Backlog inicial</div><div class="hu-resp">Equipo</div></div>
+      <div class="hu-row"><div class="hu-code">HU10</div><div class="hu-story">Crear página informativa en GitHub Pages</div><div class="hu-resp">Equipo</div></div>
+      <div class="hu-row"><div class="hu-code">HU11</div><div class="hu-story">Redactar informe del Hito 1</div><div class="hu-resp">Equipo</div></div>
+      <div class="hu-row"><div class="hu-code">HU12</div><div class="hu-story">Revisar evidencias y capturas del Sprint 0</div><div class="hu-resp">Equipo</div></div>
     </div>
   </div>
 </section>
 
-<!-- ─── TEAM ─── -->
+<!-- ─── EQUIPO ─── -->
 <section id="equipo">
   <div class="container">
-    <div class="section-tag">Equipo</div>
-    <h2>Integrantes del Grupo</h2>
-    <p class="section-desc">Cinco estudiantes de Ingeniería de Sistemas e Informática — UNSA, con roles rotativos por sprint.</p>
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Equipo</div>
+      <h2>Integrantes del Grupo</h2>
+      <p>Cinco estudiantes de Ingeniería de Sistemas e Informática — UNSA 2026-A. Roles Scrum rotativos por sprint.</p>
+    </div>
 
     <div class="team-grid">
-      <div class="team-card reveal">
-        <div class="avatar" style="background:linear-gradient(135deg,rgba(88,166,255,0.2),rgba(188,140,255,0.2));border-color:rgba(88,166,255,0.4);">RC</div>
-        <div class="member-name">Romina Giuliana Camargo Hilachoque</div>
-        <div class="member-role">Integrante 1</div>
+      <div class="member-card reveal">
+        <div class="member-avatar" style="background:rgba(79,142,247,0.1);border-color:rgba(79,142,247,0.3);color:var(--accent);">RC</div>
+        <div class="member-name">Romina Giuliana<br/>Camargo Hilachoque</div>
+        <span class="member-role">Integrante 1</span>
+        <div class="member-tags">
+          <span class="member-tag">Scrum Member</span>
+        </div>
       </div>
-      <div class="team-card reveal reveal-delay-1">
-        <div class="avatar" style="background:linear-gradient(135deg,rgba(63,185,80,0.2),rgba(88,166,255,0.2));border-color:rgba(63,185,80,0.4);">JH</div>
-        <div class="member-name">José León Enrique Hatches Curo</div>
-        <div class="member-role">Integrante 2</div>
+      <div class="member-card reveal rd1">
+        <div class="member-avatar" style="background:rgba(46,168,77,0.1);border-color:rgba(46,168,77,0.3);color:var(--green2);">JH</div>
+        <div class="member-name">José León Enrique<br/>Hatches Curo</div>
+        <span class="member-role">Integrante 2</span>
+        <div class="member-tags">
+          <span class="member-tag">Scrum Member</span>
+        </div>
       </div>
-      <div class="team-card reveal reveal-delay-2">
-        <div class="avatar" style="background:linear-gradient(135deg,rgba(188,140,255,0.2),rgba(63,185,80,0.2));border-color:rgba(188,140,255,0.4);">PM</div>
-        <div class="member-name">Paola Adamari Mayta Quispe</div>
-        <div class="member-role">Integrante 3</div>
+      <div class="member-card reveal rd2">
+        <div class="member-avatar" style="background:rgba(155,114,240,0.1);border-color:rgba(155,114,240,0.3);color:var(--purple);">PM</div>
+        <div class="member-name">Paola Adamari<br/>Mayta Quispe</div>
+        <span class="member-role">Integrante 3</span>
+        <div class="member-tags">
+          <span class="member-tag">Scrum Member</span>
+        </div>
       </div>
-      <div class="team-card reveal reveal-delay-3">
-        <div class="avatar" style="background:linear-gradient(135deg,rgba(255,166,87,0.2),rgba(188,140,255,0.2));border-color:rgba(255,166,87,0.4);">KC</div>
-        <div class="member-name">Keneth Sebastian Cutimbo Quispe</div>
-        <div class="member-role">Integrante 4</div>
+      <div class="member-card reveal rd3">
+        <div class="member-avatar" style="background:rgba(212,148,58,0.1);border-color:rgba(212,148,58,0.3);color:var(--amber);">KC</div>
+        <div class="member-name">Keneth Sebastian<br/>Cutimbo Quispe</div>
+        <span class="member-role">Integrante 4</span>
+        <div class="member-tags">
+          <span class="member-tag">Scrum Member</span>
+        </div>
       </div>
-      <div class="team-card reveal reveal-delay-3">
-        <div class="avatar" style="background:linear-gradient(135deg,rgba(248,81,73,0.2),rgba(255,166,87,0.2));border-color:rgba(248,81,73,0.4);">JM</div>
-        <div class="member-name">Jose Manuel Morocco Saico</div>
-        <div class="member-role">Integrante 5</div>
+      <div class="member-card reveal rd4">
+        <div class="member-avatar" style="background:rgba(229,82,82,0.1);border-color:rgba(229,82,82,0.3);color:var(--red);">JM</div>
+        <div class="member-name">Jose Manuel<br/>Morocco Saico</div>
+        <span class="member-role">Integrante 5</span>
+        <div class="member-tags">
+          <span class="member-tag">Scrum Member</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1834,36 +1955,43 @@
 <!-- ─── ENLACES ─── -->
 <section id="enlaces">
   <div class="container">
-    <div class="section-tag">Referencias</div>
-    <h2>Enlaces del Proyecto</h2>
-    <p class="section-desc">Accede a todos los recursos del proyecto directamente desde aquí.</p>
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Referencias</div>
+      <h2>Enlaces del Proyecto</h2>
+    </div>
 
     <div class="links-grid">
-      <a href="https://github.com/koel/koel" target="_blank" class="link-card reveal">
-        <div class="link-icon">
-          <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <a href="https://github.com/JoseMorocco/IPS-2026-koel" target="_blank" class="link-tile reveal">
+        <div class="link-tile-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color:var(--text2)"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         </div>
-        <div class="link-title">Repositorio Koel</div>
-        <div style="font-size:0.8rem;color:var(--text2);">Código fuente original con licencia MIT</div>
-        <div class="link-url">github.com/koel/koel →</div>
+        <div class="link-tile-title">Repositorio del Proyecto</div>
+        <div class="link-tile-desc">Código fuente del proyecto académico IPS-2026-koel con GitHub Actions y Pages configurados.</div>
+        <div class="link-tile-url">JoseMorocco/IPS-2026-koel →</div>
       </a>
-      <a href="https://github.com/koel/docker" target="_blank" class="link-card reveal reveal-delay-1">
-        <div class="link-icon">🐳</div>
-        <div class="link-title">Docker Image</div>
-        <div style="font-size:0.8rem;color:var(--text2);">Imagen oficial Docker con Compose para Koel</div>
-        <div class="link-url">github.com/koel/docker →</div>
+      <a href="https://github.com/koel/koel" target="_blank" class="link-tile reveal rd1">
+        <div class="link-tile-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color:var(--text2)"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </div>
+        <div class="link-tile-title">Repositorio Koel</div>
+        <div class="link-tile-desc">Código fuente original de Koel Music Server con licencia MIT.</div>
+        <div class="link-tile-url">koel/koel →</div>
       </a>
-      <a href="#" class="link-card reveal reveal-delay-2">
-        <div class="link-icon">📊</div>
-        <div class="link-title">GitHub Projects</div>
-        <div style="font-size:0.8rem;color:var(--text2);">Tablero Scrum del equipo con Sprint Backlog</div>
-        <div class="link-url">Tablero del equipo →</div>
+      <a href="https://github.com/users/JoseMorocco/projects/1" target="_blank" class="link-tile reveal rd2">
+        <div class="link-tile-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="var(--text2)" stroke-width="1.3"/><path d="M4 5.5h8M4 8.5h8M4 11.5h5" stroke="var(--text2)" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </div>
+        <div class="link-tile-title">GitHub Projects</div>
+        <div class="link-tile-desc">Tablero Scrum/Kanban del equipo con Sprint Backlog y estado de cada HU.</div>
+        <div class="link-tile-url">Tablero Sprint 0 →</div>
       </a>
-      <a href="#" class="link-card reveal reveal-delay-3">
-        <div class="link-icon">🎫</div>
-        <div class="link-title">GitHub Issues</div>
-        <div style="font-size:0.8rem;color:var(--text2);">12 historias de usuario registradas y en seguimiento</div>
-        <div class="link-url">Issues del sprint →</div>
+      <a href="https://github.com/koel/docker" target="_blank" class="link-tile reveal rd3">
+        <div class="link-tile-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="5" height="3" rx="0.8" stroke="var(--text2)" stroke-width="1.2"/><rect x="7.5" y="5" width="5" height="3" rx="0.8" stroke="var(--text2)" stroke-width="1.2"/><rect x="4.25" y="2" width="5" height="3" rx="0.8" stroke="var(--text2)" stroke-width="1.2"/><path d="M8 8v3m-4-3v2m8-2v2M4 12.5c0 .5.5 1.5 4 1.5s4-1 4-1.5" stroke="var(--text2)" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="link-tile-title">Docker Image</div>
+        <div class="link-tile-desc">Imagen oficial Docker con Compose para desplegar Koel con MySQL o PostgreSQL.</div>
+        <div class="link-tile-url">koel/docker →</div>
       </a>
     </div>
   </div>
@@ -1874,60 +2002,55 @@
   <div class="container">
     <div class="footer-inner">
       <div class="footer-left">
-        <strong>Koel · Scrum + DevOps · UNSA 2026-A</strong><br/>
-        Ingeniería y Procesos de Software · Facultad de Ingeniería de Producción y Servicios<br/>
-        Departamento Académico de Ingeniería de Sistemas e Informática
+        <strong style="color:var(--text2);">IPS-2026-koel · Scrum + DevOps</strong><br/>
+        Ingeniería y Procesos de Software · UNSA 2026-A<br/>
+        Facultad de Ingeniería de Producción y Servicios · Dpto. Ingeniería de Sistemas e Informática
       </div>
       <div class="footer-right">
-        <a href="https://github.com/koel/koel" target="_blank" class="footer-link">GitHub</a>
-        <a href="https://koel.dev" target="_blank" class="footer-link">koel.dev</a>
+        <a href="https://github.com/JoseMorocco/IPS-2026-koel" target="_blank" class="footer-link">GitHub</a>
+        <a href="https://josemorocco.github.io/IPS-2026-koel/" target="_blank" class="footer-link">Pages</a>
+        <a href="https://github.com/koel/koel" target="_blank" class="footer-link">koel/koel</a>
         <a href="https://mit-license.org" target="_blank" class="footer-link">MIT License</a>
       </div>
     </div>
-    <div class="divider"></div>
-    <div style="text-align:center;font-size:0.75rem;color:var(--text3);font-family:'JetBrains Mono',monospace;">
-      Sprint 0 · Hito 1 · 13.MAY.2026 · Universidad Nacional de San Agustín de Arequipa
+    <div style="border-top:1px solid var(--line);margin-top:20px;padding-top:16px;text-align:center;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--text3);">
+        Sprint 0 · Hito 1 · 13.MAY.2026 · Universidad Nacional de San Agustín de Arequipa
+      </span>
     </div>
   </div>
 </footer>
 
 <script>
-  // Intersection Observer for scroll animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// Nav active state
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
 
-  // Smooth nav highlight
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 80;
-      if (window.scrollY >= sectionTop) current = section.getAttribute('id');
-    });
-    navLinks.forEach(link => {
-      link.style.color = '';
-      if (link.getAttribute('href') === `#${current}`) {
-        link.style.color = 'var(--text)';
-      }
-    });
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.getAttribute('id');
+      navLinks.forEach(l => {
+        const active = l.getAttribute('href') === `#${id}`;
+        l.style.color = active ? 'var(--text)' : '';
+        l.style.background = active ? 'var(--bg3)' : '';
+      });
+    }
   });
+}, { rootMargin: '-40% 0px -40% 0px' });
+sections.forEach(s => navObs.observe(s));
 
-  // Typing animation for terminal
-  const lines = document.querySelectorAll('.terminal-body > div');
-  lines.forEach((line, i) => {
-    line.style.opacity = '0';
-    line.style.transition = 'opacity 0.3s ease';
-    setTimeout(() => { line.style.opacity = '1'; }, i * 120 + 500);
-  });
+// Terminal line stagger
+document.querySelectorAll('.term-body > div').forEach((line, i) => {
+  line.style.opacity = '0';
+  setTimeout(() => { line.style.opacity = '1'; line.style.transition = 'opacity 0.25s'; }, i * 100 + 600);
+});
 </script>
 </body>
 </html>
