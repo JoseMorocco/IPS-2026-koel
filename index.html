@@ -437,8 +437,17 @@ h1 .grad {
 #architecture { padding: 80px 0; border-top: 1px solid var(--line); }
 
 .arch-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.arch-top-row {
+  display: flex;
+  justify-content: center;
+}
+.arch-bottom-row {
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 24px;
   align-items: start;
 }
@@ -533,8 +542,9 @@ h1 .grad {
   border: 1px solid var(--line);
   border-radius: var(--r3);
   overflow: hidden;
-  margin-top: 24px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  width: fit-content;
+  min-width: 340px;
 }
 
 .cloc-bar {
@@ -980,6 +990,7 @@ footer {
 }
 .footer-link:hover { color: var(--accent); }
 
+
 /* ─── SCROLL REVEAL ─── */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
 .reveal.visible { opacity: 1; transform: none; }
@@ -995,7 +1006,7 @@ footer {
   .hero-terminal { display: none; }
   .about-layout { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
-  .arch-layout { grid-template-columns: 1fr; }
+  .arch-bottom-row { grid-template-columns: 1fr; }
   .devops-layout { grid-template-columns: 1fr; }
   .kanban-board { grid-template-columns: repeat(3, 1fr); }
   .team-grid { grid-template-columns: repeat(3, 1fr); }
@@ -1130,6 +1141,50 @@ footer {
           <div>&nbsp;</div>
           <div><span class="tg">$</span> <span class="tw">▶</span> gh workflow run deploy.yml<span class="tcursor"></span></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EQUIPO ─── -->
+<section id="equipo" style="border-top:1px solid var(--line);padding:60px 0;">
+  <div class="container">
+    <div class="sh reveal" style="margin-bottom:28px;">
+      <div class="sh-eyebrow">Autores</div>
+      <h2>Equipo de Trabajo</h2>
+      <p>Estudiantes de Ingeniería de Sistemas e Informática — UNSA 2026-A · Ingeniería y Procesos de Software.</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="member-card reveal">
+        <div class="member-avatar" style="background:rgba(79,142,247,0.1);border-color:rgba(79,142,247,0.3);color:var(--accent);">RC</div>
+        <div class="member-name">Romina Giuliana<br/>Camargo Hilachoque</div>
+        <span class="member-role">Integrante 1</span>
+        <div class="member-tags"><span class="member-tag">Scrum Member</span></div>
+      </div>
+      <div class="member-card reveal rd1">
+        <div class="member-avatar" style="background:rgba(46,168,77,0.1);border-color:rgba(46,168,77,0.3);color:var(--green2);">JH</div>
+        <div class="member-name">José León Enrique<br/>Hatches Curo</div>
+        <span class="member-role">Integrante 2</span>
+        <div class="member-tags"><span class="member-tag">Scrum Member</span></div>
+      </div>
+      <div class="member-card reveal rd2">
+        <div class="member-avatar" style="background:rgba(155,114,240,0.1);border-color:rgba(155,114,240,0.3);color:var(--purple);">PM</div>
+        <div class="member-name">Paola Adamari<br/>Mayta Quispe</div>
+        <span class="member-role">Integrante 3</span>
+        <div class="member-tags"><span class="member-tag">Scrum Member</span></div>
+      </div>
+      <div class="member-card reveal rd3">
+        <div class="member-avatar" style="background:rgba(212,148,58,0.1);border-color:rgba(212,148,58,0.3);color:var(--amber);">KC</div>
+        <div class="member-name">Keneth Sebastian<br/>Cutimbo Quispe</div>
+        <span class="member-role">Integrante 4</span>
+        <div class="member-tags"><span class="member-tag">Scrum Member</span></div>
+      </div>
+      <div class="member-card reveal rd4">
+        <div class="member-avatar" style="background:rgba(229,82,82,0.1);border-color:rgba(229,82,82,0.3);color:var(--red);">JM</div>
+        <div class="member-name">Jose Manuel<br/>Morocco Saico</div>
+        <span class="member-role">Integrante 5</span>
+        <div class="member-tags"><span class="member-tag">Scrum Member</span></div>
       </div>
     </div>
   </div>
@@ -1362,121 +1417,163 @@ footer {
     </div>
 
     <div class="arch-layout">
-      <!-- Left: Component diagram -->
-      <div class="comp-diagram reveal">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Diagrama de componentes</div>
-
-        <div class="comp-layer frontend">
-          <div class="comp-layer-label">Frontend (Vue.js)</div>
-          <div class="comp-nodes">
-            <div class="comp-node purple">Enrutador Vue</div>
-          </div>
-          <div class="comp-nodes" style="margin-top:5px;">
-            <div class="comp-node purple">Componentes Vue</div>
-          </div>
-          <div class="comp-nodes" style="margin-top:5px;">
-            <div class="comp-node purple">Gestión de Estado</div>
-            <div class="comp-node purple">Servicios de Cliente</div>
-          </div>
+      <!-- Top row: Component diagram centered -->
+      <div class="arch-top-row">
+      <!-- Component diagram (SVG) -->
+      <div class="comp-diagram reveal" style="padding:0;background:var(--bg1);border:1px solid var(--line2);border-radius:var(--r3);overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:6px;padding:9px 14px;background:var(--bg2);border-bottom:1px solid var(--line);">
+          <div class="term-dot td1"></div><div class="term-dot td2"></div><div class="term-dot td3"></div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);margin:0 auto;transform:translateX(-14px);">koel · component-diagram</span>
         </div>
+        <div style="padding:18px 14px;overflow-x:auto;display:flex;justify-content:center;">
+          <svg viewBox="0 0 520 570" width="520" height="570" xmlns="http://www.w3.org/2000/svg" style="font-family:'IBM Plex Mono',monospace;max-width:100%;height:auto;">
+            <defs>
+              <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="rgba(155,114,240,0.7)"/></marker>
+              <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="rgba(79,142,247,0.7)"/></marker>
+              <marker id="arr-gray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="rgba(61,77,92,0.8)"/></marker>
+              <marker id="arr-amber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="rgba(212,148,58,0.7)"/></marker>
+            </defs>
 
-        <div class="comp-arrow">↓ Llamadas a la API ↓</div>
+            <!-- ── S1: Frontend (Vue.js) ── -->
+            <rect x="110" y="14" width="300" height="188" rx="6" fill="rgba(155,114,240,0.03)" stroke="rgba(155,114,240,0.35)" stroke-width="1" stroke-dasharray="5,3"/>
+            <rect x="170" y="6" width="130" height="18" rx="3" fill="#111519"/>
+            <text x="235" y="18" text-anchor="middle" font-size="9.5" fill="rgba(155,114,240,0.85)" letter-spacing="0.06em">Frontend (Vue.js)</text>
 
-        <div class="comp-layer backend">
-          <div class="comp-layer-label">Backend (Laravel)</div>
-          <div class="comp-nodes">
-            <div class="comp-node blue">Controladores</div>
-          </div>
-          <div class="comp-nodes" style="margin-top:5px;">
-            <div class="comp-node blue">Servicios</div>
-          </div>
-          <div class="comp-nodes" style="margin-top:5px;">
-            <div class="comp-node blue">Repositorios</div>
-            <div class="comp-node blue">Adapt. Almacenamiento</div>
-          </div>
-        </div>
+            <rect x="187" y="28" width="116" height="30" rx="4" fill="rgba(155,114,240,0.07)" stroke="rgba(155,114,240,0.4)" stroke-width="1"/>
+            <text x="245" y="47" text-anchor="middle" font-size="10" fill="rgba(155,114,240,0.9)">Enrutador Vue</text>
 
-        <div style="display:flex;gap:6px;margin:4px 0;">
-          <div style="flex:1;">
-            <div class="comp-arrow">↓</div>
-            <div class="comp-layer database">
-              <div class="comp-layer-label">Base de Datos</div>
-              <div class="comp-nodes">
-                <div class="comp-node amber">Modelos</div>
-              </div>
-              <div class="comp-nodes" style="margin-top:5px;">
-                <div class="comp-node amber">MySQL / SQLite / PgSQL</div>
-              </div>
-            </div>
-          </div>
-          <div style="flex:1;">
-            <div class="comp-arrow">↓</div>
-            <div class="comp-layer media">
-              <div class="comp-layer-label">Multimedia</div>
-              <div class="comp-nodes">
-                <div class="comp-node cyan">Archivos de Audio</div>
-              </div>
-            </div>
-          </div>
-        </div>
+            <line x1="245" y1="58" x2="245" y2="76" stroke="rgba(155,114,240,0.5)" stroke-width="1.2" marker-end="url(#arr-purple)"/>
 
-        <div class="comp-layer external" style="margin-top:6px;">
-          <div class="comp-layer-label">APIs Externas</div>
-          <div class="comp-nodes">
-            <div class="comp-node red">Last.fm</div>
-            <div class="comp-node red">YouTube</div>
-            <div class="comp-node red">Spotify</div>
-            <div class="comp-node red">iTunes</div>
-          </div>
+            <rect x="187" y="78" width="116" height="30" rx="4" fill="rgba(155,114,240,0.07)" stroke="rgba(155,114,240,0.4)" stroke-width="1"/>
+            <text x="245" y="97" text-anchor="middle" font-size="10" fill="rgba(155,114,240,0.9)">Componentes Vue</text>
+
+            <line x1="210" y1="108" x2="172" y2="136" stroke="rgba(155,114,240,0.5)" stroke-width="1.2" marker-end="url(#arr-purple)"/>
+            <line x1="280" y1="108" x2="318" y2="136" stroke="rgba(155,114,240,0.5)" stroke-width="1.2" marker-end="url(#arr-purple)"/>
+
+            <rect x="120" y="138" width="108" height="30" rx="4" fill="rgba(155,114,240,0.07)" stroke="rgba(155,114,240,0.4)" stroke-width="1"/>
+            <text x="174" y="153" text-anchor="middle" font-size="9" fill="rgba(155,114,240,0.9)">Gestión de Estado</text>
+
+            <rect x="292" y="138" width="108" height="30" rx="4" fill="rgba(155,114,240,0.07)" stroke="rgba(155,114,240,0.4)" stroke-width="1"/>
+            <text x="346" y="153" text-anchor="middle" font-size="9" fill="rgba(155,114,240,0.9)">Servicios de</text>
+            <text x="346" y="164" text-anchor="middle" font-size="9" fill="rgba(155,114,240,0.9)">Cliente</text>
+
+            <!-- API label + arrow -->
+            <text x="260" y="220" text-anchor="middle" font-size="8.5" fill="rgba(61,77,92,0.85)" letter-spacing="0.06em">Llamadas a la API</text>
+            <line x1="245" y1="202" x2="245" y2="238" stroke="rgba(61,77,92,0.55)" stroke-width="1.2" marker-end="url(#arr-gray)"/>
+
+            <!-- ── S2: Backend (Laravel) ── -->
+            <rect x="96" y="240" width="328" height="196" rx="6" fill="rgba(79,142,247,0.03)" stroke="rgba(79,142,247,0.35)" stroke-width="1" stroke-dasharray="5,3"/>
+            <rect x="170" y="232" width="130" height="18" rx="3" fill="#111519"/>
+            <text x="235" y="244" text-anchor="middle" font-size="9.5" fill="rgba(79,142,247,0.85)" letter-spacing="0.06em">Backend (Laravel)</text>
+
+            <rect x="187" y="256" width="116" height="30" rx="4" fill="rgba(79,142,247,0.07)" stroke="rgba(79,142,247,0.4)" stroke-width="1"/>
+            <text x="245" y="275" text-anchor="middle" font-size="10" fill="rgba(79,142,247,0.9)">Controladores</text>
+
+            <line x1="245" y1="286" x2="245" y2="304" stroke="rgba(79,142,247,0.5)" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+
+            <rect x="187" y="306" width="116" height="30" rx="4" fill="rgba(79,142,247,0.07)" stroke="rgba(79,142,247,0.4)" stroke-width="1"/>
+            <text x="245" y="325" text-anchor="middle" font-size="10" fill="rgba(79,142,247,0.9)">Servicios</text>
+
+            <line x1="215" y1="336" x2="185" y2="364" stroke="rgba(79,142,247,0.5)" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+            <line x1="275" y1="336" x2="318" y2="364" stroke="rgba(79,142,247,0.5)" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+
+            <rect x="120" y="366" width="120" height="30" rx="4" fill="rgba(79,142,247,0.07)" stroke="rgba(79,142,247,0.4)" stroke-width="1"/>
+            <text x="180" y="385" text-anchor="middle" font-size="10" fill="rgba(79,142,247,0.9)">Repositorios</text>
+
+            <rect x="292" y="366" width="124" height="44" rx="4" fill="rgba(79,142,247,0.07)" stroke="rgba(79,142,247,0.4)" stroke-width="1"/>
+            <text x="354" y="384" text-anchor="middle" font-size="9" fill="rgba(79,142,247,0.9)">Adaptadores de</text>
+            <text x="354" y="397" text-anchor="middle" font-size="9" fill="rgba(79,142,247,0.9)">Almacenamiento</text>
+
+            <!-- ── S3: APIs Externas (left, dashed) ── -->
+            <rect x="4" y="296" width="82" height="72" rx="6" fill="rgba(229,82,82,0.03)" stroke="rgba(229,82,82,0.3)" stroke-width="1" stroke-dasharray="4,3"/>
+            <rect x="8" y="288" width="74" height="16" rx="3" fill="#111519"/>
+            <text x="45" y="299" text-anchor="middle" font-size="8.5" fill="rgba(229,82,82,0.8)" letter-spacing="0.04em">APIs Externas</text>
+            <text x="45" y="322" text-anchor="middle" font-size="8.5" fill="rgba(229,82,82,0.7)">Last.fm /</text>
+            <text x="45" y="334" text-anchor="middle" font-size="8.5" fill="rgba(229,82,82,0.7)">YouTube /</text>
+            <text x="45" y="346" text-anchor="middle" font-size="8.5" fill="rgba(229,82,82,0.7)">Spotify / iTunes</text>
+            <line x1="86" y1="332" x2="118" y2="332" stroke="rgba(229,82,82,0.35)" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arr-gray)"/>
+
+            <!-- ── S4: Base de Datos ── -->
+            <rect x="90" y="464" width="196" height="96" rx="6" fill="rgba(212,148,58,0.03)" stroke="rgba(212,148,58,0.35)" stroke-width="1" stroke-dasharray="5,3"/>
+            <rect x="118" y="456" width="102" height="16" rx="3" fill="#111519"/>
+            <text x="169" y="467" text-anchor="middle" font-size="9" fill="rgba(212,148,58,0.85)" letter-spacing="0.05em">Base de Datos</text>
+
+            <rect x="122" y="474" width="90" height="28" rx="4" fill="rgba(212,148,58,0.07)" stroke="rgba(212,148,58,0.4)" stroke-width="1"/>
+            <text x="167" y="491" text-anchor="middle" font-size="10" fill="rgba(212,148,58,0.9)">Modelos</text>
+
+            <rect x="100" y="514" width="138" height="28" rx="4" fill="rgba(212,148,58,0.04)" stroke="rgba(212,148,58,0.25)" stroke-width="1"/>
+            <text x="169" y="528" text-anchor="middle" font-size="8.5" fill="rgba(212,148,58,0.75)">MySQL / SQLite /</text>
+            <text x="169" y="540" text-anchor="middle" font-size="8.5" fill="rgba(212,148,58,0.75)">PostgreSQL</text>
+
+            <!-- Arrow: Repositorios → Modelos -->
+            <line x1="180" y1="396" x2="175" y2="474" stroke="rgba(212,148,58,0.4)" stroke-width="1.2" marker-end="url(#arr-amber)"/>
+
+            <!-- ── S5: Archivos Multimedia ── -->
+            <rect x="316" y="464" width="166" height="60" rx="6" fill="rgba(34,184,207,0.03)" stroke="rgba(34,184,207,0.35)" stroke-width="1" stroke-dasharray="5,3"/>
+            <rect x="328" y="456" width="130" height="16" rx="3" fill="#111519"/>
+            <text x="393" y="467" text-anchor="middle" font-size="9" fill="rgba(34,184,207,0.85)" letter-spacing="0.04em">Archivos Multimedia</text>
+
+            <rect x="330" y="476" width="138" height="28" rx="4" fill="rgba(34,184,207,0.06)" stroke="rgba(34,184,207,0.4)" stroke-width="1"/>
+            <text x="399" y="494" text-anchor="middle" font-size="10" fill="rgba(34,184,207,0.9)">Archivos de Audio</text>
+
+            <!-- Arrow: Adaptadores → Archivos -->
+            <line x1="370" y1="410" x2="390" y2="476" stroke="rgba(34,184,207,0.4)" stroke-width="1.2" marker-end="url(#arr-gray)"/>
+          </svg>
         </div>
       </div>
 
-      <!-- Right: Detail cards -->
-      <div class="arch-detail-col">
-        <div class="arch-card reveal rd1">
-          <div class="arch-card-header">
-            <div class="arch-card-dot" style="background:var(--purple);"></div>
-            <div class="arch-card-title">Frontend — Vue.js SPA</div>
-          </div>
-          <p>Aplicación de página única con componentes como App.vue, MainWrapper, AudioPlayer y AppFooter. Gestión de estado con stores de Pinia: songStore, albumStore, artistStore, queueStore.</p>
-          <div class="arch-tags">
-            <span class="arch-tag">Vue.js 3</span>
-            <span class="arch-tag">Pinia</span>
-            <span class="arch-tag">TypeScript</span>
-            <span class="arch-tag">Vite</span>
-            <span class="arch-tag">AudioPlayer</span>
-          </div>
-        </div>
-        <div class="arch-card reveal rd2">
-          <div class="arch-card-header">
-            <div class="arch-card-dot" style="background:var(--accent);"></div>
-            <div class="arch-card-title">Backend — Laravel REST API</div>
-          </div>
-          <p>Gestiona lógica de negocio, autenticación, rutas API y procesamiento de metadatos. Expone endpoints para canciones, álbumes y artistas. Queue workers para tareas asíncronas.</p>
-          <div class="arch-tags">
-            <span class="arch-tag">Laravel 10</span>
-            <span class="arch-tag">PHP 8</span>
-            <span class="arch-tag">Auth service</span>
-            <span class="arch-tag">Media Scanner</span>
-            <span class="arch-tag">Queue</span>
-          </div>
-        </div>
-        <div class="arch-card reveal rd3">
-          <div class="arch-card-header">
-            <div class="arch-card-dot" style="background:var(--amber);"></div>
-            <div class="arch-card-title">Datos y Almacenamiento</div>
-          </div>
-          <p>Archivos multimedia en local o Dropbox. La BD almacena usuarios, canciones, artistas, álbumes, playlists y favoritos. Compatible con MySQL, MariaDB, PostgreSQL y SQLite.</p>
-          <div class="arch-tags">
-            <span class="arch-tag">MySQL 8</span>
-            <span class="arch-tag">MariaDB</span>
-            <span class="arch-tag">PostgreSQL</span>
-            <span class="arch-tag">SQLite</span>
-            <span class="arch-tag">Dropbox</span>
-          </div>
-        </div>
+      </div><!-- /arch-top-row -->
 
-        <!-- CLOC results styled terminal -->
+      <!-- Bottom row: detail cards left, cloc right -->
+      <div class="arch-bottom-row">
+        <!-- Detail cards -->
+        <div class="arch-detail-col">
+          <div class="arch-card reveal rd1">
+            <div class="arch-card-header">
+              <div class="arch-card-dot" style="background:var(--purple);"></div>
+              <div class="arch-card-title">Frontend — Vue.js SPA</div>
+            </div>
+            <p>Aplicación de página única con componentes como App.vue, MainWrapper, AudioPlayer y AppFooter. Gestión de estado con stores de Pinia: songStore, albumStore, artistStore, queueStore.</p>
+            <div class="arch-tags">
+              <span class="arch-tag">Vue.js 3</span>
+              <span class="arch-tag">Pinia</span>
+              <span class="arch-tag">TypeScript</span>
+              <span class="arch-tag">Vite</span>
+              <span class="arch-tag">AudioPlayer</span>
+            </div>
+          </div>
+          <div class="arch-card reveal rd2">
+            <div class="arch-card-header">
+              <div class="arch-card-dot" style="background:var(--accent);"></div>
+              <div class="arch-card-title">Backend — Laravel REST API</div>
+            </div>
+            <p>Gestiona lógica de negocio, autenticación, rutas API y procesamiento de metadatos. Expone endpoints para canciones, álbumes y artistas. Queue workers para tareas asíncronas.</p>
+            <div class="arch-tags">
+              <span class="arch-tag">Laravel 10</span>
+              <span class="arch-tag">PHP 8</span>
+              <span class="arch-tag">Auth service</span>
+              <span class="arch-tag">Media Scanner</span>
+              <span class="arch-tag">Queue</span>
+            </div>
+          </div>
+          <div class="arch-card reveal rd3">
+            <div class="arch-card-header">
+              <div class="arch-card-dot" style="background:var(--amber);"></div>
+              <div class="arch-card-title">Datos y Almacenamiento</div>
+            </div>
+            <p>Archivos multimedia en local o Dropbox. La BD almacena usuarios, canciones, artistas, álbumes, playlists y favoritos. Compatible con MySQL, MariaDB, PostgreSQL y SQLite.</p>
+            <div class="arch-tags">
+              <span class="arch-tag">MySQL 8</span>
+              <span class="arch-tag">MariaDB</span>
+              <span class="arch-tag">PostgreSQL</span>
+              <span class="arch-tag">SQLite</span>
+              <span class="arch-tag">Dropbox</span>
+            </div>
+          </div>
+        </div><!-- /arch-detail-col -->
+
+        <!-- CLOC terminal right -->
+        <div>
         <div class="cloc-terminal reveal rd2">
           <div class="cloc-bar">
             <div class="term-dot td1"></div>
@@ -1493,11 +1590,21 @@ footer {
             <div class="cloc-row"><span class="cloc-lang">YAML</span><span class="cloc-num">12</span><span class="cloc-num">1665</span><span class="cloc-num">1</span><span class="cloc-num">7962</span></div>
             <div class="cloc-row"><span class="cloc-lang">JSON</span><span class="cloc-num">40</span><span class="cloc-num">3</span><span class="cloc-num">0</span><span class="cloc-num">7060</span></div>
             <div class="cloc-row"><span class="cloc-lang">Markdown</span><span class="cloc-num">41</span><span class="cloc-num">939</span><span class="cloc-num">5</span><span class="cloc-num">2421</span></div>
+            <div class="cloc-row"><span class="cloc-lang">SVG</span><span class="cloc-num">36</span><span class="cloc-num">37</span><span class="cloc-num">4</span><span class="cloc-num">1226</span></div>
+            <div class="cloc-row"><span class="cloc-lang">XML</span><span class="cloc-num">3</span><span class="cloc-num">6</span><span class="cloc-num">3</span><span class="cloc-num">247</span></div>
+            <div class="cloc-row"><span class="cloc-lang">Blade</span><span class="cloc-num">9</span><span class="cloc-num">28</span><span class="cloc-num">0</span><span class="cloc-num">148</span></div>
+            <div class="cloc-row"><span class="cloc-lang">HTML</span><span class="cloc-num">1</span><span class="cloc-num">707</span><span class="cloc-num">4106</span><span class="cloc-num">136</span></div>
+            <div class="cloc-row"><span class="cloc-lang">CSS</span><span class="cloc-num">72</span><span class="cloc-num">0</span><span class="cloc-num">0</span><span class="cloc-num">72</span></div>
+            <div class="cloc-row"><span class="cloc-lang">Bourne Shell</span><span class="cloc-num">3</span><span class="cloc-num">10</span><span class="cloc-num">3</span><span class="cloc-num">41</span></div>
+            <div class="cloc-row"><span class="cloc-lang">TOML</span><span class="cloc-num">1</span><span class="cloc-num">5</span><span class="cloc-num">2</span><span class="cloc-num">40</span></div>
+            <div class="cloc-row"><span class="cloc-lang">INI</span><span class="cloc-num">2</span><span class="cloc-num">1</span><span class="cloc-num">0</span><span class="cloc-num">10</span></div>
             <div class="cloc-row cloc-sum-row"><span class="cloc-sum-label">SUM:</span><span class="cloc-num">2376</span><span class="cloc-num">23400</span><span class="cloc-num">9398</span><span class="cloc-num highlight">120465</span></div>
           </div>
-        </div>
-      </div>
-    </div>
+        </div><!-- /cloc-terminal -->
+        </div><!-- /cloc right col -->
+      </div><!-- /arch-bottom-row -->
+    </div><!-- /arch-layout -->
+
   </div>
 </section>
 
@@ -1898,59 +2005,6 @@ footer {
   </div>
 </section>
 
-<!-- ─── EQUIPO ─── -->
-<section id="equipo">
-  <div class="container">
-    <div class="sh reveal">
-      <div class="sh-eyebrow">Equipo</div>
-      <h2>Integrantes del Grupo</h2>
-      <p>Cinco estudiantes de Ingeniería de Sistemas e Informática — UNSA 2026-A. Roles Scrum rotativos por sprint.</p>
-    </div>
-
-    <div class="team-grid">
-      <div class="member-card reveal">
-        <div class="member-avatar" style="background:rgba(79,142,247,0.1);border-color:rgba(79,142,247,0.3);color:var(--accent);">RC</div>
-        <div class="member-name">Romina Giuliana<br/>Camargo Hilachoque</div>
-        <span class="member-role">Integrante 1</span>
-        <div class="member-tags">
-          <span class="member-tag">Scrum Member</span>
-        </div>
-      </div>
-      <div class="member-card reveal rd1">
-        <div class="member-avatar" style="background:rgba(46,168,77,0.1);border-color:rgba(46,168,77,0.3);color:var(--green2);">JH</div>
-        <div class="member-name">José León Enrique<br/>Hatches Curo</div>
-        <span class="member-role">Integrante 2</span>
-        <div class="member-tags">
-          <span class="member-tag">Scrum Member</span>
-        </div>
-      </div>
-      <div class="member-card reveal rd2">
-        <div class="member-avatar" style="background:rgba(155,114,240,0.1);border-color:rgba(155,114,240,0.3);color:var(--purple);">PM</div>
-        <div class="member-name">Paola Adamari<br/>Mayta Quispe</div>
-        <span class="member-role">Integrante 3</span>
-        <div class="member-tags">
-          <span class="member-tag">Scrum Member</span>
-        </div>
-      </div>
-      <div class="member-card reveal rd3">
-        <div class="member-avatar" style="background:rgba(212,148,58,0.1);border-color:rgba(212,148,58,0.3);color:var(--amber);">KC</div>
-        <div class="member-name">Keneth Sebastian<br/>Cutimbo Quispe</div>
-        <span class="member-role">Integrante 4</span>
-        <div class="member-tags">
-          <span class="member-tag">Scrum Member</span>
-        </div>
-      </div>
-      <div class="member-card reveal rd4">
-        <div class="member-avatar" style="background:rgba(229,82,82,0.1);border-color:rgba(229,82,82,0.3);color:var(--red);">JM</div>
-        <div class="member-name">Jose Manuel<br/>Morocco Saico</div>
-        <span class="member-role">Integrante 5</span>
-        <div class="member-tags">
-          <span class="member-tag">Scrum Member</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ─── ENLACES ─── -->
 <section id="enlaces">
