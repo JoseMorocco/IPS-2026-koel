@@ -1,0 +1,8 @@
+# Ignore everything
+*
+
+# Allow specific files
+!/apache.conf
+!/php.ini
+!/koel-entrypoint
+!/koel-init
