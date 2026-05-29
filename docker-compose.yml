@@ -1,6 +1,6 @@
 services:
   koel:
-    image: phanan/koel
+    build: .
     depends_on:
       - database
     ports:
@@ -15,7 +15,6 @@ services:
       - music:/music
       - image_storage:/var/www/html/storage/app/public/images
       - search_index:/var/www/html/storage/search-indexes
-      - ./sql:/docker-entrypoint-initdb.d
 
   database:
     image: mariadb:10.11
