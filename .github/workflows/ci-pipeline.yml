@@ -27,12 +27,11 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Install NPM dependencies
-      run: npm install --legacy-peer-deps
+    - name: Install pnpm
+      run: npm install -g pnpm
+
+    - name: Install frontend dependencies
+      run: pnpm install
 
     - name: Build frontend assets
-      run: npm run build
-
-
-
-
+      run: pnpm run build
