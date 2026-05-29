@@ -27,6 +27,8 @@ ENV FFMPEG_PATH=/usr/bin/ffmpeg \
 
 COPY koel-entrypoint /usr/local/bin/
 COPY koel-init /usr/local/bin/
+RUN chmod +x /usr/local/bin/koel-init
+RUN chmod +x /usr/local/bin/koel-entrypoint
 ENTRYPOINT ["koel-entrypoint"]
 CMD ["apache2-foreground"]
 
