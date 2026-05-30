@@ -1939,7 +1939,72 @@ footer {
     </div>
   </div>
 </section>
-```html
+<!-- ─── RESULTADOS ─── -->
+<section id="resultados">
+  <div class="container">
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Resultados</div>
+      <h2>Sprint 0 — Entregables</h2>
+      <p>Resultados obtenidos tras la ejecución del Sprint 0, enfocados en el establecimiento de la infraestructura de gestión ágil y el análisis técnico del proyecto.</p>
+    </div>
+
+    <div class="results-layout">
+      <div class="metric-card wide reveal">
+        <div class="metric-label">GitHub Projects · Product Backlog</div>
+        <div class="metric-val accent">12 HU</div>
+        <div class="metric-desc">Tablero Kanban implementado con GitHub Projects. Todas las historias de usuario del Sprint 0 registradas como Issues con etiquetas, hitos y asignación de responsables.</div>
+      </div>
+      <div class="metric-card reveal rd1">
+        <div class="metric-label">Complejidad del proyecto</div>
+        <div class="metric-val green">120K</div>
+        <div class="metric-desc">Líneas de código medidas con <span class="mono" style="font-size:11px;">cloc</span> sobre el repositorio principal.</div>
+      </div>
+      <div class="metric-card reveal rd1">
+        <div class="metric-label">GitHub Pages</div>
+        <div class="metric-val" style="color:var(--green2);font-size:20px;margin-top:4px;">Live ✓</div>
+        <div class="metric-desc">Página del proyecto desplegada y accesible públicamente desde GitHub Pages.</div>
+      </div>
+      <div class="metric-card reveal rd2">
+        <div class="metric-label">Docker Infrastructure</div>
+        <div class="metric-val" style="color:var(--cyan);font-size:20px;margin-top:4px;">Ready ✓</div>
+        <div class="metric-desc">Infraestructura Docker identificada. koel/docker con soporte MySQL y PostgreSQL.</div>
+      </div>
+      <div class="metric-card reveal rd2">
+        <div class="metric-label">Subsistemas identificados</div>
+        <div class="metric-val">5</div>
+        <div class="metric-desc">Diagrama de componentes elaborado con 5 capas bien definidas.</div>
+      </div>
+      <div class="metric-card reveal rd3">
+        <div class="metric-label">Issues registrados</div>
+        <div class="metric-val accent">12</div>
+        <div class="metric-desc">Todas las HU registradas con etiquetas y responsables asignados.</div>
+      </div>
+    </div>
+
+    <!-- HU Table -->
+    <div class="hu-table reveal" style="margin-top:8px;">
+      <div class="hu-thead">
+        <div>Código</div>
+        <div>Historia de Usuario</div>
+        <div>Responsable</div>
+      </div>
+      <div class="hu-row"><div class="hu-code">HU01</div><div class="hu-story">Seleccionar el producto open source Koel</div><div class="hu-resp">Equipo</div></div>
+      <div class="hu-row"><div class="hu-code">HU02</div><div class="hu-story">Verificar licencia MIT del repositorio</div><div class="hu-resp">Integrante 1</div></div>
+      <div class="hu-row"><div class="hu-code">HU03</div><div class="hu-story">Identificar el dominio del sistema</div><div class="hu-resp">Integrante 2</div></div>
+      <div class="hu-row"><div class="hu-code">HU04</div><div class="hu-story">Analizar el stack tecnológico de Koel</div><div class="hu-resp">Integrante 3</div></div>
+      <div class="hu-row"><div class="hu-code">HU05</div><div class="hu-story">Identificar módulos o subsistemas principales</div><div class="hu-resp">Integrante 4</div></div>
+      <div class="hu-row"><div class="hu-code">HU06</div><div class="hu-story">Medir complejidad del proyecto con CLOC</div><div class="hu-resp">Integrante 5</div></div>
+      <div class="hu-row"><div class="hu-code">HU07</div><div class="hu-story">Revisar infraestructura Docker del proyecto</div><div class="hu-resp">Integrante 1</div></div>
+      <div class="hu-row"><div class="hu-code">HU08</div><div class="hu-story">Elaborar cronograma general de sprints</div><div class="hu-resp">Integrante 2</div></div>
+      <div class="hu-row"><div class="hu-code">HU09</div><div class="hu-story">Crear Product Backlog inicial</div><div class="hu-resp">Equipo</div></div>
+      <div class="hu-row"><div class="hu-code">HU10</div><div class="hu-story">Crear página informativa en GitHub Pages</div><div class="hu-resp">Equipo</div></div>
+      <div class="hu-row"><div class="hu-code">HU11</div><div class="hu-story">Redactar informe del Hito 1</div><div class="hu-resp">Equipo</div></div>
+      <div class="hu-row"><div class="hu-code">HU12</div><div class="hu-story">Revisar evidencias y capturas del Sprint 0</div><div class="hu-resp">Equipo</div></div>
+    </div>
+  </div>
+</section>
+
+
 <!-- ─── SPRINT 1 ─── -->
 <section id="sprint1" style="padding:80px 0;border-top:1px solid var(--line);">
   <div class="container">
@@ -2233,71 +2298,6 @@ footer {
     </div>
   </div>
 </section>
-<!-- ─── RESULTADOS ─── -->
-<section id="resultados">
-  <div class="container">
-    <div class="sh reveal">
-      <div class="sh-eyebrow">Resultados</div>
-      <h2>Sprint 0 — Entregables</h2>
-      <p>Resultados obtenidos tras la ejecución del Sprint 0, enfocados en el establecimiento de la infraestructura de gestión ágil y el análisis técnico del proyecto.</p>
-    </div>
-
-    <div class="results-layout">
-      <div class="metric-card wide reveal">
-        <div class="metric-label">GitHub Projects · Product Backlog</div>
-        <div class="metric-val accent">12 HU</div>
-        <div class="metric-desc">Tablero Kanban implementado con GitHub Projects. Todas las historias de usuario del Sprint 0 registradas como Issues con etiquetas, hitos y asignación de responsables.</div>
-      </div>
-      <div class="metric-card reveal rd1">
-        <div class="metric-label">Complejidad del proyecto</div>
-        <div class="metric-val green">120K</div>
-        <div class="metric-desc">Líneas de código medidas con <span class="mono" style="font-size:11px;">cloc</span> sobre el repositorio principal.</div>
-      </div>
-      <div class="metric-card reveal rd1">
-        <div class="metric-label">GitHub Pages</div>
-        <div class="metric-val" style="color:var(--green2);font-size:20px;margin-top:4px;">Live ✓</div>
-        <div class="metric-desc">Página del proyecto desplegada y accesible públicamente desde GitHub Pages.</div>
-      </div>
-      <div class="metric-card reveal rd2">
-        <div class="metric-label">Docker Infrastructure</div>
-        <div class="metric-val" style="color:var(--cyan);font-size:20px;margin-top:4px;">Ready ✓</div>
-        <div class="metric-desc">Infraestructura Docker identificada. koel/docker con soporte MySQL y PostgreSQL.</div>
-      </div>
-      <div class="metric-card reveal rd2">
-        <div class="metric-label">Subsistemas identificados</div>
-        <div class="metric-val">5</div>
-        <div class="metric-desc">Diagrama de componentes elaborado con 5 capas bien definidas.</div>
-      </div>
-      <div class="metric-card reveal rd3">
-        <div class="metric-label">Issues registrados</div>
-        <div class="metric-val accent">12</div>
-        <div class="metric-desc">Todas las HU registradas con etiquetas y responsables asignados.</div>
-      </div>
-    </div>
-
-    <!-- HU Table -->
-    <div class="hu-table reveal" style="margin-top:8px;">
-      <div class="hu-thead">
-        <div>Código</div>
-        <div>Historia de Usuario</div>
-        <div>Responsable</div>
-      </div>
-      <div class="hu-row"><div class="hu-code">HU01</div><div class="hu-story">Seleccionar el producto open source Koel</div><div class="hu-resp">Equipo</div></div>
-      <div class="hu-row"><div class="hu-code">HU02</div><div class="hu-story">Verificar licencia MIT del repositorio</div><div class="hu-resp">Integrante 1</div></div>
-      <div class="hu-row"><div class="hu-code">HU03</div><div class="hu-story">Identificar el dominio del sistema</div><div class="hu-resp">Integrante 2</div></div>
-      <div class="hu-row"><div class="hu-code">HU04</div><div class="hu-story">Analizar el stack tecnológico de Koel</div><div class="hu-resp">Integrante 3</div></div>
-      <div class="hu-row"><div class="hu-code">HU05</div><div class="hu-story">Identificar módulos o subsistemas principales</div><div class="hu-resp">Integrante 4</div></div>
-      <div class="hu-row"><div class="hu-code">HU06</div><div class="hu-story">Medir complejidad del proyecto con CLOC</div><div class="hu-resp">Integrante 5</div></div>
-      <div class="hu-row"><div class="hu-code">HU07</div><div class="hu-story">Revisar infraestructura Docker del proyecto</div><div class="hu-resp">Integrante 1</div></div>
-      <div class="hu-row"><div class="hu-code">HU08</div><div class="hu-story">Elaborar cronograma general de sprints</div><div class="hu-resp">Integrante 2</div></div>
-      <div class="hu-row"><div class="hu-code">HU09</div><div class="hu-story">Crear Product Backlog inicial</div><div class="hu-resp">Equipo</div></div>
-      <div class="hu-row"><div class="hu-code">HU10</div><div class="hu-story">Crear página informativa en GitHub Pages</div><div class="hu-resp">Equipo</div></div>
-      <div class="hu-row"><div class="hu-code">HU11</div><div class="hu-story">Redactar informe del Hito 1</div><div class="hu-resp">Equipo</div></div>
-      <div class="hu-row"><div class="hu-code">HU12</div><div class="hu-story">Revisar evidencias y capturas del Sprint 0</div><div class="hu-resp">Equipo</div></div>
-    </div>
-  </div>
-</section>
-
 
 <!-- ─── ENLACES ─── -->
 <section id="enlaces">
