@@ -1046,7 +1046,7 @@ footer {
     </a>
     <div class="nav-sep"></div>
     <span class="nav-tag">UNSA · 2026-A</span>
-    <span class="nav-badge">Sprint 0</span>
+    <span class="nav-badge">Sprint 2</span>
   </div>
   <div class="nav-right">
     <a href="#about" class="nav-link">Proyecto</a>
@@ -1939,7 +1939,300 @@ footer {
     </div>
   </div>
 </section>
+```html
+<!-- ─── SPRINT 1 ─── -->
+<section id="sprint1" style="padding:80px 0;border-top:1px solid var(--line);">
+  <div class="container">
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Sprint 1</div>
+      <h2>Sprint 1 — Configuración e Integración</h2>
+      <p>
+        En el Sprint 1 se avanzó con la configuración técnica inicial del proyecto Koel,
+        integrando Docker, despliegue en la nube, GitHub Actions, pruebas funcionales
+        y actualización de evidencias en GitHub Pages.
+      </p>
+    </div>
 
+    <div class="results-layout">
+      <div class="metric-card wide reveal">
+        <div class="metric-label">Objetivo del Sprint</div>
+        <div class="metric-val accent" style="font-size:24px;">Avance técnico</div>
+        <div class="metric-desc">
+          Configurar el entorno base del proyecto Koel, registrar evidencias del Sprint 1
+          y validar el funcionamiento inicial mediante Docker, nube, CI/CD y pruebas.
+        </div>
+      </div>
+
+      <div class="metric-card reveal rd1">
+        <div class="metric-label">Docker</div>
+        <div class="metric-val green" style="font-size:22px;">Ready ✓</div>
+        <div class="metric-desc">
+          Koel fue levantado localmente mediante Docker Compose para validar su ejecución.
+        </div>
+      </div>
+
+      <div class="metric-card reveal rd1">
+        <div class="metric-label">Nube</div>
+        <div class="metric-val" style="color:var(--cyan);font-size:22px;">AWS EC2</div>
+        <div class="metric-desc">
+          Se trabajó el despliegue de Koel en una instancia remota usando Ubuntu, SSH y Docker.
+        </div>
+      </div>
+
+      <div class="metric-card reveal rd2">
+        <div class="metric-label">CI/CD</div>
+        <div class="metric-val accent" style="font-size:22px;">Actions</div>
+        <div class="metric-desc">
+          Se inició la configuración del pipeline con GitHub Actions para automatizar validaciones.
+        </div>
+      </div>
+
+      <div class="metric-card reveal rd2">
+        <div class="metric-label">Pruebas</div>
+        <div class="metric-val" style="font-size:22px;">Funcionales</div>
+        <div class="metric-desc">
+          Se validaron funciones básicas como acceso, visualización de biblioteca y reproducción.
+        </div>
+      </div>
+
+      <div class="metric-card reveal rd3">
+        <div class="metric-label">GitHub Pages</div>
+        <div class="metric-val green" style="font-size:22px;">Actualizado</div>
+        <div class="metric-desc">
+          Se documentaron las evidencias principales del Sprint 1 en la página del proyecto.
+        </div>
+      </div>
+    </div>
+
+    <div class="devops-layout" style="margin-top:28px;">
+      <div class="tool-panel reveal">
+        <div class="panel-header">
+          Evidencias del Sprint 1
+        </div>
+        <div class="panel-body">
+          <div class="tool-row">
+            <div class="tool-row-icon"></div>
+            <div class="tool-row-info">
+              <h4>Docker local</h4>
+              <p>
+                Se usó Docker Compose para levantar Koel en un entorno reproducible.
+                Evidencias sugeridas: comando docker compose, contenedores activos y pantalla de login.
+              </p>
+            </div>
+          </div>
+
+          <div class="tool-row">
+            <div class="tool-row-icon"></div>
+            <div class="tool-row-info">
+              <h4>Despliegue en la nube</h4>
+              <p>
+                Se configuró una instancia EC2 con Ubuntu Server, conexión SSH, Docker
+                y ejecución remota de Koel.
+              </p>
+            </div>
+          </div>
+
+          <div class="tool-row">
+            <div class="tool-row-icon"></div>
+            <div class="tool-row-info">
+              <h4>GitHub Actions</h4>
+              <p>
+                Se inició el pipeline CI/CD para validar cambios del repositorio mediante workflows.
+              </p>
+            </div>
+          </div>
+
+          <div class="tool-row">
+            <div class="tool-row-icon"></div>
+            <div class="tool-row-info">
+              <h4>Pruebas funcionales</h4>
+              <p>
+                Se revisaron funciones principales de Koel: inicio de sesión, biblioteca musical,
+                carga de canciones y reproducción.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-panel reveal rd1">
+        <div class="panel-header">
+          Flujo técnico trabajado
+        </div>
+        <div class="pipe-body">
+          <div class="pipe-step">
+            <div class="pipe-connector"></div>
+            <div class="pipe-dot-wrap"><div class="pipe-dot done">✓</div></div>
+            <div class="pipe-content">
+              <div class="pipe-head">
+                <span class="pipe-name">Docker Compose local</span>
+                <span class="badge done">done</span>
+              </div>
+              <div class="pipe-desc">
+                Se validó la ejecución inicial de Koel en un entorno local.
+              </div>
+            </div>
+          </div>
+
+          <div class="pipe-step">
+            <div class="pipe-connector"></div>
+            <div class="pipe-dot-wrap"><div class="pipe-dot done">✓</div></div>
+            <div class="pipe-content">
+              <div class="pipe-head">
+                <span class="pipe-name">Despliegue en nube</span>
+                <span class="badge done">done</span>
+              </div>
+              <div class="pipe-desc">
+                Se configuró Koel en un servidor remoto para probar su disponibilidad.
+              </div>
+            </div>
+          </div>
+
+          <div class="pipe-step">
+            <div class="pipe-connector"></div>
+            <div class="pipe-dot-wrap"><div class="pipe-dot active">▶</div></div>
+            <div class="pipe-content">
+              <div class="pipe-head">
+                <span class="pipe-name">Pipeline CI/CD</span>
+                <span class="badge active">en revisión</span>
+              </div>
+              <div class="pipe-desc">
+                Se inició la automatización con GitHub Actions para validar el proyecto.
+              </div>
+            </div>
+          </div>
+
+          <div class="pipe-step">
+            <div class="pipe-dot-wrap"><div class="pipe-dot pending">○</div></div>
+            <div class="pipe-content" style="padding-bottom:0;">
+              <div class="pipe-head">
+                <span class="pipe-name">Mejoras para Sprint 2</span>
+                <span class="badge pending">pendiente</span>
+              </div>
+              <div class="pipe-desc">
+                Completar validaciones automáticas, mejorar evidencias y reforzar pruebas funcionales.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hu-table reveal" style="margin-top:30px;">
+      <div class="hu-thead">
+        <div>Código</div>
+        <div>Historia de Usuario</div>
+        <div>Estado</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU13</div>
+        <div class="hu-story">Gestionar Sprint 1 en GitHub Projects</div>
+        <div class="hu-resp">In progress</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU14</div>
+        <div class="hu-story">Documentar levantamiento de Koel con Docker Compose</div>
+        <div class="hu-resp">Done</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU15</div>
+        <div class="hu-story">Desplegar Koel en la nube</div>
+        <div class="hu-resp">Done</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU16</div>
+        <div class="hu-story">Documentar proceso de despliegue en la nube</div>
+        <div class="hu-resp">Done</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU17</div>
+        <div class="hu-story">Configurar pipeline CI/CD con GitHub Actions</div>
+        <div class="hu-resp">In review</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU18</div>
+        <div class="hu-story">Automatizar validaciones del proyecto en CI</div>
+        <div class="hu-resp">In progress</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU19</div>
+        <div class="hu-story">Testear pipeline CI/CD y registrar resultados</div>
+        <div class="hu-resp">Ready</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU20</div>
+        <div class="hu-story">Ejecutar pruebas funcionales de Koel en la nube</div>
+        <div class="hu-resp">Ready</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU21</div>
+        <div class="hu-story">Validar funcionalidades principales</div>
+        <div class="hu-resp">Ready</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU22</div>
+        <div class="hu-story">Actualizar GitHub Pages con evidencias del Sprint 1</div>
+        <div class="hu-resp">En desarrollo</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU23</div>
+        <div class="hu-story">Preparar Sprint 2 con nuevo Scrum Master</div>
+        <div class="hu-resp">Backlog</div>
+      </div>
+    </div>
+
+    <div class="arch-bottom-row" style="margin-top:28px;">
+      <div class="arch-card reveal">
+        <div class="arch-card-header">
+          <div class="arch-card-dot" style="background:var(--green2);"></div>
+          <div class="arch-card-title">Resultados del Sprint 1</div>
+        </div>
+        <p>
+          Se organizó el Sprint 1 mediante GitHub Projects, se registraron las historias
+          de usuario en GitHub Issues, se levantó Koel con Docker Compose, se avanzó con
+          el despliegue en la nube, se inició la configuración del pipeline CI/CD y se
+          documentaron evidencias en GitHub Pages.
+        </p>
+        <div class="tl-tags">
+          <span class="tl-tag done">✓ Docker</span>
+          <span class="tl-tag done">✓ Nube</span>
+          <span class="tl-tag done">✓ GitHub Projects</span>
+          <span class="tl-tag done">✓ Issues</span>
+          <span class="tl-tag done">✓ Pages</span>
+        </div>
+      </div>
+
+      <div class="arch-card reveal rd1">
+        <div class="arch-card-header">
+          <div class="arch-card-dot" style="background:var(--amber);"></div>
+          <div class="arch-card-title">Pendientes para Sprint 2</div>
+        </div>
+        <p>
+          Para el Sprint 2 queda completar la validación del pipeline CI/CD, registrar
+          resultados de pruebas automatizadas, mejorar la documentación visual, ampliar
+          pruebas funcionales y preparar el avance hacia un producto más estable.
+        </p>
+        <div class="tl-tags">
+          <span class="tl-tag">Pipeline completo</span>
+          <span class="tl-tag">Pruebas automáticas</span>
+          <span class="tl-tag">Burndown chart</span>
+          <span class="tl-tag">Mejor documentación</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ─── RESULTADOS ─── -->
 <section id="resultados">
   <div class="container">
