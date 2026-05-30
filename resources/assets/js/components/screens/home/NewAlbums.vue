@@ -1,6 +1,6 @@
 <template>
   <HomeScreenBlock>
-    <template #header>Latest Albums</template>
+    <template #header>Latest Albums - CI Deploy Check</template>
     <ol
       v-if="loading"
       class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3"
