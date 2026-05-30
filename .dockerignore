@@ -1,8 +1,10 @@
-# Ignore everything
-*
-
-# Allow specific files
-!/apache.conf
-!/php.ini
-!/koel-entrypoint
-!/koel-init
+.git
+.github
+node_modules
+vendor
+.env
+.env.local
+docker-compose.yml
+Dockerfile
+.dockerignore
+README.md
