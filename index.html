@@ -2365,119 +2365,80 @@ footer {
         <div class="hu-resp">GitHub Pages / Scrum Master Sprint 2</div>
       </div>
     </div>
-    <div class="devops-layout" style="margin-top:28px;">
-      <div class="tool-panel reveal">
-        <div class="panel-header">
-          Evidencias del Sprint 1
+  
+<div class="devops-layout" style="margin-top:28px;">
+  <div class="tool-panel reveal">
+    <div class="panel-header">
+      Evidencias del Sprint 1
+    </div>
+
+    <div class="panel-body">
+      <div class="tool-row">
+        <div class="tool-row-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="8" rx="2"></rect>
+            <path d="M7 11V7h4v4"></path>
+            <path d="M13 11V5h4v6"></path>
+          </svg>
         </div>
-        <div class="panel-body">
-          <div class="tool-row">
-            <div class="tool-row-icon"></div>
-            <div class="tool-row-info">
-              <h4>Docker local</h4>
-              <p>
-                Se usó Docker Compose para levantar Koel en un entorno reproducible.
-                Evidencias sugeridas: comando docker compose, contenedores activos y pantalla de login.
-              </p>
-            </div>
-          </div>
-
-          <div class="tool-row">
-            <div class="tool-row-icon"></div>
-            <div class="tool-row-info">
-              <h4>Despliegue en la nube</h4>
-              <p>
-                Se configuró una instancia EC2 con Ubuntu Server, conexión SSH, Docker
-                y ejecución remota de Koel.
-              </p>
-            </div>
-          </div>
-
-          <div class="tool-row">
-            <div class="tool-row-icon"></div>
-            <div class="tool-row-info">
-              <h4>GitHub Actions</h4>
-              <p>
-                Se inició el pipeline CI/CD para validar cambios del repositorio mediante workflows.
-              </p>
-            </div>
-          </div>
-
-          <div class="tool-row">
-            <div class="tool-row-icon"></div>
-            <div class="tool-row-info">
-              <h4>Pruebas funcionales</h4>
-              <p>
-                Se revisaron funciones principales de Koel: inicio de sesión, biblioteca musical,
-                carga de canciones y reproducción.
-              </p>
-            </div>
-          </div>
+        <div class="tool-row-info">
+          <h4>Docker local</h4>
+          <p>
+            Se usó Docker Compose para levantar Koel en un entorno reproducible,
+            verificando los contenedores activos y el acceso inicial a la aplicación.
+          </p>
         </div>
       </div>
 
-      <div class="pipeline-panel reveal rd1">
-        <div class="panel-header">
-          Flujo técnico trabajado
+      <div class="tool-row">
+        <div class="tool-row-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.5 19H7a5 5 0 1 1 .8-9.9A7 7 0 0 1 21 12.5a4 4 0 0 1-3.5 6.5z"></path>
+          </svg>
         </div>
-        <div class="pipe-body">
-          <div class="pipe-step">
-            <div class="pipe-connector"></div>
-            <div class="pipe-dot-wrap"><div class="pipe-dot done">✓</div></div>
-            <div class="pipe-content">
-              <div class="pipe-head">
-                <span class="pipe-name">Docker Compose local</span>
-                <span class="badge done">done</span>
-              </div>
-              <div class="pipe-desc">
-                Se validó la ejecución inicial de Koel en un entorno local.
-              </div>
-            </div>
-          </div>
+        <div class="tool-row-info">
+          <h4>Despliegue en la nube</h4>
+          <p>
+            Se configuró una instancia EC2 con Ubuntu Server, conexión SSH, Docker
+            y ejecución remota de Koel mediante una IP pública.
+          </p>
+        </div>
+      </div>
 
-          <div class="pipe-step">
-            <div class="pipe-connector"></div>
-            <div class="pipe-dot-wrap"><div class="pipe-dot done">✓</div></div>
-            <div class="pipe-content">
-              <div class="pipe-head">
-                <span class="pipe-name">Despliegue en nube</span>
-                <span class="badge done">done</span>
-              </div>
-              <div class="pipe-desc">
-                Se configuró Koel en un servidor remoto para probar su disponibilidad.
-              </div>
-            </div>
-          </div>
+      <div class="tool-row">
+        <div class="tool-row-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5z"></path>
+            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1A2 2 0 1 1 7.1 4l.1.1a1.7 1.7 0 0 0 1.9.3h.1A1.7 1.7 0 0 0 10 2.8V3a2 2 0 1 1 4 0v-.1a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 20 6.9l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path>
+          </svg>
+        </div>
+        <div class="tool-row-info">
+          <h4>GitHub Actions</h4>
+          <p>
+            Se configuró un pipeline CI/CD para validar cambios del repositorio,
+            corregir errores de dependencias y obtener ejecuciones satisfactorias.
+          </p>
+        </div>
+      </div>
 
-          <div class="pipe-step">
-            <div class="pipe-connector"></div>
-            <div class="pipe-dot-wrap"><div class="pipe-dot active">▶</div></div>
-            <div class="pipe-content">
-              <div class="pipe-head">
-                <span class="pipe-name">Pipeline CI/CD</span>
-                <span class="badge active">en revisión</span>
-              </div>
-              <div class="pipe-desc">
-                Se inició la automatización con GitHub Actions para validar el proyecto.
-              </div>
-            </div>
-          </div>
-
-          <div class="pipe-step">
-            <div class="pipe-dot-wrap"><div class="pipe-dot pending">○</div></div>
-            <div class="pipe-content" style="padding-bottom:0;">
-              <div class="pipe-head">
-                <span class="pipe-name">Mejoras para Sprint 2</span>
-                <span class="badge pending">pendiente</span>
-              </div>
-              <div class="pipe-desc">
-                Completar validaciones automáticas, mejorar evidencias y reforzar pruebas funcionales.
-              </div>
-            </div>
-          </div>
+      <div class="tool-row">
+        <div class="tool-row-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M9 12l2 2 4-4"></path>
+          </svg>
+        </div>
+        <div class="tool-row-info">
+          <h4>Pruebas funcionales</h4>
+          <p>
+            Se revisaron funciones principales de Koel, como inicio de sesión,
+            biblioteca musical, carga de canciones y reproducción.
+          </p>
         </div>
       </div>
     </div>
+  </div>
+
 
 <!-- ─── Evidencias de GIT HUB Actions ─── -->
 
