@@ -1,6 +1,6 @@
 services:
   koel:
-    build: .
+    image: leonhatches/koel-app:latest
     depends_on:
       - database
     ports:
