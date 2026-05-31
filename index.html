@@ -2633,14 +2633,15 @@ footer {
   </div>
 </div>
 
+
 <!-- ─── Carrusel de evidencias Sprint 1 ─── -->
 <div class="sh reveal" style="margin-top:42px;margin-bottom:24px;">
   <div class="sh-eyebrow">Evidencias</div>
   <h3>Evidencias principales del Sprint 1</h3>
   <p>
     Se presentan las capturas más importantes del Sprint 1: Docker local,
-    despliegue en AWS EC2, configuración del pipeline CI/CD con GitHub Actions
-    y pruebas funcionales realizadas sobre Koel.
+    despliegue en AWS EC2, configuración del pipeline CI/CD con GitHub Actions,
+    despliegue automatizado y pruebas funcionales realizadas sobre Koel.
   </p>
 </div>
 
@@ -2650,136 +2651,179 @@ footer {
   <div class="carousel-window">
     <div class="carousel-track" id="evidenceTrack">
 
-      <div class="carousel-slide">
-        <img src="assets/img/sprint1/codigofinal.png" alt="Archivo YAML del pipeline CI/CD">
-        <div class="carousel-caption">
-          <h4>Workflow YAML</h4>
-          <p>Archivo <span class="mono">ci-pipeline.yml</span> configurado para ejecutar validaciones automáticas con GitHub Actions.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="assets/img/sprint1/actions4.png" alt="Error del pipeline en GitHub Actions">
-        <div class="carousel-caption">
-          <h4>Ejecución con errores</h4>
-          <p>Primera ejecución del pipeline, donde se detectaron errores relacionados con dependencias y configuración del entorno.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="assets/img/sprint1/actions5.png" alt="Pipeline ejecutado correctamente en GitHub Actions">
-        <div class="carousel-caption">
-          <h4>Pipeline corregido</h4>
-          <p>Ejecuciones satisfactorias del workflow después de ajustar la configuración del pipeline CI/CD.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="assets/img/sprint1/pantalla_inicio.jpeg" alt="Koel desplegado en AWS EC2">
-        <div class="carousel-caption">
-          <h4>Koel en AWS EC2</h4>
-          <p>Pantalla de inicio de sesión de Koel ejecutándose desde una instancia EC2, evidenciando el despliegue en la nube.</p>
-        </div>
-      </div>
-
+      <!-- 1. Docker local -->
       <div class="carousel-slide">
         <img src="assets/img/sprint1/docker-local.png" alt="Contenedores de Koel ejecutándose en Docker Desktop">
         <div class="carousel-caption">
           <h4>Docker local</h4>
-          <p>Contenedores de Koel ejecutándose en Docker Desktop, incluyendo el servicio de base de datos y la aplicación principal.</p>
+          <p>
+            Contenedores de Koel ejecutándose en Docker Desktop, incluyendo el servicio de base de datos
+            y la aplicación principal.
+          </p>
         </div>
       </div>
 
+      <!-- 2. AWS EC2 panel -->
       <div class="carousel-slide">
         <img src="assets/img/sprint1/aws-ec2-dashboard.png" alt="Panel de AWS EC2">
         <div class="carousel-caption">
           <h4>Panel AWS EC2</h4>
-          <p>Panel de AWS EC2 utilizado para gestionar la instancia destinada al despliegue de Koel en la nube.</p>
+          <p>
+            Panel de AWS EC2 utilizado para gestionar la instancia destinada al despliegue de Koel en la nube.
+          </p>
         </div>
       </div>
-      
-<div class="carousel-slide">
-  <img src="assets/img/sprint1/deploy-ec2-oscuro.png" alt="Workflow de despliegue hacia AWS EC2">
-  <div class="carousel-caption">
-    <h4>Workflow de despliegue a EC2</h4>
-    <p>
-      Archivo de GitHub Actions configurado para construir la imagen Docker,
-      sincronizar el repositorio y desplegar Koel en la instancia AWS EC2.
-    </p>
-  </div>
-</div>
 
-<div class="carousel-slide">
-  <img src="assets/img/sprint1/codigomodificado2.png" alt="Modificación realizada en el código de Koel">
-  <div class="carousel-caption">
-    <h4>Cambio realizado en el código</h4>
-    <p>
-      Evidencia del cambio aplicado en el componente de Koel, utilizado para comprobar
-      que las modificaciones del repositorio puedan reflejarse en la aplicación desplegada.
-    </p>
-  </div>
-</div>
-
-<div class="carousel-slide">
-  <img src="assets/img/sprint1/testcd02.png" alt="Ejecución correcta del pipeline CD">
-  <div class="carousel-caption">
-    <h4>Pipeline CD ejecutado correctamente</h4>
-    <p>
-      Ejecución satisfactoria de los workflows después de integrar permisos,
-      pruebas y despliegue automatizado hacia AWS EC2.
-    </p>
-  </div>
-</div>
-
-<div class="carousel-slide">
-  <img src="assets/img/sprint1/cambio-ec2-exitoso.png" alt="Cambio reflejado en Koel desplegado en EC2">
-  <div class="carousel-caption">
-    <h4>Cambio visible en EC2</h4>
-    <p>
-      Validación final donde se observa que el cambio realizado en el repositorio
-      se refleja correctamente en Koel desplegado en la nube.
-    </p>
-  </div>
-</div>
-
-
+      <!-- 3. Koel en EC2 -->
       <div class="carousel-slide">
-        <img src="assets/img/sprint1/prueba-reproduccion.png" alt="Reproducción musical en Koel">
+        <img src="assets/img/sprint1/pantalla_inicio.jpeg" alt="Koel desplegado en AWS EC2">
         <div class="carousel-caption">
-          <h4>Prueba de reproducción</h4>
-          <p>Se verificó que Koel permita reproducir canciones desde la biblioteca musical, mostrando el reproductor activo y la canción seleccionada.</p>
+          <h4>Koel en AWS EC2</h4>
+          <p>
+            Pantalla de inicio de sesión de Koel ejecutándose desde una instancia EC2,
+            evidenciando el despliegue de la aplicación en la nube.
+          </p>
         </div>
       </div>
 
+      <!-- 4. Workflow YAML -->
       <div class="carousel-slide">
-        <img src="assets/img/sprint1/prueba-subida-cancion.png" alt="Subida de canción en Koel">
+        <img src="assets/img/sprint1/codigofinal.png" alt="Archivo YAML del pipeline CI/CD">
         <div class="carousel-caption">
-          <h4>Prueba de carga de canciones</h4>
-          <p>Se comprobó que el administrador pueda subir archivos musicales desde la interfaz web de Koel.</p>
+          <h4>Workflow YAML</h4>
+          <p>
+            Archivo <span class="mono">ci-pipeline.yml</span> configurado para ejecutar validaciones
+            automáticas con GitHub Actions.
+          </p>
         </div>
       </div>
 
+      <!-- 5. Error del pipeline -->
       <div class="carousel-slide">
-        <img src="assets/img/sprint1/prueba-crear-usuario.png" alt="Creación de usuario en Koel">
+        <img src="assets/img/sprint1/actions4.png" alt="Error del pipeline en GitHub Actions">
         <div class="carousel-caption">
-          <h4>Prueba de administración de usuarios</h4>
-          <p>Se validó que la cuenta administradora pueda crear nuevos usuarios y asignarles un rol dentro del sistema.</p>
+          <h4>Ejecución con errores</h4>
+          <p>
+            Primera ejecución del pipeline, donde se detectaron errores relacionados con dependencias
+            y configuración del entorno.
+          </p>
         </div>
       </div>
 
+      <!-- 6. Pipeline corregido -->
       <div class="carousel-slide">
-        <img src="assets/img/sprint1/prueba-radio-online.png" alt="Registro de radio online en Koel">
+        <img src="assets/img/sprint1/actions5.png" alt="Pipeline ejecutado correctamente en GitHub Actions">
         <div class="carousel-caption">
-          <h4>Prueba de radio online</h4>
-          <p>Se agregó una nueva estación de radio online para verificar la integración de contenido multimedia externo dentro de Koel.</p>
+          <h4>Pipeline corregido</h4>
+          <p>
+            Ejecuciones satisfactorias del workflow después de ajustar la configuración del pipeline CI/CD.
+          </p>
         </div>
       </div>
 
+      <!-- 7. Workflow de despliegue a EC2 -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/deploy-ec2-oscuro.png" alt="Workflow de despliegue hacia AWS EC2">
+        <div class="carousel-caption">
+          <h4>Workflow de despliegue a EC2</h4>
+          <p>
+            Archivo de GitHub Actions configurado para construir la imagen Docker,
+            sincronizar el repositorio y desplegar Koel en la instancia AWS EC2.
+          </p>
+        </div>
+      </div>
+
+      <!-- 8. Cambio en código -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/codigomodificado2.png" alt="Modificación realizada en el código de Koel">
+        <div class="carousel-caption">
+          <h4>Cambio realizado en el código</h4>
+          <p>
+            Evidencia del cambio aplicado en el componente de Koel para comprobar que las modificaciones
+            del repositorio puedan reflejarse en la aplicación desplegada.
+          </p>
+        </div>
+      </div>
+
+      <!-- 9. Pipeline CD correcto -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/testcd02.png" alt="Ejecución correcta del pipeline CD">
+        <div class="carousel-caption">
+          <h4>Pipeline CD ejecutado correctamente</h4>
+          <p>
+            Ejecución satisfactoria de los workflows después de integrar permisos,
+            pruebas y despliegue automatizado hacia AWS EC2.
+          </p>
+        </div>
+      </div>
+
+      <!-- 10. Cambio visible en EC2 -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/cambio-ec2-exitoso.png" alt="Cambio reflejado en Koel desplegado en EC2">
+        <div class="carousel-caption">
+          <h4>Cambio visible en EC2</h4>
+          <p>
+            Validación final donde se observa que el cambio realizado en el repositorio
+            se refleja correctamente en Koel desplegado en la nube.
+          </p>
+        </div>
+      </div>
+
+      <!-- 11. Interfaz principal -->
       <div class="carousel-slide">
         <img src="assets/img/sprint1/prueba-home-koel.png" alt="Pantalla principal de Koel">
         <div class="carousel-caption">
           <h4>Prueba de interfaz principal</h4>
-          <p>Se revisó la pantalla principal de Koel, validando la visualización de canciones recientes, álbumes y acceso general a la biblioteca musical.</p>
+          <p>
+            Se revisó la pantalla principal de Koel, validando la visualización de canciones recientes,
+            álbumes y acceso general a la biblioteca musical.
+          </p>
+        </div>
+      </div>
+
+      <!-- 12. Reproducción -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/prueba-reproduccion.png" alt="Reproducción musical en Koel">
+        <div class="carousel-caption">
+          <h4>Prueba de reproducción</h4>
+          <p>
+            Se verificó que Koel permita reproducir canciones desde la biblioteca musical,
+            mostrando el reproductor activo y la canción seleccionada.
+          </p>
+        </div>
+      </div>
+
+      <!-- 13. Subida de canción -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/prueba-subida-cancion.png" alt="Subida de canción en Koel">
+        <div class="carousel-caption">
+          <h4>Prueba de carga de canciones</h4>
+          <p>
+            Se comprobó que el administrador pueda subir archivos musicales desde la interfaz web de Koel.
+          </p>
+        </div>
+      </div>
+
+      <!-- 14. Crear usuario -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/prueba-crear-usuario.png" alt="Creación de usuario en Koel">
+        <div class="carousel-caption">
+          <h4>Prueba de administración de usuarios</h4>
+          <p>
+            Se validó que la cuenta administradora pueda crear nuevos usuarios y asignarles un rol dentro del sistema.
+          </p>
+        </div>
+      </div>
+
+      <!-- 15. Radio online -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/prueba-radio-online.png" alt="Registro de radio online en Koel">
+        <div class="carousel-caption">
+          <h4>Prueba de radio online</h4>
+          <p>
+            Se agregó una nueva estación de radio online para verificar la integración de contenido multimedia
+            externo dentro de Koel.
+          </p>
         </div>
       </div>
 
@@ -2800,8 +2844,13 @@ footer {
     <button class="dot" onclick="goEvidenceSlide(8)"></button>
     <button class="dot" onclick="goEvidenceSlide(9)"></button>
     <button class="dot" onclick="goEvidenceSlide(10)"></button>
+    <button class="dot" onclick="goEvidenceSlide(11)"></button>
+    <button class="dot" onclick="goEvidenceSlide(12)"></button>
+    <button class="dot" onclick="goEvidenceSlide(13)"></button>
+    <button class="dot" onclick="goEvidenceSlide(14)"></button>
   </div>
 </div>
+
 
 
     
