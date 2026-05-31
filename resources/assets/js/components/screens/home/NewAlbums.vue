@@ -1,6 +1,6 @@
 <template>
   <HomeScreenBlock>
-    <template #header>Latest Albums - CI Deploy Check</template>
+    <template #header>Latest Albums - Este es un Segundo Test De CD</template>
     <ol
       v-if="loading"
       class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3"
