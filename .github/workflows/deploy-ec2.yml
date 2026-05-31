@@ -26,6 +26,7 @@ jobs:
           context: .
           push: true
           tags: leonhatches/koel-app:latest
+          no-cache: true
 
       - name: Deploy application on EC2
         uses: appleboy/ssh-action@v1.0.3
@@ -36,8 +37,9 @@ jobs:
           script: |
             cd /home/ubuntu/IPS-2026-koel
 
-            echo "Pulling latest changes from GitHub..."
-            git pull origin master
+            echo "Discarding local changes and synchronizing with master..."
+            git fetch --all
+            git reset --hard origin/master
 
             echo "Downloading new image from Docker Hub..."
             docker compose pull
