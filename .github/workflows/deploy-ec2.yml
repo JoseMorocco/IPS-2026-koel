@@ -42,10 +42,9 @@ jobs:
 
             cd /home/ubuntu/IPS-2026-koel
 
-            echo "Autenticando git con token y sincronizando master..."
-            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/JoseMorocco/IPS-2026-koel.git"
-            git fetch --all
-            git reset --hard origin/master
+            echo "Sincronizando con master desde GitHub..."
+            git fetch "https://x-access-token:${GITHUB_TOKEN}@github.com/JoseMorocco/IPS-2026-koel.git" master
+            git reset --hard FETCH_HEAD
 
             echo "Descargando imagen actualizada de Docker Hub..."
             docker compose pull
