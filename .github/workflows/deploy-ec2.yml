@@ -30,24 +30,30 @@ jobs:
 
       - name: Deploy application on EC2
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          envs: GITHUB_TOKEN
           script: |
+            set -e
+
             cd /home/ubuntu/IPS-2026-koel
 
-            echo "Discarding local changes and synchronizing with master..."
+            echo "Autenticando git con token y sincronizando master..."
+            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/JoseMorocco/IPS-2026-koel.git"
             git fetch --all
             git reset --hard origin/master
 
-            echo "Downloading new image from Docker Hub..."
+            echo "Descargando imagen actualizada de Docker Hub..."
             docker compose pull
 
-            echo "Starting updated containers..."
+            echo "Levantando contenedores actualizados..."
             docker compose up -d
 
-            echo "Cleaning unused Docker images..."
+            echo "Limpiando imágenes Docker no utilizadas..."
             docker image prune -f
 
-            echo "Deployment completed successfully."
+            echo "Deployment completado exitosamente."
