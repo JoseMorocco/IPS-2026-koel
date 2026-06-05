@@ -85,6 +85,17 @@ Required when `STORAGE_DRIVER=sftp`.
 | `ALLOW_DOWNLOAD` | Whether to allow song downloading. Multi-song downloads require the `zip` PHP extension. | `true` |
 | `DOWNLOAD_LIMIT` | The maximum number of songs allowed in a single download. `0` means unlimited. Single-song downloads are always allowed. | `0` |
 
+## YouTube Downloader
+
+Koel can download audio directly from YouTube using [yt-dlp](https://github.com/yt-dlp/yt-dlp). The official Docker image includes yt-dlp pre-installed.
+
+| Variable | Description | Default |
+|---|---|---|
+| `YTDLP_PATH` | Full path to the `yt-dlp` binary. | `/usr/local/bin/yt-dlp` |
+| `YTDLP_MAX_FILESIZE` | Maximum file size allowed for a YouTube download (uses yt-dlp format, e.g. `200m`, `1g`). Prevents accidentally downloading very long videos. | `200m` |
+| `YTDLP_TIMEOUT` | Maximum time in seconds allowed for a single YouTube download operation. | `300` |
+
+
 ## Service Integrations
 
 Also see [Service Integrations](service-integrations) for detailed setup instructions.

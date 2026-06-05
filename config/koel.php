@@ -176,6 +176,21 @@ return [
         'limit' => max((int) env('DOWNLOAD_LIMIT', 0), 0),
     ],
 
+    /*
+     |--------------------------------------------------------------------------
+     | YouTube Downloader
+     |--------------------------------------------------------------------------
+     |
+     | Configuration for downloading audio from YouTube via yt-dlp.
+     |
+     */
+
+    'youtube_downloader' => [
+        'ytdlp_path' => env('YTDLP_PATH', '/usr/local/bin/yt-dlp'),
+        'max_filesize' => env('YTDLP_MAX_FILESIZE', '200m'),
+        'timeout' => (int) env('YTDLP_TIMEOUT', 300),
+    ],
+
     'media_browser' => [
         'enabled' => env('MEDIA_BROWSER_ENABLED', false),
     ],

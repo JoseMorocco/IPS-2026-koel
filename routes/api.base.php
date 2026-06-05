@@ -13,6 +13,7 @@ use App\Http\Controllers\API\Artist\FetchArtistEventsController;
 use App\Http\Controllers\API\Artist\FetchArtistInformationController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DisconnectFromLastfmController;
+use App\Http\Controllers\API\DownloadFromYouTubeController;
 use App\Http\Controllers\API\Embed\EmbedController;
 use App\Http\Controllers\API\Embed\EmbedOptionsController;
 use App\Http\Controllers\API\ExcerptSearchController;
@@ -217,6 +218,9 @@ Route::prefix('api')
             if (YouTube::enabled()) {
                 Route::get('youtube/search/song/{song}', SearchYouTubeController::class);
             }
+
+            Route::post('youtube/download', DownloadFromYouTubeController::class)
+                ->middleware('throttle:5,1');
 
             // Media information routes
             Route::get('albums/{album}/information', FetchAlbumInformationController::class);

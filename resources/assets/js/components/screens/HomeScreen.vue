@@ -13,6 +13,7 @@
     </ScreenEmptyState>
 
     <div v-else class="home-sections space-y-12">
+      <YouTubeDownloader data-testid="youtube-downloader" />
       <RecentlyPlayedPlayables :loading data-testid="recently-played-songs" />
       <NewAlbums :loading data-testid="recently-added-albums" />
       <SimilarSongs :loading data-testid="similar-songs" />
@@ -50,6 +51,7 @@ import NewArtists from '@/components/screens/home/NewArtists.vue'
 import LeastPlayedSongs from '@/components/screens/home/LeastPlayedSongs.vue'
 import RandomSongs from '@/components/screens/home/RandomSongs.vue'
 import SimilarSongs from '@/components/screens/home/SimilarSongs.vue'
+import YouTubeDownloader from '@/components/screens/home/YouTubeDownloader.vue'
 import ScreenHeader from '@/components/ui/ScreenHeader.vue'
 import ScreenEmptyState from '@/components/ui/ScreenEmptyState.vue'
 import BtnScrollToTop from '@/components/ui/BtnScrollToTop.vue'
