@@ -19,9 +19,12 @@ class YouTubeDownloadService
     private Closure $processFactory;
 
     public function __construct(
-        #[Config('koel.youtube_downloader.ytdlp_path')] private readonly string $ytdlpPath,
-        #[Config('koel.youtube_downloader.max_filesize')] private readonly string $maxFilesize,
-        #[Config('koel.youtube_downloader.timeout')] private readonly int $timeout,
+        #[Config('koel.youtube_downloader.ytdlp_path')]
+        private readonly string $ytdlpPath,
+        #[Config('koel.youtube_downloader.max_filesize')]
+        private readonly string $maxFilesize,
+        #[Config('koel.youtube_downloader.timeout')]
+        private readonly int $timeout,
     ) {
         $this->processFactory = fn (array $command) => new Process($command, timeout: $this->timeout);
     }
@@ -43,23 +46,26 @@ class YouTubeDownloadService
         $process = ($this->processFactory)([
             $this->ytdlpPath,
             '--extract-audio',
-            '--audio-format', 'mp3',
-            '--audio-quality', '0',
+            '--audio-format',
+            'mp3',
+            '--audio-quality',
+            '0',
             '--embed-thumbnail',
             '--add-metadata',
             '--no-playlist',
-            '--max-filesize', $this->maxFilesize,
-            '--output', $outputTemplate,
-            '--print', 'after_move:filepath',
+            '--max-filesize',
+            $this->maxFilesize,
+            '--output',
+            $outputTemplate,
+            '--print',
+            'after_move:filepath',
             $url,
         ]);
 
         try {
             $process->run();
         } catch (ProcessTimedOutException) {
-            throw new RuntimeException(
-                sprintf('YouTube download timed out after %d seconds.', $this->timeout)
-            );
+            throw new RuntimeException(sprintf('YouTube download timed out after %d seconds.', $this->timeout));
         }
 
         if (!$process->isSuccessful()) {
@@ -70,7 +76,7 @@ class YouTubeDownloadService
 
         throw_unless(
             $outputPath && File::exists($outputPath),
-            new RuntimeException('Download completed but the output MP3 file could not be located.')
+            new RuntimeException('Download completed but the output MP3 file could not be located.'),
         );
 
         return $outputPath;

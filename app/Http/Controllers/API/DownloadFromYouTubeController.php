@@ -30,9 +30,7 @@ class DownloadFromYouTubeController extends Controller
 
         try {
             /** @var Song|PendingDispatch $dispatchedResult */
-            $dispatchedResult = Dispatcher::dispatch(
-                new DownloadFromYouTubeJob($request->url, $user)
-            );
+            $dispatchedResult = Dispatcher::dispatch(new DownloadFromYouTubeJob($request->url, $user));
 
             if ($dispatchedResult instanceof Song) {
                 $song = $songRepository->getOne($dispatchedResult->id);

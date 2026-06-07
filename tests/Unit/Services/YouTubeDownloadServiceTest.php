@@ -90,11 +90,7 @@ class YouTubeDownloadServiceTest extends TestCase
 
     private function makeService(?Process $processMock = null): YouTubeDownloadService
     {
-        $service = new YouTubeDownloadService(
-            ytdlpPath: '/usr/local/bin/yt-dlp',
-            maxFilesize: '200m',
-            timeout: 300,
-        );
+        $service = new YouTubeDownloadService(ytdlpPath: '/usr/local/bin/yt-dlp', maxFilesize: '200m', timeout: 300);
 
         if ($processMock !== null) {
             // Inject a pre-built process mock via closure binding to bypass real Process creation
@@ -103,7 +99,7 @@ class YouTubeDownloadServiceTest extends TestCase
                     $svc->processFactory = static fn (array $command) => $proc;
                 },
                 null,
-                YouTubeDownloadService::class
+                YouTubeDownloadService::class,
             );
 
             $injector($service, $processMock);
