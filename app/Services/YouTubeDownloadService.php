@@ -15,7 +15,7 @@ class YouTubeDownloadService
 {
     private const DOWNLOAD_SUBDIRECTORY = '__KOEL_YT_DOWNLOADS__';
 
-    /** @var Closure(): Process */
+    /** @var Closure(array<string>): Process */
     private Closure $processFactory;
 
     public function __construct(
