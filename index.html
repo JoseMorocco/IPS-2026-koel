@@ -105,6 +105,9 @@ nav {
   color: var(--accent);
   letter-spacing: 0.05em;
 }
+.nav-badge.done { background: rgba(46,168,77,0.1); color: var(--green2); border: 1px solid rgba(46,168,77,0.25); }
+.nav-badge.active { background: rgba(79,142,247,0.1); color: var(--accent); border: 1px solid rgba(79,142,247,0.25); }
+.nav-badge.pending { background: rgba(61,77,92,0.3); color: var(--text3); border: 1px solid var(--line); }
 
 .nav-right { display: flex; align-items: center; gap: 6px; }
 
@@ -1162,7 +1165,11 @@ footer {
     </a>
     <div class="nav-sep"></div>
     <span class="nav-tag">UNSA · 2026-A</span>
-    <span class="nav-badge">Sprint 1</span>
+    <span class="nav-badge done">Sprint 0</span>
+    <span class="nav-badge done">Sprint 1</span>
+    <span class="nav-badge done">Sprint 2</span>
+    <span class="nav-badge active">Sprint 3</span>
+    <span class="nav-badge pending">Sprint 4</span>
   </div>
   <div class="nav-right">
     <a href="#about" class="nav-link">Proyecto</a>
