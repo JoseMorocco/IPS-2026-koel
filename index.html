@@ -251,7 +251,6 @@ h1 .grad {
   display: flex; gap: 28px; margin-top: 36px;
 }
 
-.meta-item {}
 .meta-val {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 20px; font-weight: 600;
@@ -2798,10 +2797,11 @@ footer {
     </div>
   </div>
 </div>
-
+</div>
+</section>
 
 <!-- ─── SPRINT 2 ─── -->
-<section id="sprint1" style="padding:80px 0;border-top:1px solid var(--line);">
+<section id="sprint2" style="padding:80px 0;border-top:1px solid var(--line);">
   <div class="container">
     <div class="sh reveal">
       <div class="sh-eyebrow">Sprint 2</div>
@@ -3271,9 +3271,13 @@ footer {
     </div>
   </div>
 </div>
-
+</div>
+</div>
+</section>
 
 <!-- ─── Carrusel de evidencias Sprint 1 ─── -->
+<section id="carrusel-sprint1" style="padding:80px 0;border-top:1px solid var(--line);">
+<div class="container">
 <div class="sh reveal" style="margin-top:42px;margin-bottom:24px;">
   <div class="sh-eyebrow">Evidencias</div>
   <h3>Evidencias principales del Sprint 1</h3>
@@ -3489,11 +3493,236 @@ footer {
     <button class="dot" onclick="goEvidenceSlide(14)"></button>
   </div>
 </div>
+</div>
+</section>
 
 
+<!-- ─── Carrusel de evidencias Sprint 2 ─── -->
+<section id="carrusel-sprint2" style="padding:80px 0;border-top:1px solid var(--line);">
+<div class="container">
+<div class="sh reveal" style="margin-top:42px;margin-bottom:24px;">
+  <div class="sh-eyebrow">Evidencias</div>
+  <h3>Evidencias principales del Sprint 2</h3>
+  <p>
+    Se presentan las capturas más importantes del Sprint 1: Docker local,
+    despliegue en AWS EC2, configuración del pipeline CI/CD con GitHub Actions,
+    despliegue automatizado y pruebas funcionales realizadas sobre Koel.
+  </p>
+</div>
+
+<div class="evidence-carousel reveal">
+  <button class="carousel-btn prev" onclick="moveEvidenceSlide2(-1)">‹</button>
+
+  <div class="carousel-window">
+    <div class="carousel-track" id="evidenceTrack2">
+
+      <!-- 1. Docker local -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/docker-local.png" alt="Contenedores de Koel ejecutándose en Docker Desktop">
+        <div class="carousel-caption">
+          <h4>Docker local</h4>
+          <p>
+            Contenedores de Koel ejecutándose en Docker Desktop, incluyendo el servicio de base de datos
+            y la aplicación principal.
+          </p>
+        </div>
+      </div>
+
+      <!-- 2. AWS EC2 panel -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/aws-ec2-dashboard.png" alt="Panel de AWS EC2">
+        <div class="carousel-caption">
+          <h4>Panel AWS EC2</h4>
+          <p>
+            Panel de AWS EC2 utilizado para gestionar la instancia destinada al despliegue de Koel en la nube.
+          </p>
+        </div>
+      </div>
+
+      <!-- 3. Koel en EC2 -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/pantalla_inicio.jpeg" alt="Koel desplegado en AWS EC2">
+        <div class="carousel-caption">
+          <h4>Koel en AWS EC2</h4>
+          <p>
+            Pantalla de inicio de sesión de Koel ejecutándose desde una instancia EC2,
+            evidenciando el despliegue de la aplicación en la nube.
+          </p>
+        </div>
+      </div>
+
+      <!-- 4. Workflow YAML -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/codigofinal.png" alt="Archivo YAML del pipeline CI/CD">
+        <div class="carousel-caption">
+          <h4>Workflow YAML</h4>
+          <p>
+            Archivo <span class="mono">ci-pipeline.yml</span> configurado para ejecutar validaciones
+            automáticas con GitHub Actions.
+          </p>
+        </div>
+      </div>
+
+      <!-- 5. Error del pipeline -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/actions4.png" alt="Error del pipeline en GitHub Actions">
+        <div class="carousel-caption">
+          <h4>Ejecución con errores</h4>
+          <p>
+            Primera ejecución del pipeline, donde se detectaron errores relacionados con dependencias
+            y configuración del entorno.
+          </p>
+        </div>
+      </div>
+
+      <!-- 6. Pipeline corregido -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/actions5.png" alt="Pipeline ejecutado correctamente en GitHub Actions">
+        <div class="carousel-caption">
+          <h4>Pipeline corregido</h4>
+          <p>
+            Ejecuciones satisfactorias del workflow después de ajustar la configuración del pipeline CI/CD.
+          </p>
+        </div>
+      </div>
+
+      <!-- 7. Workflow de despliegue a EC2 -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/deploy-ec2-oscuro.png" alt="Workflow de despliegue hacia AWS EC2">
+        <div class="carousel-caption">
+          <h4>Workflow de despliegue a EC2</h4>
+          <p>
+            Archivo de GitHub Actions configurado para construir la imagen Docker,
+            sincronizar el repositorio y desplegar Koel en la instancia AWS EC2.
+          </p>
+        </div>
+      </div>
+
+      <!-- 8. Cambio en código -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/codigomodificado2.png" alt="Modificación realizada en el código de Koel">
+        <div class="carousel-caption">
+          <h4>Cambio realizado en el código</h4>
+          <p>
+            Evidencia del cambio aplicado en el componente de Koel para comprobar que las modificaciones
+            del repositorio puedan reflejarse en la aplicación desplegada.
+          </p>
+        </div>
+      </div>
+
+      <!-- 9. Pipeline CD correcto -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/testcd02.png" alt="Ejecución correcta del pipeline CD">
+        <div class="carousel-caption">
+          <h4>Pipeline CD ejecutado correctamente</h4>
+          <p>
+            Ejecución satisfactoria de los workflows después de integrar permisos,
+            pruebas y despliegue automatizado hacia AWS EC2.
+          </p>
+        </div>
+      </div>
+
+      <!-- 10. Cambio visible en EC2 -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/cambio-ec2-exitoso.png" alt="Cambio reflejado en Koel desplegado en EC2">
+        <div class="carousel-caption">
+          <h4>Cambio visible en EC2</h4>
+          <p>
+            Validación final donde se observa que el cambio realizado en el repositorio
+            se refleja correctamente en Koel desplegado en la nube.
+          </p>
+        </div>
+      </div>
+
+      <!-- 11. Interfaz principal -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/prueba-home-koel.png" alt="Pantalla principal de Koel">
+        <div class="carousel-caption">
+          <h4>Prueba de interfaz principal</h4>
+          <p>
+            Se revisó la pantalla principal de Koel, validando la visualización de canciones recientes,
+            álbumes y acceso general a la biblioteca musical.
+          </p>
+        </div>
+      </div>
+
+      <!-- 12. Reproducción -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/prueba-reproduccion.png" alt="Reproducción musical en Koel">
+        <div class="carousel-caption">
+          <h4>Prueba de reproducción</h4>
+          <p>
+            Se verificó que Koel permita reproducir canciones desde la biblioteca musical,
+            mostrando el reproductor activo y la canción seleccionada.
+          </p>
+        </div>
+      </div>
+
+      <!-- 13. Subida de canción -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/prueba-subida-cancion.png" alt="Subida de canción en Koel">
+        <div class="carousel-caption">
+          <h4>Prueba de carga de canciones</h4>
+          <p>
+            Se comprobó que el administrador pueda subir archivos musicales desde la interfaz web de Koel.
+          </p>
+        </div>
+      </div>
+
+      <!-- 14. Crear usuario -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/prueba-crear-usuario.png" alt="Creación de usuario en Koel">
+        <div class="carousel-caption">
+          <h4>Prueba de administración de usuarios</h4>
+          <p>
+            Se validó que la cuenta administradora pueda crear nuevos usuarios y asignarles un rol dentro del sistema.
+          </p>
+        </div>
+      </div>
+
+      <!-- 15. Radio online -->
+      <div class="carousel-slide">
+        <img src="assets/img/sprint1/prueba-radio-online.png" alt="Registro de radio online en Koel">
+        <div class="carousel-caption">
+          <h4>Prueba de radio online</h4>
+          <p>
+            Se agregó una nueva estación de radio online para verificar la integración de contenido multimedia
+            externo dentro de Koel.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <button class="carousel-btn next" onclick="moveEvidenceSlide2(1)">›</button>
+
+  <div class="carousel-dots">
+    <button class="dot active" onclick="goEvidenceSlide2(0)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(1)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(2)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(3)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(4)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(5)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(6)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(7)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(8)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(9)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(10)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(11)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(12)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(13)"></button>
+    <button class="dot" onclick="goEvidenceSlide2(14)"></button>
+  </div>
+</div>
+</div>
+</section>
 
     
-
+<section id="resultados-sprints" style="padding:80px 0;border-top:1px solid var(--line);">
+  <div class="container">
+    <div class="sh-eyebrow">Resultados</div>
+      <h2>Resultado de Sprints</h2>
     <div class="arch-bottom-row" style="margin-top:28px;">
       <div class="arch-card reveal">
         <div class="arch-card-header">
@@ -3652,7 +3881,7 @@ document.querySelectorAll('.term-body > div').forEach((line, i) => {
 // Carrusel de evidencias Sprint 1
 let evidenceIndex = 0;
 const evidenceTrack = document.getElementById("evidenceTrack");
-const evidenceDots = document.querySelectorAll(".carousel-dots .dot");
+const evidenceDots = document.querySelectorAll("#carrusel-sprint1 .carousel-dots .dot");
 const totalEvidenceSlides = evidenceTrack ? evidenceTrack.querySelectorAll(".carousel-slide").length : 0;
 
 function updateEvidenceCarousel() {
@@ -3687,6 +3916,47 @@ function goEvidenceSlide(index) {
   evidenceIndex = index;
   updateEvidenceCarousel();
 }
+
+
+// --- Segundo Carrusel ---
+let evidenceIndex2 = 0;
+const evidenceTrack2 = document.getElementById("evidenceTrack2");
+const evidenceDots2 = document.querySelectorAll("#carrusel-sprint2 .carousel-dots .dot");
+const totalEvidenceSlides2 = evidenceTrack2 ? evidenceTrack2.querySelectorAll(".carousel-slide").length : 0;
+
+function updateEvidenceCarousel2() {
+  if (!evidenceTrack2) return;
+
+  evidenceTrack2.style.transform = `translateX(-${evidenceIndex2 * 100}%)`;
+
+  evidenceDots2.forEach((dot, index) => {
+    dot.classList.toggle("active", index === evidenceIndex2);
+  });
+}
+
+function moveEvidenceSlide2(direction) {
+  if (!evidenceTrack2 || totalEvidenceSlides2 === 0) return;
+
+  evidenceIndex2 += direction;
+
+  if (evidenceIndex2 < 0) {
+    evidenceIndex2 = totalEvidenceSlides2 - 1;
+  }
+
+  if (evidenceIndex2 >= totalEvidenceSlides2) {
+    evidenceIndex2 = 0;
+  }
+
+  updateEvidenceCarousel2();
+}
+
+function goEvidenceSlide2(index) {
+  if (!evidenceTrack2) return;
+
+  evidenceIndex2 = index;
+  updateEvidenceCarousel2();
+}
+
 </script>
 
 </body>
