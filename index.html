@@ -3063,23 +3063,24 @@ footer {
 <div class="devops-layout" style="margin-top:28px;">
   <div class="tool-panel reveal">
     <div class="panel-header">
-      Evidencias del Sprint 1
+      Evidencias del Sprint 2
     </div>
 
     <div class="panel-body">
       <div class="tool-row">
+        
         <div class="tool-row-icon" style="display:flex;align-items:center;justify-content:center;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="8" rx="2"></rect>
-            <path d="M7 11V7h4v4"></path>
-            <path d="M13 11V5h4v6"></path>
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
           </svg>
         </div>
+
         <div class="tool-row-info">
-          <h4>Docker local</h4>
+          <h4>Actas de Reunión</h4>
           <p>
-            Se usó Docker Compose para levantar Koel en un entorno reproducible.
-            Se evidenció mediante contenedores activos y pantalla de inicio de sesión.
+            Se realizaron reuniones de equipo para discutir propuestas de mejora, analizar su viabilidad técnica y priorizarlas.
+             Las actas de estas reuniones se documentaron para registrar las decisiones tomadas.
           </p>
         </div>
       </div>
@@ -3087,14 +3088,19 @@ footer {
       <div class="tool-row">
         <div class="tool-row-icon" style="display:flex;align-items:center;justify-content:center;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17.5 19H7a5 5 0 1 1 .8-9.9A7 7 0 0 1 21 12.5a4 4 0 0 1-3.5 6.5z"></path>
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
           </svg>
         </div>
         <div class="tool-row-info">
-          <h4>Despliegue en la nube</h4>
+          <h4>Lista de Propuestas</h4>
           <p>
-            Se configuró una instancia EC2 con Ubuntu Server, conexión SSH, Docker
-            y ejecución remota de Koel.
+            Se elaboró una lista de propuestas de funcionalidades a implementar, priorizando
+            la opción de descarga de videos.
           </p>
         </div>
       </div>
@@ -3102,17 +3108,32 @@ footer {
       <div class="tool-row">
         <div class="tool-row-icon" style="display:flex;align-items:center;justify-content:center;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5z"></path>
-            <path d="M4 12h4"></path>
-            <path d="M16 12h4"></path>
-            <path d="M12 4v4"></path>
-            <path d="M12 16v4"></path>
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <rect x="7" y="7" width="3" height="9"></rect>
+            <rect x="14" y="7" width="3" height="5"></rect>
           </svg>
         </div>
         <div class="tool-row-info">
-          <h4>GitHub Actions</h4>
+          <h4>Desarrollo en Jira</h4>
           <p>
-            Se inició el pipeline CI/CD para validar cambios del repositorio mediante workflows.
+            Se configuró un tablero Scrum en Jira para gestionar las tareas del Sprint 2, asignar responsables y hacer seguimiento al avance de las mejoras implementadas.
+          </p>
+        </div>
+      </div>
+
+      <div class="tool-row">
+        <div class="tool-row-icon" style="display:flex;align-items:center;justify-content:center;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </div>
+        <div class="tool-row-info">
+          <h4>Primera Propuesta: Descarga de Enlace de Youtube</h4>
+          <p>
+            Se implementaron mejoras para permitir la descarga de archivos de audio a partir de enlaces de YouTube,
+            integrando esta funcionalidad a la interfaz de Koel mediante un nuevo botón.
           </p>
         </div>
       </div>
@@ -3120,20 +3141,20 @@ footer {
       <div class="tool-row">
         <div class="tool-row-icon" style="display:flex;align-items:center;justify-content:center;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            <path d="M9 12l2 2 4-4"></path>
+            <polyline points="9 11 12 14 22 4"></polyline>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
           </svg>
         </div>
         <div class="tool-row-info">
           <h4>Pruebas funcionales</h4>
           <p>
-            Se revisaron funciones principales de Koel: inicio de sesión, biblioteca musical,
-            carga de canciones y reproducción.
+            Se revisa la nueva función de descarga, para validar su correcto funcionamiento y registrar cualquier error encontrado durante las pruebas.
           </p>
         </div>
       </div>
     </div>
   </div>
+  
 
   <div class="pipeline-panel reveal rd1">
     <div class="panel-header">
