@@ -7,9 +7,22 @@ if [[ ! -f /var/www/html/.env ]]; then
     exit 0
 fi
 
+# Keep yt-dlp updated to ensure bot-check bypass patches are always current.
+# YouTube's anti-bot measures evolve rapidly; running an outdated yt-dlp is the
+# most common reason downloads start failing. Set YTDLP_AUTO_UPDATE=false to skip.
+if [[ "${YTDLP_AUTO_UPDATE:-true}" != "false" ]]; then
+    echo "Updating yt-dlp to latest version..."
+    if curl -sL https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp \
+        -o /usr/local/bin/yt-dlp && chmod a+rx /usr/local/bin/yt-dlp; then
+        echo "yt-dlp updated: $(/usr/local/bin/yt-dlp --version 2>/dev/null)"
+    else
+        echo "Warning: yt-dlp update failed (no internet?). Using bundled version."
+    fi
+fi
+
 if [[ -z "${SKIP_INIT}" ]]; then
     if [[ -z "${OPTIMIZE_CONFIG}" ]]; then
-        echo "Config not optimized. You can optimize the config with `OPTIMIZE_CONFIG`. Note that this will prevent config modifications from being applied until the container is restarted."
+        echo "Config not optimized. You can optimize the config with \`OPTIMIZE_CONFIG\`. Note that this will prevent config modifications from being applied until the container is restarted."
     else
         echo "Optimizing config..."
         # clear before caching, in case this is a container reboot and it was already cached from before

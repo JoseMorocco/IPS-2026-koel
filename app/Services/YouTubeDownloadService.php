@@ -15,6 +15,20 @@ class YouTubeDownloadService
 {
     private const DOWNLOAD_SUBDIRECTORY = '__KOEL_YT_DOWNLOADS__';
 
+    /**
+     * yt-dlp player clients to attempt in order of preference.
+     *
+     * - android_music: primary choice — uses the YouTube Music Android API,
+     *   which does NOT require a Po_Token and works reliably from datacenter IPs.
+     * - ios:           Apple iOS client route, also Po_Token-free.
+     * - tv_embedded:   Smart TV / embedded client, most permissive but lower quality ceiling.
+     *
+     * The standard "web" client is intentionally excluded: since 2024 YouTube
+     * requires a valid Po_Token for web-client requests from non-residential IPs,
+     * which is what triggers the "Sign in to confirm you're not a bot" error.
+     */
+    private const PLAYER_CLIENTS = ['android_music', 'ios', 'tv_embedded'];
+
     /** @var Closure(array<string>): Process */
     private Closure $processFactory;
 
@@ -31,9 +45,10 @@ class YouTubeDownloadService
 
     /**
      * Download audio from a YouTube URL, convert to MP3, and return the resulting file path.
+     * Automatically retries with alternative player clients when a bot-check error is detected.
      *
      * @throws MediaPathNotSetException if MEDIA_PATH is not configured
-     * @throws RuntimeException if yt-dlp fails or the output file cannot be found
+     * @throws RuntimeException if yt-dlp fails on all player clients
      */
     public function download(string $url): string
     {
@@ -41,31 +56,52 @@ class YouTubeDownloadService
         throw_unless((bool) $mediaPath, MediaPathNotSetException::class);
 
         $downloadDirectory = $this->ensureDownloadDirectory($mediaPath);
+        $lastError = '';
+
+        foreach (self::PLAYER_CLIENTS as $playerClient) {
+            try {
+                return $this->attemptDownload($url, $downloadDirectory, $playerClient);
+            } catch (RuntimeException $e) {
+                $lastError = $e->getMessage();
+
+                if (!$this->isBotCheckError($lastError)) {
+                    throw $e;
+                }
+            }
+        }
+
+        throw new RuntimeException(
+            sprintf('Download failed on all player clients. Last error: %s', $lastError)
+        );
+    }
+
+    private function attemptDownload(string $url, string $downloadDirectory, string $playerClient): string
+    {
         $outputTemplate = $downloadDirectory . DIRECTORY_SEPARATOR . '%(title)s.%(ext)s';
 
         $process = ($this->processFactory)([
             $this->ytdlpPath,
             '--extract-audio',
-            '--audio-format',
-            'mp3',
-            '--audio-quality',
-            '0',
+            '--audio-format', 'mp3',
+            '--audio-quality', '0',
             '--embed-thumbnail',
             '--add-metadata',
             '--no-playlist',
-            '--max-filesize',
-            $this->maxFilesize,
-            '--output',
-            $outputTemplate,
-            '--print',
-            'after_move:filepath',
+            '--max-filesize', $this->maxFilesize,
+            '--extractor-args', sprintf('youtube:player_client=%s', $playerClient),
+            '--retries', '3',
+            '--fragment-retries', '3',
+            '--output', $outputTemplate,
+            '--print', 'after_move:filepath',
             $url,
         ]);
 
         try {
             $process->run();
         } catch (ProcessTimedOutException) {
-            throw new RuntimeException(sprintf('YouTube download timed out after %d seconds.', $this->timeout));
+            throw new RuntimeException(
+                sprintf('YouTube download timed out after %d seconds.', $this->timeout)
+            );
         }
 
         if (!$process->isSuccessful()) {
@@ -80,6 +116,14 @@ class YouTubeDownloadService
         );
 
         return $outputPath;
+    }
+
+    private function isBotCheckError(string $errorMessage): bool
+    {
+        return str_contains($errorMessage, 'Sign in to confirm')
+            || str_contains($errorMessage, 'not a bot')
+            || str_contains($errorMessage, 'Po_Token')
+            || str_contains($errorMessage, 'po_token');
     }
 
     private function ensureDownloadDirectory(string $mediaPath): string
