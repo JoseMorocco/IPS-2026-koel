@@ -70,9 +70,7 @@ class YouTubeDownloadService
             }
         }
 
-        throw new RuntimeException(
-            sprintf('Download failed on all player clients. Last error: %s', $lastError)
-        );
+        throw new RuntimeException(sprintf('Download failed on all player clients. Last error: %s', $lastError));
     }
 
     private function attemptDownload(string $url, string $downloadDirectory, string $playerClient): string
@@ -82,26 +80,32 @@ class YouTubeDownloadService
         $process = ($this->processFactory)([
             $this->ytdlpPath,
             '--extract-audio',
-            '--audio-format', 'mp3',
-            '--audio-quality', '0',
+            '--audio-format',
+            'mp3',
+            '--audio-quality',
+            '0',
             '--embed-thumbnail',
             '--add-metadata',
             '--no-playlist',
-            '--max-filesize', $this->maxFilesize,
-            '--extractor-args', sprintf('youtube:player_client=%s', $playerClient),
-            '--retries', '3',
-            '--fragment-retries', '3',
-            '--output', $outputTemplate,
-            '--print', 'after_move:filepath',
+            '--max-filesize',
+            $this->maxFilesize,
+            '--extractor-args',
+            sprintf('youtube:player_client=%s', $playerClient),
+            '--retries',
+            '3',
+            '--fragment-retries',
+            '3',
+            '--output',
+            $outputTemplate,
+            '--print',
+            'after_move:filepath',
             $url,
         ]);
 
         try {
             $process->run();
         } catch (ProcessTimedOutException) {
-            throw new RuntimeException(
-                sprintf('YouTube download timed out after %d seconds.', $this->timeout)
-            );
+            throw new RuntimeException(sprintf('YouTube download timed out after %d seconds.', $this->timeout));
         }
 
         if (!$process->isSuccessful()) {
@@ -120,10 +124,12 @@ class YouTubeDownloadService
 
     private function isBotCheckError(string $errorMessage): bool
     {
-        return str_contains($errorMessage, 'Sign in to confirm')
+        return (
+            str_contains($errorMessage, 'Sign in to confirm')
             || str_contains($errorMessage, 'not a bot')
             || str_contains($errorMessage, 'Po_Token')
-            || str_contains($errorMessage, 'po_token');
+            || str_contains($errorMessage, 'po_token')
+        );
     }
 
     private function ensureDownloadDirectory(string $mediaPath): string
