@@ -38,7 +38,7 @@ class YouTubeDownloadServiceTest extends TestCase
     public function throwsWhenCobaltApiRequestFails(): void
     {
         Http::fake([
-            'api.cobalt.tools' => Http::response(['error' => ['code' => 'error.api.unreachable']], 500),
+            '*' => Http::response(['error' => ['code' => 'error.api.unreachable']], 500),
         ]);
 
         $this->expectException(RuntimeException::class);
@@ -51,7 +51,7 @@ class YouTubeDownloadServiceTest extends TestCase
     public function throwsWhenCobaltApiReturnsNoUrl(): void
     {
         Http::fake([
-            'api.cobalt.tools' => Http::response(['status' => 'error', 'url' => null], 200),
+            '*' => Http::response(['status' => 'error', 'url' => null], 200),
         ]);
 
         $this->expectException(RuntimeException::class);
@@ -65,7 +65,7 @@ class YouTubeDownloadServiceTest extends TestCase
     {
         Http::fake([
             'api.cobalt.tools' => Http::response(['url' => self::DIRECT_URL], 200),
-            self::DIRECT_URL => Http::response(null, 403),
+            '*' => Http::response(null, 403),
         ]);
 
         $this->expectException(RuntimeException::class);
@@ -79,7 +79,7 @@ class YouTubeDownloadServiceTest extends TestCase
     {
         Http::fake([
             'api.cobalt.tools' => Http::response(['url' => self::DIRECT_URL], 200),
-            self::DIRECT_URL => Http::response('fake-mp3-binary-content', 200),
+            '*' => Http::response('fake-mp3-binary-content', 200),
         ]);
 
         File::expects('ensureDirectoryExists')->once();
@@ -98,7 +98,7 @@ class YouTubeDownloadServiceTest extends TestCase
     {
         Http::fake([
             'api.cobalt.tools' => Http::response(['url' => self::DIRECT_URL], 200),
-            self::DIRECT_URL => Http::response('fake-mp3-binary-content', 200),
+            '*' => Http::response('fake-mp3-binary-content', 200),
         ]);
 
         File::expects('ensureDirectoryExists')->once();
