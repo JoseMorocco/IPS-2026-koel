@@ -21,10 +21,6 @@ class YouTubeDownloadService
      * breaking the existing #[Config] wiring in config/koel.php.
      */
     public function __construct(
-        #[Config('koel.youtube_downloader.ytdlp_path')]
-        private readonly string $ytdlpPath,
-        #[Config('koel.youtube_downloader.max_filesize')]
-        private readonly string $maxFilesize,
         #[Config('koel.youtube_downloader.timeout')]
         private readonly int $timeout,
     ) {}
