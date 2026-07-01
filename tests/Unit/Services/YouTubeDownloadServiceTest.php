@@ -5,17 +5,17 @@ namespace Tests\Unit\Services;
 use App\Exceptions\MediaPathNotSetException;
 use App\Models\Setting;
 use App\Services\YouTubeDownloadService;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\File;
-use Mockery;
-use Mockery\MockInterface;
+use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
-use Symfony\Component\Process\Process;
 use Tests\TestCase;
 
 class YouTubeDownloadServiceTest extends TestCase
 {
     private const VALID_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+    private const DIRECT_URL = 'https://cobalt.stream/audio/abc123.mp3';
 
     public function setUp(): void
     {
@@ -35,76 +35,93 @@ class YouTubeDownloadServiceTest extends TestCase
     }
 
     #[Test]
-    public function throwsOnProcessFailure(): void
+    public function throwsWhenCobaltApiRequestFails(): void
     {
-        /** @var Process|MockInterface $process */
-        $process = Mockery::mock(Process::class);
-        $process->expects('run')->once();
-        $process->expects('isSuccessful')->once()->andReturn(false);
-        $process->expects('getErrorOutput')->once()->andReturn('ERROR: Video unavailable');
-
-        File::expects('ensureDirectoryExists')->once();
+        Http::fake([
+            'api.cobalt.tools/*' => Http::response(['error' => ['code' => 'error.api.unreachable']], 500),
+        ]);
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessageMatches('/Video unavailable/');
+        $this->expectExceptionMessageMatches('/Cobalt.tools API request failed/');
 
-        $this->makeService($process)->download(self::VALID_URL);
+        $this->makeService()->download(self::VALID_URL);
     }
 
     #[Test]
-    public function throwsWhenOutputFileIsMissing(): void
+    public function throwsWhenCobaltApiReturnsNoUrl(): void
     {
-        /** @var Process|MockInterface $process */
-        $process = Mockery::mock(Process::class);
-        $process->expects('run')->once();
-        $process->expects('isSuccessful')->once()->andReturn(true);
-        $process->expects('getOutput')->once()->andReturn('/path/to/missing-file.mp3');
-
-        File::expects('ensureDirectoryExists')->once();
-        File::expects('exists')->with('/path/to/missing-file.mp3')->andReturn(false);
+        Http::fake([
+            'api.cobalt.tools/*' => Http::response(['status' => 'error', 'url' => null], 200),
+        ]);
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessageMatches('/could not be located/');
+        $this->expectExceptionMessageMatches('/returned no download URL/');
 
-        $this->makeService($process)->download(self::VALID_URL);
+        $this->makeService()->download(self::VALID_URL);
     }
 
     #[Test]
-    public function returnsPathOnSuccess(): void
+    public function throwsWhenAudioDownloadFails(): void
     {
-        $expectedPath = '/music/__KOEL_YT_DOWNLOADS__/Rick Astley - Never Gonna Give You Up.mp3';
+        Http::fake([
+            'api.cobalt.tools/*' => Http::response(['url' => self::DIRECT_URL], 200),
+            self::DIRECT_URL => Http::response(null, 403),
+        ]);
 
-        /** @var Process|MockInterface $process */
-        $process = Mockery::mock(Process::class);
-        $process->expects('run')->once();
-        $process->expects('isSuccessful')->once()->andReturn(true);
-        $process->expects('getOutput')->once()->andReturn($expectedPath . "\n");
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessageMatches('/Failed to download audio file/');
 
-        File::expects('ensureDirectoryExists')->once();
-        File::expects('exists')->with($expectedPath)->andReturn(true);
-
-        $result = $this->makeService($process)->download(self::VALID_URL);
-
-        self::assertSame($expectedPath, $result);
+        $this->makeService()->download(self::VALID_URL);
     }
 
-    private function makeService(?Process $processMock = null): YouTubeDownloadService
+    #[Test]
+    public function successfulDownloadReturnsSavedFilePath(): void
     {
-        $service = new YouTubeDownloadService(ytdlpPath: '/usr/local/bin/yt-dlp', maxFilesize: '200m', timeout: 300);
+        Http::fake([
+            'api.cobalt.tools/*' => Http::response(['url' => self::DIRECT_URL], 200),
+            self::DIRECT_URL => Http::response('fake-mp3-binary-content', 200),
+        ]);
 
-        if ($processMock !== null) {
-            // Inject a pre-built process mock via closure binding to bypass real Process creation
-            $injector = \Closure::bind(
-                static function (YouTubeDownloadService $svc, Process $proc): void {
-                    $svc->processFactory = static fn (array $command) => $proc;
-                },
-                null,
-                YouTubeDownloadService::class,
+        File::expects('ensureDirectoryExists')->once();
+        File::expects('put')->once()->andReturn(true);
+        File::expects('exists')->once()->andReturn(true);
+
+        $result = $this->makeService()->download(self::VALID_URL);
+
+        self::assertStringContainsString('__KOEL_YT_DOWNLOADS__', $result);
+        self::assertStringEndsWith('.mp3', $result);
+        self::assertStringStartsWith(public_path('sandbox/media'), $result);
+    }
+
+    #[Test]
+    public function cobaltApiIsCalledWithCorrectPayload(): void
+    {
+        Http::fake([
+            'api.cobalt.tools/*' => Http::response(['url' => self::DIRECT_URL], 200),
+            self::DIRECT_URL => Http::response('fake-mp3-binary-content', 200),
+        ]);
+
+        File::expects('ensureDirectoryExists')->once();
+        File::expects('put')->once()->andReturn(true);
+        File::expects('exists')->once()->andReturn(true);
+
+        $this->makeService()->download(self::VALID_URL);
+
+        Http::assertSent(static function (Request $request): bool {
+            return (
+                $request->url() === 'https://api.cobalt.tools/api/json'
+                && $request->method() === 'POST'
+                && $request->header('Accept')[0] === 'application/json'
+                && $request->header('Content-Type')[0] === 'application/json'
+                && $request['url'] === self::VALID_URL
+                && $request['isAudioOnly'] === true
+                && $request['aFormat'] === 'mp3'
             );
+        });
+    }
 
-            $injector($service, $processMock);
-        }
-
-        return $service;
+    private function makeService(): YouTubeDownloadService
+    {
+        return new YouTubeDownloadService(ytdlpPath: '/usr/local/bin/yt-dlp', maxFilesize: '200m', timeout: 30);
     }
 }
