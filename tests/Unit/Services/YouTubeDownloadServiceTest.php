@@ -122,6 +122,6 @@ class YouTubeDownloadServiceTest extends TestCase
 
     private function makeService(): YouTubeDownloadService
     {
-        return new YouTubeDownloadService(ytdlpPath: '/usr/local/bin/yt-dlp', maxFilesize: '200m', timeout: 30);
+        return new YouTubeDownloadService(timeout: 30);
     }
 }

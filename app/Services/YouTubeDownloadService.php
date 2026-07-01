@@ -16,9 +16,8 @@ class YouTubeDownloadService
     private const COBALT_API_ENDPOINT = 'https://api.cobalt.tools/api/json';
 
     /**
-     * Constructor params are kept intact to preserve Service Container bindings.
-     * $ytdlpPath and $maxFilesize are no longer used but must remain to avoid
-     * breaking the existing #[Config] wiring in config/koel.php.
+     * $ytdlpPath and $maxFilesize were removed from this constructor.
+     * Only $timeout is used (for Http::timeout() calls).
      */
     public function __construct(
         #[Config('koel.youtube_downloader.timeout')]
