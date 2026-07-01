@@ -137,6 +137,8 @@ class YouTubeDownloadService
             || str_contains($errorMessage, 'not a bot')
             || str_contains($errorMessage, 'Po_Token')
             || str_contains($errorMessage, 'po_token')
+            || str_contains($errorMessage, '403')
+            || str_contains($errorMessage, 'Forbidden')
         );
     }
 
