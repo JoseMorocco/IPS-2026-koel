@@ -13,7 +13,7 @@ use RuntimeException;
 class YouTubeDownloadService
 {
     private const DOWNLOAD_SUBDIRECTORY = '__KOEL_YT_DOWNLOADS__';
-    private const COBALT_API_ENDPOINT = 'https://api.cobalt.tools/api/json';
+    private const COBALT_API_ENDPOINT = 'https://api.cobalt.tools/';
 
     /**
      * $ytdlpPath and $maxFilesize were removed from this constructor.
@@ -54,11 +54,12 @@ class YouTubeDownloadService
             ->withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
+                'Origin' => 'https://cobalt.tools',
+                'User-Agent' => 'Mozilla/5.0 (compatible; Koel/1.0)',
             ])
             ->post(self::COBALT_API_ENDPOINT, [
                 'url' => $url,
-                'isAudioOnly' => true,
-                'aFormat' => 'mp3',
+                'downloadMode' => 'audio',
             ]);
 
         if ($response->failed()) {
