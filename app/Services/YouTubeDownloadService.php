@@ -76,17 +76,17 @@ class YouTubeDownloadService
     private function attemptDownload(string $url, string $downloadDirectory, string $playerClient): string
     {
         $outputTemplate = $downloadDirectory . DIRECTORY_SEPARATOR . '%(title)s.%(ext)s';
-        
+
         // 1. Definimos la ruta donde yt-dlp buscará las cookies
         $cookiesPath = storage_path('app/youtube-cookies.txt');
 
         $process = ($this->processFactory)([
             $this->ytdlpPath,
-            
+
             // 2. Inyectamos la sesión VIP al comando
             '--cookies',
             $cookiesPath,
-            
+
             '--extract-audio',
             '--audio-format',
             'mp3',
