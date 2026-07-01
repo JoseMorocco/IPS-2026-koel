@@ -90,3 +90,6 @@ docs/.vitepress/cache
 demo-credits.json
 
 public/sandbox
+
+#Ignorar cookies de YouTube
+storage/app/youtube-cookies.txt
