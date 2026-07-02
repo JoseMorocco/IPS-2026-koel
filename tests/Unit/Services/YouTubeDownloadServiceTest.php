@@ -15,7 +15,9 @@ use Tests\TestCase;
 class YouTubeDownloadServiceTest extends TestCase
 {
     private const VALID_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-    private const DIRECT_URL = 'https://cobalt.stream/audio/abc123.mp3';
+    private const COBALT_HOST = 'cobalt.q0.wtf*';
+    private const AUDIO_HOST = 'fake-audio-url.com*';
+    private const DIRECT_URL = 'https://fake-audio-url.com/song.mp3';
 
     public function setUp(): void
     {
@@ -38,7 +40,7 @@ class YouTubeDownloadServiceTest extends TestCase
     public function throwsWhenCobaltApiRequestFails(): void
     {
         Http::fake([
-            '*' => Http::response(['error' => ['code' => 'error.api.unreachable']], 500),
+            self::COBALT_HOST => Http::response(['error' => ['code' => 'error.api.unreachable']], 500),
         ]);
 
         $this->expectException(RuntimeException::class);
@@ -51,7 +53,7 @@ class YouTubeDownloadServiceTest extends TestCase
     public function throwsWhenCobaltApiReturnsNoUrl(): void
     {
         Http::fake([
-            '*' => Http::response(['status' => 'error', 'url' => null], 200),
+            self::COBALT_HOST => Http::response(['status' => 'error', 'url' => null], 200),
         ]);
 
         $this->expectException(RuntimeException::class);
@@ -64,8 +66,8 @@ class YouTubeDownloadServiceTest extends TestCase
     public function throwsWhenAudioDownloadFails(): void
     {
         Http::fake([
-            'api.cobalt.tools' => Http::response(['url' => self::DIRECT_URL], 200),
-            '*' => Http::response(null, 403),
+            self::COBALT_HOST => Http::response(['url' => self::DIRECT_URL], 200),
+            self::AUDIO_HOST => Http::response(null, 403),
         ]);
 
         $this->expectException(RuntimeException::class);
@@ -78,8 +80,8 @@ class YouTubeDownloadServiceTest extends TestCase
     public function successfulDownloadReturnsSavedFilePath(): void
     {
         Http::fake([
-            'api.cobalt.tools' => Http::response(['url' => self::DIRECT_URL], 200),
-            '*' => Http::response('fake-mp3-binary-content', 200),
+            self::COBALT_HOST => Http::response(['url' => self::DIRECT_URL], 200),
+            self::AUDIO_HOST => Http::response('fake-mp3-binary-content', 200),
         ]);
 
         File::expects('ensureDirectoryExists')->once();
@@ -97,8 +99,8 @@ class YouTubeDownloadServiceTest extends TestCase
     public function cobaltApiIsCalledWithCorrectPayload(): void
     {
         Http::fake([
-            'api.cobalt.tools' => Http::response(['url' => self::DIRECT_URL], 200),
-            '*' => Http::response('fake-mp3-binary-content', 200),
+            self::COBALT_HOST => Http::response(['url' => self::DIRECT_URL], 200),
+            self::AUDIO_HOST => Http::response('fake-mp3-binary-content', 200),
         ]);
 
         File::expects('ensureDirectoryExists')->once();
@@ -109,11 +111,11 @@ class YouTubeDownloadServiceTest extends TestCase
 
         Http::assertSent(static function (Request $request): bool {
             return (
-                $request->url() === 'https://api.cobalt.tools/'
+                $request->url() === 'https://cobalt.q0.wtf/'
                 && $request->method() === 'POST'
                 && $request->header('Accept')[0] === 'application/json'
                 && $request->header('Content-Type')[0] === 'application/json'
-                && $request->header('Origin')[0] === 'https://cobalt.tools'
+                && $request->header('Origin')[0] === 'https://cobalt.q0.wtf'
                 && $request['url'] === self::VALID_URL
                 && $request['downloadMode'] === 'audio'
             );
