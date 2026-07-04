@@ -28,37 +28,29 @@
           {{ isDownloading ? 'Downloading…' : 'Download' }}
         </Btn>
       </form>
-
-      <Transition name="fade">
-        <p v-if="message" :class="['status-message', status]" role="status">
-          <Icon v-if="status === 'success'" :icon="faCircleCheck" />
-          <Icon v-if="status === 'error'" :icon="faCircleXmark" />
-          {{ message }}
-        </p>
-      </Transition>
     </div>
   </HomeScreenBlock>
 </template>
 
 <script lang="ts" setup>
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-import { faCircleCheck, faCircleXmark, faDownload, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { computed, defineAsyncComponent, ref, toRef } from 'vue'
+import { faDownload, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { computed, defineAsyncComponent, ref } from 'vue'
 import { albumStore } from '@/stores/albumStore'
 import { commonStore } from '@/stores/commonStore'
 import { playableStore } from '@/stores/playableStore'
 import { eventBus } from '@/utils/eventBus'
 import { youTubeDownloadService } from '@/services/youTubeDownloadService'
+import { useMessageToaster } from '@/composables/useMessageToaster'
 
 import HomeScreenBlock from '@/components/screens/home/HomeScreenBlock.vue'
 
 const Btn = defineAsyncComponent(() => import('@/components/ui/form/Btn.vue'))
 
-const url = ref('')
+const { toastSuccess, toastError } = useMessageToaster()
 
-const status = toRef(youTubeDownloadService.state, 'status')
-const message = toRef(youTubeDownloadService.state, 'message')
-const isDownloading = computed(() => status.value === 'downloading')
+const url = ref('')
+const isDownloading = computed(() => youTubeDownloadService.state.status === 'downloading')
 
 const handleDownload = async () => {
   const trimmedUrl = url.value.trim()
@@ -73,7 +65,10 @@ const handleDownload = async () => {
     albumStore.syncWithVault(result.album)
     commonStore.state.song_length += 1
     eventBus.emit('SONG_UPLOADED', result.song)
+    toastSuccess('Track downloaded and added to your library!')
     url.value = ''
+  } else {
+    toastError(youTubeDownloadService.state.message || 'Download failed. Please check the URL and try again.')
   }
 }
 </script>
@@ -97,27 +92,5 @@ const handleDownload = async () => {
 
 .download-btn {
   @apply whitespace-nowrap flex items-center gap-2;
-}
-
-.status-message {
-  @apply flex items-center gap-2 text-sm;
-
-  &.success {
-    @apply text-k-success;
-  }
-
-  &.error {
-    @apply text-k-danger;
-  }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  @apply transition-opacity duration-300;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  @apply opacity-0;
 }
 </style>
