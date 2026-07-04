@@ -30,6 +30,11 @@ export const routes = [
     screen: 'Songs',
   },
   {
+    name: 'statistics',
+    path: '/statistics',
+    screen: 'Statistics',
+  },
+  {
     name: 'albums.index',
     path: '/albums',
     screen: 'Albums',

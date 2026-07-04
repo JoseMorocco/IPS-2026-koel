@@ -30,6 +30,10 @@ const PRELOAD_BUFFER = 30
 export class QueuePlaybackService extends BasePlaybackService {
   private repeatModes: RepeatMode[] = ['NO_REPEAT', 'REPEAT_ALL', 'REPEAT_ONE']
   private upNext: Ref<Playable | null> = ref(null)
+  private activeListeningSessionId: number | null = null
+  private listenedSeconds = 0
+  private lastReportedSeconds = 0
+  private lastPlaybackPosition = 0
 
   /**
    * The next item in the queue.
@@ -59,10 +63,16 @@ export class QueuePlaybackService extends BasePlaybackService {
     }
   }
 
-  public registerPlay(playable: Playable) {
+  public async registerPlay(playable: Playable) {
+    await this.flushListeningSession()
     recentlyPlayedStore.add(playable)
-    playableStore.registerPlay(playable)
     playable.play_count_registered = true
+    const interaction = await playableStore.registerPlay(playable)
+
+    this.activeListeningSessionId = interaction.listening_session_id
+    this.listenedSeconds = 0
+    this.lastReportedSeconds = 0
+    this.lastPlaybackPosition = this.media.currentTime
 
     if (isSong(playable) && !playable.album_cover) {
       encyclopediaService.fetchForAlbum({ id: playable.album_id } as Album).catch(logger.error)
@@ -110,11 +120,7 @@ export class QueuePlaybackService extends BasePlaybackService {
       return
     }
 
-    if (queueStore.current) {
-      queueStore.current.playback_state = 'Stopped'
-    }
-
-    playable.playback_state = 'Playing'
+    this.markAsOnlyPlaying(playable)
 
     await this.setNowPlayingMeta(playable)
 
@@ -220,6 +226,7 @@ export class QueuePlaybackService extends BasePlaybackService {
       await this.media.play()
       navigator.mediaSession && (navigator.mediaSession.playbackState = 'playing')
       this.showNotification(playable)
+      await this.registerPlay(playable)
     } catch (error: unknown) {
       // convert this into a warning to avoid breaking the app
       logger.warn(error)
@@ -270,6 +277,8 @@ export class QueuePlaybackService extends BasePlaybackService {
 
   public async stop() {
     this.cancelCrossfade()
+    this.flushListeningSession()
+    this.activeListeningSessionId = null
 
     if (this.media) {
       this.media.pause()
@@ -288,6 +297,7 @@ export class QueuePlaybackService extends BasePlaybackService {
   public async pause() {
     this.cancelCrossfade()
     this.media.pause()
+    this.flushListeningSession()
 
     queueStore.current!.playback_state = 'Paused'
     navigator.mediaSession && (navigator.mediaSession.playbackState = 'paused')
@@ -312,6 +322,10 @@ export class QueuePlaybackService extends BasePlaybackService {
       await this.media.play()
     } catch (error: unknown) {
       logger.error(error)
+    }
+
+    if (isSong(playable) && !this.activeListeningSessionId) {
+      await this.registerPlay(playable)
     }
 
     queueStore.current!.playback_state = 'Playing'
@@ -353,6 +367,18 @@ export class QueuePlaybackService extends BasePlaybackService {
     queueStore.all.length && (await this.play(queueStore.first))
   }
 
+  private markAsOnlyPlaying(playable: Playable) {
+    playableStore.vault.forEach((storedPlayable: Playable) => {
+      storedPlayable.playback_state = storedPlayable.id === playable.id ? 'Playing' : 'Stopped'
+    })
+
+    queueStore.all.forEach((queuedPlayable: Playable) => {
+      queuedPlayable.playback_state = queuedPlayable.id === playable.id ? 'Playing' : 'Stopped'
+    })
+
+    playable.playback_state = 'Playing'
+  }
+
   private async setNowPlayingMeta(playable: Playable) {
     document.title = `${playable.title} ♫ ${useBranding().name}`
     this.media.setAttribute('title', isSong(playable) ? `${playable.artist_name} - ${playable.title}` : playable.title)
@@ -377,6 +403,8 @@ export class QueuePlaybackService extends BasePlaybackService {
   }
 
   protected onEnded(): void {
+    this.flushListeningSession()
+
     if (
       queueStore.current &&
       isSong(queueStore.current) &&
@@ -410,11 +438,7 @@ export class QueuePlaybackService extends BasePlaybackService {
 
     const media = this.media
 
-    // If we've passed 25% of the playable, it's safe to say it has been "played".
-    // See https://github.com/koel/koel/issues/1087
-    if (!currentPlayable.play_count_registered && media.currentTime * 4 >= media.duration) {
-      this.registerPlay(currentPlayable)
-    }
+    this.trackListenedTime(media.currentTime)
 
     if (Math.ceil(media.currentTime) % 5 === 0) {
       // every 5 seconds, we save the current playback position to the server
@@ -486,6 +510,46 @@ export class QueuePlaybackService extends BasePlaybackService {
   public seekTo(position: number): void {
     this.cancelCrossfade()
     this.media.currentTime = position || 0
+    this.lastPlaybackPosition = this.media.currentTime
+  }
+
+  private trackListenedTime(currentPosition: number): void {
+    if (!this.activeListeningSessionId || this.media.paused) {
+      this.lastPlaybackPosition = currentPosition
+      return
+    }
+
+    const elapsedSeconds = currentPosition - this.lastPlaybackPosition
+    this.lastPlaybackPosition = currentPosition
+
+    if (elapsedSeconds <= 0 || elapsedSeconds > 2) {
+      return
+    }
+
+    this.listenedSeconds += elapsedSeconds
+
+    if (Math.floor(this.listenedSeconds) - this.lastReportedSeconds >= 5) {
+      this.flushListeningSession()
+    }
+  }
+
+  private async flushListeningSession(): Promise<void> {
+    const listenedSeconds = Math.floor(this.listenedSeconds)
+
+    if (!this.activeListeningSessionId || listenedSeconds <= this.lastReportedSeconds) {
+      return
+    }
+
+    this.lastReportedSeconds = listenedSeconds
+
+    try {
+      await http.silently.put(`interaction/listening-sessions/${this.activeListeningSessionId}`, {
+        listened_seconds: listenedSeconds,
+      })
+    } catch (error: unknown) {
+      this.lastReportedSeconds = 0
+      logger.error(error)
+    }
   }
 
   /** Cancel any active crossfade and restore volume */

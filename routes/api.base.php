@@ -23,6 +23,7 @@ use App\Http\Controllers\API\FetchAlbumThumbnailController;
 use App\Http\Controllers\API\FetchDemoCreditsController;
 use App\Http\Controllers\API\FetchFavoriteSongsController;
 use App\Http\Controllers\API\FetchInitialDataController;
+use App\Http\Controllers\API\FetchMonthlyListeningStatisticsController;
 use App\Http\Controllers\API\FetchOverviewController;
 use App\Http\Controllers\API\FetchRecentlyPlayedSongController;
 use App\Http\Controllers\API\FetchSongsByIdsController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\API\GenreController;
 use App\Http\Controllers\API\GetOneTimeTokenController;
 use App\Http\Controllers\API\LambdaSongController as S3SongController;
 use App\Http\Controllers\API\LikeMultipleSongsController;
+use App\Http\Controllers\API\ListeningSessionController;
 use App\Http\Controllers\API\MediaBrowser\FetchFolderSongsController;
 use App\Http\Controllers\API\MediaBrowser\FetchRecursiveFolderSongsController;
 use App\Http\Controllers\API\MediaBrowser\FetchSubfoldersController;
@@ -166,6 +168,11 @@ Route::prefix('api')
 
             // Interaction routes
             Route::post('interaction/play', RegisterPlayController::class);
+            Route::put('interaction/listening-sessions/{listeningSession}', [
+                ListeningSessionController::class,
+                'update',
+            ]);
+            Route::get('statistics/listening', FetchMonthlyListeningStatisticsController::class);
 
             // Like/unlike routes (deprecated)
             Route::post('interaction/like', ToggleLikeSongController::class);

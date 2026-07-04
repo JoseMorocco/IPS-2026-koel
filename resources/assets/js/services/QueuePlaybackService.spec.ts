@@ -42,38 +42,24 @@ describe('playbackService', () => {
     expect(playbackService.media).toBe(media)
   })
 
-  it.each([
-    [false, 100, 400, 1],
-    [true, 100, 400, 0],
-    [false, 100, 500, 0],
-  ])(
-    'when playCountRegistered is %s, current media time is %d, media duration is %d, then registerPlay() should be call %d times',
-    (playCountRegistered, currentTime, duration, numberOfCalls) => {
-      const song = h.factory('song').make({
-        play_count_registered: playCountRegistered,
-        playback_state: 'Playing',
-      })
+  it('does not delay play registration until a playback percentage is reached', () => {
+    const song = setCurrentSong(h.factory('song').make({ playback_state: 'Playing' }))
+    const mediaElement = playbackService.media
 
-      setCurrentSong(song)
+    h.setReadOnlyProperty(mediaElement, 'currentTime', 100)
+    h.setReadOnlyProperty(mediaElement, 'duration', 400)
 
-      const mediaElement = playbackService.media
+    const registerPlayMock = h.mock(playbackService, 'registerPlay')
+    const putMock = h.mock(http, 'put')
 
-      // we can't set mediaElement.currentTime|duration directly because they're read-only
-      h.setReadOnlyProperty(mediaElement, 'currentTime', currentTime)
-      h.setReadOnlyProperty(mediaElement, 'duration', duration)
+    mediaElement.dispatchEvent(new Event('timeupdate'))
 
-      const registerPlayMock = h.mock(playbackService, 'registerPlay')
-      const putMock = h.mock(http, 'put')
-
-      mediaElement.dispatchEvent(new Event('timeupdate'))
-
-      expect(registerPlayMock).toHaveBeenCalledTimes(numberOfCalls)
-      expect(putMock).toHaveBeenCalledWith('queue/playback-status', {
-        song: song.id,
-        position: currentTime,
-      })
-    },
-  )
+    expect(registerPlayMock).not.toHaveBeenCalled()
+    expect(putMock).toHaveBeenCalledWith('queue/playback-status', {
+      song: song.id,
+      position: 100,
+    })
+  })
 
   it('plays next playable if current playable is errored', () => {
     const logMock = h.mock(logger, 'error')
@@ -143,12 +129,15 @@ describe('playbackService', () => {
     },
   )
 
-  it('registers play', () => {
+  it('registers play', async () => {
     const recentlyPlayedStoreAddMock = h.mock(recentlyPlayedStore, 'add')
-    const registerPlayMock = h.mock(playableStore, 'registerPlay')
+    const registerPlayMock = h.mock(playableStore, 'registerPlay').mockResolvedValue({
+      listening_session_id: 123,
+      play_count: 1,
+    })
     const song = h.factory('song').make()
 
-    playbackService.registerPlay(song)
+    await playbackService.registerPlay(song)
 
     expect(recentlyPlayedStoreAddMock).toHaveBeenCalledWith(song)
     expect(registerPlayMock).toHaveBeenCalledWith(song)
@@ -181,6 +170,7 @@ describe('playbackService', () => {
     const showNotificationMock = h.mock(playbackService, 'showNotification')
     const putMock = h.mock(http, 'put')
     const playMock = h.mock(window.HTMLMediaElement.prototype, 'play')
+    const registerPlayMock = h.mock(playbackService, 'registerPlay')
 
     await playbackService.restart()
 
@@ -188,6 +178,7 @@ describe('playbackService', () => {
     expect(song.play_count_registered).toBe(false)
     expect(broadcastMock).toHaveBeenCalledWith('SOCKET_STREAMABLE', song)
     expect(showNotificationMock).toHaveBeenCalled()
+    expect(registerPlayMock).toHaveBeenCalledWith(song)
     expect(playbackService.media.currentTime).toBe(0)
     expect(playMock).toHaveBeenCalled()
 
@@ -294,12 +285,14 @@ describe('playbackService', () => {
 
     const playMock = h.mock(window.HTMLMediaElement.prototype, 'play')
     const broadcastMock = h.mock(socketService, 'broadcast')
+    const registerPlayMock = h.mock(playbackService, 'registerPlay')
 
     await playbackService.resume()
 
     expect(queueStore.current?.playback_state).toEqual('Playing')
     expect(broadcastMock).toHaveBeenCalledWith('SOCKET_STREAMABLE', song)
     expect(playMock).toHaveBeenCalled()
+    expect(registerPlayMock).toHaveBeenCalledWith(song)
   })
 
   it('plays first in queue if toggled when there is no current playable', async () => {
@@ -364,6 +357,20 @@ describe('playbackService', () => {
     await playbackService.playFirstInQueue()
 
     expect(playMock).toHaveBeenCalledWith(songs[0])
+  })
+
+  it('stops every other playable when switching songs', async () => {
+    const [flowers, stalePlayingSong, billieJean] = playableStore.syncWithVault(h.factory('song').make(3))
+    flowers.playback_state = 'Playing'
+    stalePlayingSong.playback_state = 'Playing'
+    queueStore.state.playables = reactive([flowers, stalePlayingSong, billieJean])
+    h.mock(playbackService, 'restart')
+
+    await playbackService.play(billieJean)
+
+    expect(flowers.playback_state).toBe('Stopped')
+    expect(stalePlayingSong.playback_state).toBe('Stopped')
+    expect(billieJean.playback_state).toBe('Playing')
   })
 
   it('stops listening to media event after deactivation', () => {

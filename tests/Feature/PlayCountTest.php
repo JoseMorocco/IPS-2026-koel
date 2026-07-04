@@ -28,6 +28,7 @@ class PlayCountTest extends TestCase
             'id',
             'song_id',
             'play_count',
+            'listening_session_id',
         ]);
 
         self::assertSame(11, $interaction->refresh()->play_count);
@@ -46,6 +47,7 @@ class PlayCountTest extends TestCase
             'id',
             'song_id',
             'play_count',
+            'listening_session_id',
         ]);
 
         $interaction = Interaction::query()

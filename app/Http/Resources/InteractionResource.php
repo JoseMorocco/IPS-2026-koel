@@ -18,6 +18,7 @@ class InteractionResource extends JsonResource
 
     public function __construct(
         private readonly Interaction $interaction,
+        private readonly ?int $listeningSessionId = null,
     ) {
         parent::__construct($interaction);
     }
@@ -32,6 +33,7 @@ class InteractionResource extends JsonResource
             'song_id' => $this->interaction->song_id,
             'playCount' => $this->interaction->play_count, // @fixme backwards compatibility
             'play_count' => $this->interaction->play_count,
+            'listening_session_id' => $this->when($this->listeningSessionId !== null, $this->listeningSessionId),
         ];
     }
 }
