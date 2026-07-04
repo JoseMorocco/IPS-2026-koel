@@ -38,9 +38,7 @@ class YouTubeDownloadService
 
         $downloadDirectory = $this->ensureDownloadDirectory($mediaPath);
         $directUrl = $this->resolveDirectDownloadUrl($url);
-        $filePath = $this->fetchAndSaveAudio($directUrl, $downloadDirectory);
-
-        return $filePath;
+        return $this->fetchAndSaveAudio($directUrl, $downloadDirectory);
     }
 
     /**
