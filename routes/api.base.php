@@ -226,8 +226,7 @@ Route::prefix('api')
                 Route::get('youtube/search/song/{song}', SearchYouTubeController::class);
             }
 
-            Route::post('youtube/download', DownloadFromYouTubeController::class)
-                ->middleware('throttle:5,1');
+            Route::post('youtube/download', DownloadFromYouTubeController::class)->middleware('throttle:5,1');
 
             // Media information routes
             Route::get('albums/{album}/information', FetchAlbumInformationController::class);

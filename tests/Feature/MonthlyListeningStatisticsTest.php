@@ -19,20 +19,30 @@ class MonthlyListeningStatisticsTest extends TestCase
         $mostPlayedSong = Song::factory()->createOne();
         $secondSong = Song::factory()->createOne();
 
-        ListeningSession::factory()->for($user)->for($mostPlayedSong, 'song')->createMany([
-            ['listened_seconds' => 120, 'started_at' => Carbon::parse('2026-07-02 10:00:00')],
-            ['listened_seconds' => 180, 'started_at' => Carbon::parse('2026-07-02 11:00:00')],
-        ]);
-        ListeningSession::factory()->for($user)->for($secondSong, 'song')->createOne([
-            'listened_seconds' => 60,
-            'started_at' => Carbon::parse('2026-07-03 10:00:00'),
-        ]);
-        ListeningSession::factory()->for($user)->for($mostPlayedSong, 'song')->createOne([
-            'listened_seconds' => 999,
-            'started_at' => Carbon::parse('2026-06-30 10:00:00'),
-        ]);
+        ListeningSession::factory()
+            ->for($user)
+            ->for($mostPlayedSong, 'song')
+            ->createMany([
+                ['listened_seconds' => 120, 'started_at' => Carbon::parse('2026-07-02 10:00:00')],
+                ['listened_seconds' => 180, 'started_at' => Carbon::parse('2026-07-02 11:00:00')],
+            ]);
+        ListeningSession::factory()
+            ->for($user)
+            ->for($secondSong, 'song')
+            ->createOne([
+                'listened_seconds' => 60,
+                'started_at' => Carbon::parse('2026-07-03 10:00:00'),
+            ]);
+        ListeningSession::factory()
+            ->for($user)
+            ->for($mostPlayedSong, 'song')
+            ->createOne([
+                'listened_seconds' => 999,
+                'started_at' => Carbon::parse('2026-06-30 10:00:00'),
+            ]);
 
-        $response = $this->getAs('/api/statistics/listening?month=2026-07', $user)
+        $response = $this
+            ->getAs('/api/statistics/listening?month=2026-07', $user)
             ->assertSuccessful()
             ->assertJsonPath('month', '2026-07')
             ->assertJsonPath('total_seconds', 360)
@@ -57,7 +67,8 @@ class MonthlyListeningStatisticsTest extends TestCase
             'started_at' => Carbon::parse('2026-07-02 10:00:00'),
         ]);
 
-        $this->getAs('/api/statistics/listening?month=2026-07', $user)
+        $this
+            ->getAs('/api/statistics/listening?month=2026-07', $user)
             ->assertSuccessful()
             ->assertJsonPath('total_seconds', 0)
             ->assertJsonCount(0, 'top_songs');

@@ -50,22 +50,23 @@ class MonthlyListeningStatisticsService
      */
     private function buildDailyTotals(Collection $sessions, Carbon $month): array
     {
-        $secondsByDate = $sessions
-            ->groupBy(static fn (ListeningSession $session): string => $session->started_at->toDateString())
-            ->map(static fn (Collection $dailySessions): int => (int) $dailySessions->sum('listened_seconds'));
+        $secondsByDate = $sessions->groupBy(
+            static fn (ListeningSession $session): string => $session->started_at->toDateString(),
+        )->map(static fn (Collection $dailySessions): int => (int) $dailySessions->sum('listened_seconds'));
 
-        return collect(range(1, $month->daysInMonth))
-            ->map(static function (int $day) use ($month, $secondsByDate): array {
-                $date = $month->copy()->day($day)->toDateString();
-                $seconds = (int) $secondsByDate->get($date, 0);
+        return collect(range(1, $month->daysInMonth))->map(static function (int $day) use (
+            $month,
+            $secondsByDate,
+        ): array {
+            $date = $month->copy()->day($day)->toDateString();
+            $seconds = (int) $secondsByDate->get($date, 0);
 
-                return [
-                    'date' => $date,
-                    'seconds' => $seconds,
-                    'minutes' => (int) floor($seconds / 60),
-                ];
-            })
-            ->all();
+            return [
+                'date' => $date,
+                'seconds' => $seconds,
+                'minutes' => (int) floor($seconds / 60),
+            ];
+        })->all();
     }
 
     /**

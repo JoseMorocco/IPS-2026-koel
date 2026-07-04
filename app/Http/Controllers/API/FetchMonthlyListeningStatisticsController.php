@@ -24,13 +24,11 @@ class FetchMonthlyListeningStatisticsController extends Controller
         ))->startOfMonth();
         $statistics = $statisticsService->generate($user, $month);
 
-        $statistics['top_songs'] = collect($statistics['top_songs'])
-            ->map(static fn (array $entry): array => [
-                'song' => SongResource::make($entry['song']),
-                'play_count' => $entry['play_count'],
-                'listened_seconds' => $entry['listened_seconds'],
-            ])
-            ->all();
+        $statistics['top_songs'] = collect($statistics['top_songs'])->map(static fn (array $entry): array => [
+            'song' => SongResource::make($entry['song']),
+            'play_count' => $entry['play_count'],
+            'listened_seconds' => $entry['listened_seconds'],
+        ])->all();
 
         return response()->json($statistics);
     }

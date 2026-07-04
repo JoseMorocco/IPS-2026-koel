@@ -19,7 +19,8 @@ class ListeningSessionTest extends TestCase
 
         self::assertSame(36, strlen($song->id));
 
-        $response = $this->postAs('/api/interaction/play', ['song' => $song->id], $user)
+        $response = $this
+            ->postAs('/api/interaction/play', ['song' => $song->id], $user)
             ->assertSuccessful()
             ->assertJsonStructure(['listening_session_id']);
 
