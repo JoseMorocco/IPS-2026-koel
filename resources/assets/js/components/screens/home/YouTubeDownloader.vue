@@ -34,9 +34,7 @@
           <Icon :icon="showDetails ? faChevronUp : faChevronDown" class="mr-1" />
           {{ showDetails ? 'Ocultar detalles del error' : 'Ver detalles del error' }}
         </button>
-        <Transition name="slide">
-          <pre v-if="showDetails" class="error-log">{{ technicalError }}</pre>
-        </Transition>
+        <pre v-show="showDetails" class="error-log">{{ technicalError }}</pre>
       </div>
     </div>
   </HomeScreenBlock>
@@ -84,7 +82,7 @@ const handleDownload = async () => {
   } else {
     technicalError.value =
       youTubeDownloadService.state.message || 'Download failed. Please check the URL and try again.'
-    toastError('Error en la descarga. Revisa los detalles locales.')
+    toastError('Download failed. Check the details below.')
   }
 }
 </script>
@@ -118,15 +116,4 @@ const handleDownload = async () => {
   @apply max-h-40 overflow-y-auto whitespace-pre-wrap break-all rounded border border-k-danger bg-k-bg p-3 font-mono text-xs text-k-danger opacity-80;
 }
 
-.slide-enter-active,
-.slide-leave-active {
-  @apply overflow-hidden transition-all duration-200;
-  max-height: 10rem;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-  max-height: 0;
-  @apply opacity-0;
-}
 </style>
