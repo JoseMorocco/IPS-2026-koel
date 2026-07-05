@@ -115,7 +115,7 @@ const handleDownload = async () => {
 }
 
 .error-log {
-  @apply max-h-40 overflow-y-auto whitespace-pre-wrap break-all rounded border border-k-danger/40 bg-k-bg p-3 font-mono text-xs text-k-danger/80;
+  @apply max-h-40 overflow-y-auto whitespace-pre-wrap break-all rounded border border-k-danger bg-k-bg p-3 font-mono text-xs text-k-danger opacity-80;
 }
 
 .slide-enter-active,
