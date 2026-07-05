@@ -1,7 +1,7 @@
 <template>
   <HomeScreenBlock>
     <template #header>
-      <Icon :icon="faYoutube" class="text-red-500 mr-2" />
+      <Icon :icon="faYoutube" class="mr-2 text-red-500" />
       Download Music from YouTube
     </template>
 
@@ -93,11 +93,14 @@ const handleDownload = async () => {
 }
 
 .input-row {
-  @apply flex gap-3 items-stretch;
+  @apply flex items-stretch gap-3;
 }
 
 .url-input {
-  @apply flex-1 bg-k-bg-input border border-k-fg-20 rounded px-3 py-2 text-k-fg placeholder-k-fg-40 transition-colors duration-200 focus:border-k-highlight focus:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+  @apply flex-1 rounded border border-k-fg-20 bg-k-bg-input px-3 py-2 text-k-fg
+         transition-colors duration-200 placeholder-k-fg-40
+         focus:border-k-highlight focus:outline-none
+         disabled:cursor-not-allowed disabled:opacity-50;
 }
 
 .download-btn {
@@ -109,11 +112,12 @@ const handleDownload = async () => {
 }
 
 .details-toggle {
-  @apply inline-flex cursor-pointer items-center self-start text-xs text-k-danger transition-opacity duration-150 hover:opacity-80;
+  @apply inline-flex cursor-pointer items-center self-start text-xs
+         text-k-danger transition-opacity duration-150 hover:opacity-80;
 }
 
 .error-log {
-  @apply max-h-40 overflow-y-auto whitespace-pre-wrap break-all rounded border border-k-danger bg-k-bg p-3 font-mono text-xs text-k-danger opacity-80;
+  @apply max-h-40 overflow-y-auto break-all whitespace-pre-wrap rounded
+         border border-k-danger bg-k-bg p-3 font-mono text-xs text-k-danger opacity-80;
 }
-
 </style>
