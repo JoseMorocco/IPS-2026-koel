@@ -28,13 +28,23 @@
           {{ isDownloading ? 'Downloading…' : 'Download' }}
         </Btn>
       </form>
+
+      <div v-if="technicalError" class="error-panel">
+        <button class="details-toggle" type="button" @click="showDetails = !showDetails">
+          <Icon :icon="showDetails ? faChevronUp : faChevronDown" class="mr-1" />
+          {{ showDetails ? 'Ocultar detalles del error' : 'Ver detalles del error' }}
+        </button>
+        <Transition name="slide">
+          <pre v-if="showDetails" class="error-log">{{ technicalError }}</pre>
+        </Transition>
+      </div>
     </div>
   </HomeScreenBlock>
 </template>
 
 <script lang="ts" setup>
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-import { faDownload, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faChevronUp, faDownload, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { computed, defineAsyncComponent, ref } from 'vue'
 import { albumStore } from '@/stores/albumStore'
 import { commonStore } from '@/stores/commonStore'
@@ -50,6 +60,8 @@ const Btn = defineAsyncComponent(() => import('@/components/ui/form/Btn.vue'))
 const { toastSuccess, toastError } = useMessageToaster()
 
 const url = ref('')
+const technicalError = ref('')
+const showDetails = ref(false)
 const isDownloading = computed(() => youTubeDownloadService.state.status === 'downloading')
 
 const handleDownload = async () => {
@@ -57,6 +69,9 @@ const handleDownload = async () => {
   if (!trimmedUrl) {
     return
   }
+
+  technicalError.value = ''
+  showDetails.value = false
 
   const result = await youTubeDownloadService.download(trimmedUrl)
 
@@ -68,7 +83,8 @@ const handleDownload = async () => {
     toastSuccess('Track downloaded and added to your library!')
     url.value = ''
   } else {
-    toastError(youTubeDownloadService.state.message || 'Download failed. Please check the URL and try again.')
+    technicalError.value = youTubeDownloadService.state.message || 'Download failed. Please check the URL and try again.'
+    toastError('Error en la descarga. Revisa los detalles locales.')
   }
 }
 </script>
@@ -92,5 +108,32 @@ const handleDownload = async () => {
 
 .download-btn {
   @apply whitespace-nowrap flex items-center gap-2;
+}
+
+.error-panel {
+  @apply flex flex-col gap-2;
+}
+
+.details-toggle {
+  @apply inline-flex items-center text-xs text-k-danger cursor-pointer
+         hover:opacity-80 transition-opacity duration-150 self-start;
+}
+
+.error-log {
+  @apply text-xs font-mono whitespace-pre-wrap break-all
+         bg-k-bg border border-k-danger/40 text-k-danger/80
+         rounded p-3 max-h-40 overflow-y-auto;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  @apply transition-all duration-200 overflow-hidden;
+  max-height: 10rem;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  max-height: 0;
+  @apply opacity-0;
 }
 </style>
