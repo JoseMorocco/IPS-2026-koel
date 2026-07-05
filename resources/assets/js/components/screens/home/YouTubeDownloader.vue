@@ -52,7 +52,6 @@ import { playableStore } from '@/stores/playableStore'
 import { eventBus } from '@/utils/eventBus'
 import { youTubeDownloadService } from '@/services/youTubeDownloadService'
 import { useMessageToaster } from '@/composables/useMessageToaster'
-
 import HomeScreenBlock from '@/components/screens/home/HomeScreenBlock.vue'
 
 const Btn = defineAsyncComponent(() => import('@/components/ui/form/Btn.vue'))
@@ -83,7 +82,8 @@ const handleDownload = async () => {
     toastSuccess('Track downloaded and added to your library!')
     url.value = ''
   } else {
-    technicalError.value = youTubeDownloadService.state.message || 'Download failed. Please check the URL and try again.'
+    technicalError.value =
+      youTubeDownloadService.state.message || 'Download failed. Please check the URL and try again.'
     toastError('Error en la descarga. Revisa los detalles locales.')
   }
 }
@@ -99,15 +99,11 @@ const handleDownload = async () => {
 }
 
 .url-input {
-  @apply flex-1 bg-k-bg-input border border-k-fg-20 rounded px-3 py-2
-         text-k-fg placeholder-k-fg-40
-         focus:outline-none focus:border-k-highlight
-         disabled:opacity-50 disabled:cursor-not-allowed
-         transition-colors duration-200;
+  @apply flex-1 bg-k-bg-input border border-k-fg-20 rounded px-3 py-2 text-k-fg placeholder-k-fg-40 transition-colors duration-200 focus:border-k-highlight focus:outline-none disabled:cursor-not-allowed disabled:opacity-50;
 }
 
 .download-btn {
-  @apply whitespace-nowrap flex items-center gap-2;
+  @apply flex items-center gap-2 whitespace-nowrap;
 }
 
 .error-panel {
@@ -115,19 +111,16 @@ const handleDownload = async () => {
 }
 
 .details-toggle {
-  @apply inline-flex items-center text-xs text-k-danger cursor-pointer
-         hover:opacity-80 transition-opacity duration-150 self-start;
+  @apply inline-flex cursor-pointer items-center self-start text-xs text-k-danger transition-opacity duration-150 hover:opacity-80;
 }
 
 .error-log {
-  @apply text-xs font-mono whitespace-pre-wrap break-all
-         bg-k-bg border border-k-danger/40 text-k-danger/80
-         rounded p-3 max-h-40 overflow-y-auto;
+  @apply max-h-40 overflow-y-auto whitespace-pre-wrap break-all rounded border border-k-danger/40 bg-k-bg p-3 font-mono text-xs text-k-danger/80;
 }
 
 .slide-enter-active,
 .slide-leave-active {
-  @apply transition-all duration-200 overflow-hidden;
+  @apply overflow-hidden transition-all duration-200;
   max-height: 10rem;
 }
 
