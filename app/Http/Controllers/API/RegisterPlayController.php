@@ -9,6 +9,7 @@ use App\Http\Resources\InteractionResource;
 use App\Models\Song;
 use App\Models\User;
 use App\Services\InteractionService;
+use App\Services\ListeningSessionService;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class RegisterPlayController extends Controller
@@ -17,6 +18,7 @@ class RegisterPlayController extends Controller
     public function __invoke(
         IncreasePlayCountRequest $request,
         InteractionService $interactionService,
+        ListeningSessionService $listeningSessionService,
         Authenticatable $user,
     ) {
         /** @var Song $song */
@@ -24,8 +26,9 @@ class RegisterPlayController extends Controller
         $this->authorize('access', $song);
 
         $interaction = $interactionService->increasePlayCount($song, $user);
+        $listeningSession = $listeningSessionService->start($song, $user);
         event(new PlaybackStarted($interaction->song, $interaction->user));
 
-        return InteractionResource::make($interaction);
+        return InteractionResource::make($interaction, $listeningSession->id);
     }
 }

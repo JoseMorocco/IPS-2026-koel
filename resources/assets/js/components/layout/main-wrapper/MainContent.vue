@@ -16,6 +16,7 @@
     <PlaylistScreen v-if="screenLoaded('Playlist')" v-show="screen === 'Playlist'" />
     <FavoritesScreen v-if="screenLoaded('Favorites')" v-show="screen === 'Favorites'" />
     <RecentlyPlayedScreen v-if="screenLoaded('RecentlyPlayed')" v-show="screen === 'RecentlyPlayed'" />
+    <ListeningStatisticsScreen v-if="screenLoaded('Statistics')" v-show="screen === 'Statistics'" />
     <OfflineSongsScreen v-if="screenLoaded('OfflineSongs')" v-show="screen === 'OfflineSongs'" />
     <UploadScreen v-if="screenLoaded('Upload')" v-show="screen === 'Upload'" />
     <SearchExcerptsScreen v-if="screenLoaded('Search.Excerpt')" v-show="screen === 'Search.Excerpt'" />
@@ -75,6 +76,9 @@ import QueueScreen from '@/components/screens/QueueScreen.vue'
 import OfflineSongsScreen from '@/components/screens/OfflineSongsScreen.vue'
 const RadioStationListScreen = defineAsyncComponent(() => import('@/components/screens/RadioStationListScreen.vue'))
 const RecentlyPlayedScreen = defineAsyncComponent(() => import('@/components/screens/RecentlyPlayedScreen.vue'))
+const ListeningStatisticsScreen = defineAsyncComponent(
+  () => import('@/components/screens/ListeningStatisticsScreen.vue'),
+)
 const SearchExcerptsScreen = defineAsyncComponent(() => import('@/components/screens/search/SearchExcerptsScreen.vue'))
 const SearchSongResultsScreen = defineAsyncComponent(
   () => import('@/components/screens/search/SearchPlayableResultsScreen.vue'),

@@ -15,9 +15,8 @@ use Tests\TestCase;
 class YouTubeDownloadServiceTest extends TestCase
 {
     private const VALID_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-    private const COBALT_HOST = 'cobalt.q0.wtf*';
-    private const AUDIO_HOST = 'fake-audio-url.com*';
-    private const DIRECT_URL = 'https://fake-audio-url.com/song.mp3';
+    private const PROXY_URL = 'https://my-proxy.ngrok.io';
+    private const PROXY_HOST = 'my-proxy.ngrok.io*';
 
     public function setUp(): void
     {
@@ -37,41 +36,27 @@ class YouTubeDownloadServiceTest extends TestCase
     }
 
     #[Test]
-    public function throwsWhenCobaltApiRequestFails(): void
+    public function throwsWhenProxyUrlEnvIsNotSet(): void
     {
-        Http::fake([
-            self::COBALT_HOST => Http::response(['error' => ['code' => 'error.api.unreachable']], 500),
-        ]);
+        $this->withoutEnvironmentVariable('YOUTUBE_PROXY_URL');
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessageMatches('/Cobalt.tools API request failed/');
+        $this->expectExceptionMessage('Proxy residencial inactivo');
 
         $this->makeService()->download(self::VALID_URL);
     }
 
     #[Test]
-    public function throwsWhenCobaltApiReturnsNoUrl(): void
+    public function throwsWhenProxyRequestFails(): void
     {
+        $this->withEnvironmentVariable('YOUTUBE_PROXY_URL', self::PROXY_URL);
+
         Http::fake([
-            self::COBALT_HOST => Http::response(['status' => 'error', 'url' => null], 200),
+            self::PROXY_HOST => Http::response('Service Unavailable', 503),
         ]);
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessageMatches('/returned no download URL/');
-
-        $this->makeService()->download(self::VALID_URL);
-    }
-
-    #[Test]
-    public function throwsWhenAudioDownloadFails(): void
-    {
-        Http::fake([
-            self::COBALT_HOST => Http::response(['url' => self::DIRECT_URL], 200),
-            self::AUDIO_HOST => Http::response(null, 403),
-        ]);
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessageMatches('/Failed to download audio file/');
+        $this->expectExceptionMessageMatches('/Proxy download request failed/');
 
         $this->makeService()->download(self::VALID_URL);
     }
@@ -79,9 +64,10 @@ class YouTubeDownloadServiceTest extends TestCase
     #[Test]
     public function successfulDownloadReturnsSavedFilePath(): void
     {
+        $this->withEnvironmentVariable('YOUTUBE_PROXY_URL', self::PROXY_URL);
+
         Http::fake([
-            self::COBALT_HOST => Http::response(['url' => self::DIRECT_URL], 200),
-            self::AUDIO_HOST => Http::response('fake-mp3-binary-content', 200),
+            self::PROXY_HOST => Http::response('fake-mp3-binary-content', 200),
         ]);
 
         File::expects('ensureDirectoryExists')->once();
@@ -96,11 +82,12 @@ class YouTubeDownloadServiceTest extends TestCase
     }
 
     #[Test]
-    public function cobaltApiIsCalledWithCorrectPayload(): void
+    public function proxyIsCalledWithCorrectPayload(): void
     {
+        $this->withEnvironmentVariable('YOUTUBE_PROXY_URL', self::PROXY_URL);
+
         Http::fake([
-            self::COBALT_HOST => Http::response(['url' => self::DIRECT_URL], 200),
-            self::AUDIO_HOST => Http::response('fake-mp3-binary-content', 200),
+            self::PROXY_HOST => Http::response('fake-mp3-binary-content', 200),
         ]);
 
         File::expects('ensureDirectoryExists')->once();
@@ -111,15 +98,26 @@ class YouTubeDownloadServiceTest extends TestCase
 
         Http::assertSent(static function (Request $request): bool {
             return (
-                $request->url() === 'https://cobalt.q0.wtf/'
+                $request->url()
+                === self::PROXY_URL . '/download'
                 && $request->method() === 'POST'
-                && $request->header('Accept')[0] === 'application/json'
-                && $request->header('Content-Type')[0] === 'application/json'
-                && $request->header('Origin')[0] === 'https://cobalt.q0.wtf'
                 && $request['url'] === self::VALID_URL
-                && $request['downloadMode'] === 'audio'
             );
         });
+    }
+
+    // ─── helpers ────────────────────────────────────────────────────────────────
+
+    private function withEnvironmentVariable(string $key, string $value): void
+    {
+        $_ENV[$key] = $value;
+        putenv("{$key}={$value}");
+    }
+
+    private function withoutEnvironmentVariable(string $key): void
+    {
+        unset($_ENV[$key]);
+        putenv($key);
     }
 
     private function makeService(): YouTubeDownloadService

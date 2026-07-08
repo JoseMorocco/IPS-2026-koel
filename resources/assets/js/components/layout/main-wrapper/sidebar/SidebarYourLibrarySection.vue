@@ -11,6 +11,12 @@
         </template>
         All Songs
       </SidebarItem>
+      <SidebarItem :href="url('statistics')" :active="isCurrentScreen('Statistics')">
+        <template #icon>
+          <ChartNoAxesColumnIncreasingIcon :size="16" />
+        </template>
+        Listening Statistics
+      </SidebarItem>
       <SidebarItem :href="url('albums.index')" :active="isCurrentScreen('Albums', 'Album')">
         <template #icon>
           <Icon :icon="faCompactDisc" fixed-width />
@@ -61,7 +67,7 @@
 
 <script lang="ts" setup>
 import { faCloudArrowDown, faCompactDisc, faMusic, faPodcast } from '@fortawesome/free-solid-svg-icons'
-import { GuitarIcon, MicVocalIcon, RadioIcon } from 'lucide-vue-next'
+import { ChartNoAxesColumnIncreasingIcon, GuitarIcon, MicVocalIcon, RadioIcon } from 'lucide-vue-next'
 import { unescape } from 'lodash-es'
 import { computed, ref, toRef } from 'vue'
 import { useOfflinePlayback } from '@/composables/useOfflinePlayback'

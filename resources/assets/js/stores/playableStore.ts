@@ -157,6 +157,8 @@ export const playableStore = {
 
     // Use the data from the server to make sure we don't miss a play from another device.
     playable.play_count = interaction.play_count
+
+    return interaction
   },
 
   scrobble: async (song: Song) => {

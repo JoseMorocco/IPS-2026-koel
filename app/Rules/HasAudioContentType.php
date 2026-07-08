@@ -47,7 +47,9 @@ class HasAudioContentType implements ValidationRule
             if ($response->successful()) {
                 return $response->header('Content-Type');
             }
-        } catch (Throwable) {
+        } catch (Throwable $exception) {
+            report($exception);
+
             // HEAD may time out or fail on streaming servers — fall through to GET
         }
 

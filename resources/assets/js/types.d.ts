@@ -463,6 +463,28 @@ interface Interaction {
   readonly id: number
   readonly song_id: Playable['id']
   play_count: number
+  listening_session_id: number
+}
+
+interface DailyListeningStatistic {
+  date: string
+  seconds: number
+  minutes: number
+}
+
+interface TopSongListeningStatistic {
+  song: Song
+  play_count: number
+  listened_seconds: number
+}
+
+interface MonthlyListeningStatistics {
+  month: string
+  total_seconds: number
+  total_minutes: number
+  total_plays: number
+  daily: DailyListeningStatistic[]
+  top_songs: TopSongListeningStatistic[]
 }
 
 interface Favorite {
@@ -531,6 +553,7 @@ declare type ScreenName =
   | 'Search.Playables'
   | 'Settings'
   | 'Songs'
+  | 'Statistics'
   | 'Upload'
   | 'Users'
   | 'Visualizer'
