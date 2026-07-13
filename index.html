@@ -104,6 +104,7 @@ nav {
   border: 1px solid rgba(79,142,247,0.25);
   color: var(--accent);
   letter-spacing: 0.05em;
+  text-decoration: none;
 }
 .nav-badge.done { background: rgba(46,168,77,0.1); color: var(--green2); border: 1px solid rgba(46,168,77,0.25); }
 .nav-badge.active { background: rgba(79,142,247,0.1); color: var(--accent); border: 1px solid rgba(79,142,247,0.25); }
@@ -1165,11 +1166,11 @@ footer {
     </a>
     <div class="nav-sep"></div>
     <span class="nav-tag">UNSA · 2026-A</span>
-    <span class="nav-badge done">Sprint 0</span>
-    <span class="nav-badge done">Sprint 1</span>
-    <span class="nav-badge done">Sprint 2</span>
-    <span class="nav-badge done">Sprint 3</span>
-    <span class="nav-badge active">Sprint 4</span>
+    <a href="#resultados" class="nav-badge done">Sprint 0</a>
+    <a href="#sprint1" class="nav-badge done">Sprint 1</a>
+    <a href="#sprint2" class="nav-badge done">Sprint 2</a>
+    <a href="#sprint3" class="nav-badge done">Sprint 3</a>
+    <a href="#sprint4" class="nav-badge active">Sprint 4</a>
   </div>
   <div class="nav-right">
     <a href="#about" class="nav-link">Proyecto</a>
@@ -3280,6 +3281,298 @@ footer {
 </div>
 </div>
 </div>
+</section>
+
+<!-- ─── SPRINT 3 ─── -->
+<section id="sprint3" style="padding:80px 0;border-top:1px solid var(--line);">
+  <div class="container">
+    <div class="sh reveal">
+      <div class="sh-eyebrow">Sprint 3</div>
+      <h2>Sprint 3 — Estadísticas de reproducción y despliegue</h2>
+      <p>
+        En el Sprint 3 se trabajaron mejoras funcionales para Koel, principalmente el registro
+        de reproducciones, el cálculo de tiempo escuchado y la visualización de estadísticas
+        mensuales dentro de la aplicación.
+      </p>
+    </div>
+
+    <div class="results-layout">
+      <div class="metric-card wide reveal">
+        <div class="metric-label">Objetivo del Sprint</div>
+        <div class="metric-val accent" style="font-size:24px;">Estadísticas musicales</div>
+        <div class="metric-desc">
+          Implementar una sección de estadísticas que permita consultar minutos escuchados,
+          canciones iniciadas, actividad diaria y ranking de canciones más reproducidas.
+        </div>
+      </div>
+
+      <div class="metric-card reveal rd1">
+        <div class="metric-label">Funcionalidad</div>
+        <div class="metric-val green" style="font-size:22px;">Top 10</div>
+        <div class="metric-desc">
+          Se agregó un ranking mensual de canciones ordenado según la cantidad de reproducciones.
+        </div>
+      </div>
+
+      <div class="metric-card reveal rd2">
+        <div class="metric-label">Backend</div>
+        <div class="metric-val accent" style="font-size:22px;">Laravel</div>
+        <div class="metric-desc">
+          Se registraron sesiones de escucha para calcular el tiempo reproducido y el conteo
+          de reproducciones por canción.
+        </div>
+      </div>
+
+      <div class="metric-card reveal rd2">
+        <div class="metric-label">Frontend</div>
+        <div class="metric-val" style="font-size:22px;">Vue</div>
+        <div class="metric-desc">
+          Se incorporó la vista de estadísticas en la interfaz principal de Koel.
+        </div>
+      </div>
+
+      <div class="metric-card reveal rd3">
+        <div class="metric-label">Despliegue</div>
+        <div class="metric-val green" style="font-size:22px;">AWS EC2</div>
+        <div class="metric-desc">
+          Se verificó la integración mediante GitHub Actions y el despliegue de la aplicación
+          en el entorno en la nube.
+        </div>
+      </div>
+    </div>
+
+    <div class="sh reveal" style="margin-top:20px;margin-bottom:24px;">
+      <div class="sh-eyebrow">Responsabilidades</div>
+      <h3>Roles asignados en el Sprint 3</h3>
+      <p>
+        Durante el Sprint 3 se distribuyeron responsabilidades para implementar mejoras,
+        validar el funcionamiento, integrar cambios y documentar evidencias del avance.
+      </p>
+    </div>
+
+    <div class="why-grid" style="margin-top:0;margin-bottom:34px;">
+      <div class="why-card reveal">
+        <div class="why-icon" style="background:rgba(229,82,82,0.1);border:1px solid rgba(229,82,82,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+            <path d="M8 2v4"></path>
+            <path d="M16 2v4"></path>
+            <path d="M7 10h10"></path>
+            <path d="M7 14h6"></path>
+          </svg>
+        </div>
+        <div class="why-title">León · Scrum Master Sprint 3</div>
+        <div class="why-desc">
+          Organiza el seguimiento del sprint, coordina las actividades del equipo y prepara
+          la transición hacia el Sprint 4.
+        </div>
+      </div>
+
+      <div class="why-card reveal rd1">
+        <div class="why-icon" style="background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"></path>
+            <path d="M7 14l3-3 3 2 5-6"></path>
+          </svg>
+        </div>
+        <div class="why-title">Paola · Desarrollo de estadísticas</div>
+        <div class="why-desc">
+          Implementa la sección de estadísticas mensuales, el conteo de reproducciones y el
+          ranking de canciones más escuchadas.
+        </div>
+      </div>
+
+      <div class="why-card reveal rd2">
+        <div class="why-icon" style="background:rgba(46,168,77,0.1);border:1px solid rgba(46,168,77,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.5 19H7a5 5 0 1 1 .8-9.9A7 7 0 0 1 21 12.5a4 4 0 0 1-3.5 6.5z"></path>
+            <path d="M8 19v-5h8v5"></path>
+          </svg>
+        </div>
+        <div class="why-title">José · DevOps / Integración</div>
+        <div class="why-desc">
+          Apoya la integración de cambios, revisión de GitHub Actions y verificación del
+          despliegue en AWS EC2.
+        </div>
+      </div>
+
+      <div class="why-card reveal rd3">
+        <div class="why-icon" style="background:rgba(212,148,58,0.1);border:1px solid rgba(212,148,58,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M9 12l2 2 4-4"></path>
+          </svg>
+        </div>
+        <div class="why-title">Keneth · QA / Pruebas</div>
+        <div class="why-desc">
+          Ejecuta pruebas funcionales sobre las mejoras implementadas y registra errores o
+          ajustes encontrados durante la validación.
+        </div>
+      </div>
+
+      <div class="why-card reveal rd4">
+        <div class="why-icon" style="background:rgba(155,114,240,0.1);border:1px solid rgba(155,114,240,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+          </svg>
+        </div>
+        <div class="why-title">Equipo · Documentación</div>
+        <div class="why-desc">
+          Documenta evidencias, revisa resultados del sprint y actualiza la información del
+          proyecto para la presentación del hito.
+        </div>
+      </div>
+    </div>
+
+    <div class="hu-table reveal" style="margin-top:30px;">
+      <div class="hu-thead">
+        <div>Código</div>
+        <div>Historias de Usuario</div>
+        <div>Responsable</div>
+      </div>
+
+      <div class="hu-row">
+        <div class="hu-code">HU46</div>
+        <div class="hu-story">Registrar el conteo de reproducciones por canción</div>
+        <div class="hu-resp">Desarrollo</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU47</div>
+        <div class="hu-story">Mostrar el ranking de las canciones más reproducidas</div>
+        <div class="hu-resp">Desarrollo</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU48</div>
+        <div class="hu-story">Verificar despliegue del Sprint 3</div>
+        <div class="hu-resp">DevOps</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU49</div>
+        <div class="hu-story">Ejecutar pruebas funcionales de las estadísticas</div>
+        <div class="hu-resp">QA</div>
+      </div>
+      <div class="hu-row">
+        <div class="hu-code">HU50</div>
+        <div class="hu-story">Actualizar evidencias del Sprint 3 en GitHub Pages</div>
+        <div class="hu-resp">GitHub Pages</div>
+      </div>
+    </div>
+
+    <div class="devops-layout" style="margin-top:28px;">
+      <div class="tool-panel reveal">
+        <div class="panel-header">
+          Evidencias del Sprint 3
+        </div>
+
+        <div class="panel-body">
+          <div class="tool-row">
+            <div class="tool-row-icon" style="display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"></path>
+                <path d="M7 14l3-3 3 2 5-6"></path>
+              </svg>
+            </div>
+            <div class="tool-row-info">
+              <h4>Panel de estadísticas</h4>
+              <p>
+                Vista mensual con minutos escuchados, canciones iniciadas y gráfica diaria de actividad.
+              </p>
+            </div>
+          </div>
+
+          <div class="tool-row">
+            <div class="tool-row-icon" style="display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 6h13"></path>
+                <path d="M8 12h13"></path>
+                <path d="M8 18h13"></path>
+                <path d="M3 6h.01"></path>
+                <path d="M3 12h.01"></path>
+                <path d="M3 18h.01"></path>
+              </svg>
+            </div>
+            <div class="tool-row-info">
+              <h4>Ranking Top 10</h4>
+              <p>
+                Listado ordenado de canciones más reproducidas durante el mes seleccionado.
+              </p>
+            </div>
+          </div>
+
+          <div class="tool-row">
+            <div class="tool-row-icon" style="display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 12l2 2 5-5"></path>
+              </svg>
+            </div>
+            <div class="tool-row-info">
+              <h4>Integración y despliegue</h4>
+              <p>
+                Validación de los cambios mediante GitHub Actions y despliegue en AWS EC2.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-panel reveal rd1">
+        <div class="panel-header">
+          Flujo de trabajo del Sprint 3
+        </div>
+
+        <div class="pipe-body">
+          <div class="pipe-step">
+            <div class="pipe-connector"></div>
+            <div class="pipe-dot-wrap">
+              <div class="pipe-dot done">1</div>
+            </div>
+            <div class="pipe-content">
+              <div class="pipe-head">
+                <span class="pipe-name">Registro de sesiones</span>
+                <span class="badge done">done</span>
+              </div>
+              <div class="pipe-desc">
+                Se almacenan reproducciones y segundos escuchados por canción.
+              </div>
+            </div>
+          </div>
+
+          <div class="pipe-step">
+            <div class="pipe-connector"></div>
+            <div class="pipe-dot-wrap">
+              <div class="pipe-dot done">2</div>
+            </div>
+            <div class="pipe-content">
+              <div class="pipe-head">
+                <span class="pipe-name">Vista de estadísticas</span>
+                <span class="badge done">done</span>
+              </div>
+              <div class="pipe-desc">
+                Se muestra el resumen mensual, gráfica diaria y ranking Top 10.
+              </div>
+            </div>
+          </div>
+
+          <div class="pipe-step">
+            <div class="pipe-dot-wrap">
+              <div class="pipe-dot done">3</div>
+            </div>
+            <div class="pipe-content" style="padding-bottom:0;">
+              <div class="pipe-head">
+                <span class="pipe-name">Validación final</span>
+                <span class="badge done">done</span>
+              </div>
+              <div class="pipe-desc">
+                Se ejecutan pruebas, revisión de calidad y despliegue hacia AWS EC2.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="sprint4" style="padding:80px 0;border-top:1px solid var(--line);">
