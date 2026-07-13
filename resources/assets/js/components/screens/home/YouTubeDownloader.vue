@@ -1,7 +1,7 @@
 <template>
   <HomeScreenBlock>
     <template #header>
-      <Icon :icon="faYoutube" class="text-red-500 mr-2" />
+      <Icon :icon="faYoutube" class="mr-2 text-red-500" />
       Download Music from YouTube
     </template>
 
@@ -29,42 +29,46 @@
         </Btn>
       </form>
 
-      <Transition name="fade">
-        <p v-if="message" :class="['status-message', status]" role="status">
-          <Icon v-if="status === 'success'" :icon="faCircleCheck" />
-          <Icon v-if="status === 'error'" :icon="faCircleXmark" />
-          {{ message }}
-        </p>
-      </Transition>
+      <div v-if="technicalError" class="error-panel">
+        <button class="details-toggle" type="button" @click="showDetails = !showDetails">
+          <Icon :icon="showDetails ? faChevronUp : faChevronDown" class="mr-1" />
+          {{ showDetails ? 'Ocultar detalles del error' : 'Ver detalles del error' }}
+        </button>
+        <pre v-show="showDetails" class="error-log">{{ technicalError }}</pre>
+      </div>
     </div>
   </HomeScreenBlock>
 </template>
 
 <script lang="ts" setup>
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-import { faCircleCheck, faCircleXmark, faDownload, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { computed, defineAsyncComponent, ref, toRef } from 'vue'
+import { faChevronDown, faChevronUp, faDownload, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { computed, defineAsyncComponent, ref } from 'vue'
 import { albumStore } from '@/stores/albumStore'
 import { commonStore } from '@/stores/commonStore'
 import { playableStore } from '@/stores/playableStore'
 import { eventBus } from '@/utils/eventBus'
 import { youTubeDownloadService } from '@/services/youTubeDownloadService'
-
+import { useMessageToaster } from '@/composables/useMessageToaster'
 import HomeScreenBlock from '@/components/screens/home/HomeScreenBlock.vue'
 
 const Btn = defineAsyncComponent(() => import('@/components/ui/form/Btn.vue'))
 
-const url = ref('')
+const { toastSuccess, toastError } = useMessageToaster()
 
-const status = toRef(youTubeDownloadService.state, 'status')
-const message = toRef(youTubeDownloadService.state, 'message')
-const isDownloading = computed(() => status.value === 'downloading')
+const url = ref('')
+const technicalError = ref('')
+const showDetails = ref(false)
+const isDownloading = computed(() => youTubeDownloadService.state.status === 'downloading')
 
 const handleDownload = async () => {
   const trimmedUrl = url.value.trim()
   if (!trimmedUrl) {
     return
   }
+
+  technicalError.value = ''
+  showDetails.value = false
 
   const result = await youTubeDownloadService.download(trimmedUrl)
 
@@ -73,7 +77,12 @@ const handleDownload = async () => {
     albumStore.syncWithVault(result.album)
     commonStore.state.song_length += 1
     eventBus.emit('SONG_UPLOADED', result.song)
+    toastSuccess('Track downloaded and added to your library!')
     url.value = ''
+  } else {
+    technicalError.value =
+      youTubeDownloadService.state.message || 'Download failed. Please check the URL and try again.'
+    toastError('Download failed. Check the details below.')
   }
 }
 </script>
@@ -84,40 +93,31 @@ const handleDownload = async () => {
 }
 
 .input-row {
-  @apply flex gap-3 items-stretch;
+  @apply flex items-stretch gap-3;
 }
 
 .url-input {
-  @apply flex-1 bg-k-bg-input border border-k-fg-20 rounded px-3 py-2
-         text-k-fg placeholder-k-fg-40
-         focus:outline-none focus:border-k-highlight
-         disabled:opacity-50 disabled:cursor-not-allowed
-         transition-colors duration-200;
+  @apply flex-1 rounded border border-k-fg-20 bg-k-bg-input px-3 py-2 text-k-fg
+         transition-colors duration-200 placeholder-k-fg-40
+         focus:border-k-highlight focus:outline-none
+         disabled:cursor-not-allowed disabled:opacity-50;
 }
 
 .download-btn {
-  @apply whitespace-nowrap flex items-center gap-2;
+  @apply flex items-center gap-2 whitespace-nowrap;
 }
 
-.status-message {
-  @apply flex items-center gap-2 text-sm;
-
-  &.success {
-    @apply text-k-success;
-  }
-
-  &.error {
-    @apply text-k-danger;
-  }
+.error-panel {
+  @apply flex flex-col gap-2;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  @apply transition-opacity duration-300;
+.details-toggle {
+  @apply inline-flex cursor-pointer items-center self-start text-xs
+         text-k-danger transition-opacity duration-150 hover:opacity-80;
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  @apply opacity-0;
+.error-log {
+  @apply max-h-40 overflow-y-auto break-all whitespace-pre-wrap rounded
+         border border-k-danger bg-k-bg p-3 font-mono text-xs text-k-danger opacity-80;
 }
 </style>
