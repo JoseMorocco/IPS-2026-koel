@@ -5,7 +5,7 @@
       :key="index"
       :is-active="index === currentLineIndex"
       :line
-      :style="{ opacity: Math.max(0.1, 1 - Math.abs(index - currentLineIndex) / 4) }"
+      :style="{ opacity: Math.max(0.35, 1 - Math.abs(index - currentLineIndex) / 5) }"
       class="hover:!opacity-100"
       @click="seekToLine(line)"
     />
@@ -14,8 +14,6 @@
 
 <script lang="ts" setup>
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { playback } from '@/services/playbackManager'
-import type { BasePlaybackService } from '@/services/BasePlaybackService'
 
 import LrcLyricsLine from '@/components/ui/lyrics/LrcLyricsLine.vue'
 
@@ -24,7 +22,13 @@ const props = defineProps<{
   fontSize: string
 }>()
 
-let currentPlayback: BasePlaybackService | null
+/** Accede directamente al elemento <audio> del DOM para evitar race conditions
+ *  con playbackManager cuando el componente se monta antes de que inicie la reproducción.
+ */
+const getAudioElement = (): HTMLMediaElement | null =>
+  typeof document !== 'undefined'
+    ? document.querySelector<HTMLMediaElement>('#audio-player')
+    : null
 
 const lyricsContainer = ref<HTMLDivElement | null>(null)
 const currentLineIndex = ref(-1)
@@ -61,7 +65,8 @@ const scrollToCurrentLine = async () => {
 }
 
 const updateCurrentLine = () => {
-  const currentTime = currentPlayback?.media.currentTime || 0
+  const media = getAudioElement()
+  const currentTime = media?.currentTime ?? 0
   let newIndex = -1
 
   for (let i = props.lyrics.length - 1; i >= 0; i--) {
@@ -114,11 +119,14 @@ onMounted(() => {
   if (typeof window !== 'undefined') {
     window.addEventListener('beforeunload', stopTimeUpdates)
   }
-
-  currentPlayback = playback('current')
 })
 
-const seekToLine = (line: LrcLine) => currentPlayback?.seekTo(line.time)
+const seekToLine = (line: LrcLine) => {
+  const media = getAudioElement()
+  if (media) {
+    media.currentTime = line.time
+  }
+}
 
 onBeforeUnmount(() => {
   stopTimeUpdates()

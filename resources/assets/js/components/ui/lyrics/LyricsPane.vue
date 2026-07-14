@@ -52,5 +52,7 @@ watch(zoomLevel, level => (preferences.lyrics_zoom_level = level), { immediate: 
 <style lang="postcss" scoped>
 .lyrics {
   font-size: v-bind(fontSize);
+  line-height: 1.85;
+  color: color-mix(in srgb, var(--color-fg), transparent 20%); /* k-fg-80 equivalent */
 }
 </style>
