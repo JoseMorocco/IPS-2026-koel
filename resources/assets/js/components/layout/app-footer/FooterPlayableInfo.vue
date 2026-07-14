@@ -9,7 +9,7 @@
       v-koel-tooltip
       :class="playable && 'cursor-pointer'"
       :title="playable ? 'Scroll to currently playing' : undefined"
-      class="album-thumb block h-[55%] md:h-3/4 aspect-square rounded-full bg-cover"
+      class="album-thumb block h-[55%] md:h-3/4 aspect-square rounded-full bg-cover bg-center"
       @click="scrollToCurrentInQueue"
     />
     <div v-if="playable" class="meta overflow-hidden hidden md:block">

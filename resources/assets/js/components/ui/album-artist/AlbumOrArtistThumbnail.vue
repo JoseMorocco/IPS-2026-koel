@@ -6,7 +6,7 @@
     type="button"
     @click.prevent="playOrQueue"
   >
-    <img alt="Thumbnail" :src="image" class="w-full aspect-square object-cover" loading="lazy" />
+    <img alt="Thumbnail" :src="image" class="w-full h-full object-cover object-center" loading="lazy" />
     <span class="hidden">{{ buttonLabel }}</span>
     <span class="absolute top-0 left-0 w-full h-full group-hover:bg-black/40 no-hover:bg-black/40 z-10" />
     <PlayIcon />
