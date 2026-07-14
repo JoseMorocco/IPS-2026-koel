@@ -12,6 +12,22 @@
       @out="zoomOut"
     />
   </div>
+
+  <!-- Auto-fetch loading skeleton -->
+  <div v-else-if="isFetchingLyrics" class="px-6 py-8 space-y-3" data-testid="lyrics-auto-fetch-loading" aria-busy="true" aria-label="Searching for lyrics">
+    <p class="text-k-fg-50 text-sm flex items-center gap-2">
+      <span class="inline-block h-3 w-3 rounded-full border-2 border-k-highlight border-t-transparent animate-spin" aria-hidden="true" />
+      Searching for lyrics automatically&hellip;
+    </p>
+    <div class="space-y-2 mt-4 animate-pulse">
+      <div class="h-3 rounded-full bg-k-fg-10 w-3/4" />
+      <div class="h-3 rounded-full bg-k-fg-10 w-full" />
+      <div class="h-3 rounded-full bg-k-fg-10 w-5/6" />
+      <div class="h-3 rounded-full bg-k-fg-10 w-2/3" />
+      <div class="h-3 rounded-full bg-k-fg-10 w-4/5" />
+    </div>
+  </div>
+
   <p v-else class="px-6 py-8">
     <template v-if="userCanUpdateLyrics">
       No lyrics found.
@@ -28,6 +44,7 @@ import { preferenceStore as preferences } from '@/stores/preferenceStore'
 import { defineAsyncComponent } from '@/utils/helpers'
 import { useLyrics } from '@/composables/useLyrics'
 import { useModal } from '@/composables/useModal'
+import { useLyricsAutoFetch } from '@/composables/useLyricsAutoFetch'
 
 const props = defineProps<{ song: Song }>()
 const LrcLyricsPane = defineAsyncComponent(() => import('@/components/ui/lyrics/LrcLyricsPane.vue'))
@@ -39,6 +56,7 @@ const { song } = toRefs(props)
 const zoomLevel = ref(preferences.lyrics_zoom_level || 1)
 
 const { plainTextLyrics, lrcLyrics, isLrc, hasLyrics, userCanUpdateLyrics } = useLyrics(song)
+const { isFetchingLyrics } = useLyricsAutoFetch(song, userCanUpdateLyrics)
 
 const fontSize = computed(() => `${1 + (zoomLevel.value - 1) * 0.2}rem`)
 
