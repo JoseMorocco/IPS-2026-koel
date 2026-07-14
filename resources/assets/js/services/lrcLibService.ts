@@ -32,10 +32,7 @@ export const lrcLibService = {
 
     try {
       const response = await fetch(`https://lrclib.net/api/search?${params}`, {
-        signal: AbortSignal.timeout(8_000),
-        headers: {
-          'Lrclib-Client': 'Koel (https://koel.dev)',
-        },
+        signal: AbortSignal.timeout(15_000),
       })
 
       if (!response.ok) {
