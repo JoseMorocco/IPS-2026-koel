@@ -6089,13 +6089,13 @@
 
   <section id="carrusel-sprint4" style="padding:80px 0;border-top:1px solid var(--line);">
     <div class="container">
-      <div class="sh reveal" style="margin-top:42px;margin-bottom:24px;">
+        <div class="sh reveal" style="margin-top:42px;margin-bottom:24px;">
         <div class="sh-eyebrow">Evidencias</div>
         <h3>Evidencias principales del Sprint 4</h3>
         <p>
-          Espacio preparado para incorporar las capturas finales del Sprint 4: tablero Jira,
-          interfaz de letras sincronizadas, sincronización con el audio, pruebas funcionales
-          y actualización de GitHub Pages.
+          Capturas principales del Sprint 4: flujo de búsqueda automática de letras,
+          estado de carga asíncrona, integración con la API LRCLIB y visualización de
+          la letra sincronizada durante la reproducción.
         </p>
       </div>
 
@@ -6104,9 +6104,50 @@
         <div class="carousel-window">
           <div class="carousel-track" id="evidenceTrack4">
             <div class="carousel-slide">
-              <div class="carousel-caption" style="min-height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
-                <h4>Evidencias pendientes del Sprint 4</h4>
-                <p>Este carrusel queda preparado para agregar las capturas finales del Sprint 4.</p>
+              <img src="assets/img/sprint4/diagrama-letra-sincronizada.png" alt="Diagrama de secuencia de letra sincronizada">
+              <div class="carousel-caption">
+                <h4>Diagrama de secuencia</h4>
+                <p>
+                  El esquema detalla el flujo automatizado para obtener e integrar letras sincronizadas.
+                  El frontend en Vue.js detecta la ausencia de metadatos locales, consulta la API externa
+                  LRCLIB y envía la letra obtenida al backend en AWS para persistirla en la base de datos.
+                </p>
+              </div>
+            </div>
+
+            <div class="carousel-slide">
+              <img src="assets/img/sprint4/buscando-letra-api.png" alt="Estado de carga al buscar letra en la API">
+              <div class="carousel-caption">
+                <h4>Búsqueda automática de letras</h4>
+                <p>
+                  Se muestra el indicador de carga asíncrona mientras el sistema consulta la API externa.
+                  El Skeleton Loader ofrece retroalimentación visual al usuario sin bloquear la reproducción
+                  actual del audio.
+                </p>
+              </div>
+            </div>
+
+            <div class="carousel-slide">
+              <img src="assets/img/sprint4/codigo-integracion-api.png" alt="Código de integración con la API LRCLIB">
+              <div class="carousel-caption">
+                <h4>Código de integración con LRCLIB</h4>
+                <p>
+                  Se evidencia el servicio encargado de consultar letras sincronizadas desde LRCLIB.
+                  La implementación usa peticiones HTTP simples para reducir latencia y un timeout de
+                  15 segundos para manejar fallos de red de manera silenciosa.
+                </p>
+              </div>
+            </div>
+
+            <div class="carousel-slide">
+              <img src="assets/img/sprint4/letra-cargada-reproduciendo.png" alt="Letra sincronizada cargada durante la reproducción">
+              <div class="carousel-caption">
+                <h4>Letra sincronizada en reproducción</h4>
+                <p>
+                  Se confirma el funcionamiento del modo karaoke con auto-scroll y resaltado dinámico
+                  de la línea actual según el tiempo de reproducción. También se observa la mejora visual
+                  de la miniatura del reproductor inferior.
+                </p>
               </div>
             </div>
           </div>
@@ -6114,6 +6155,9 @@
         <button class="carousel-btn next" onclick="moveEvidenceSlide4(1)">›</button>
         <div class="carousel-dots">
           <button class="dot active" onclick="goEvidenceSlide4(0)"></button>
+          <button class="dot" onclick="goEvidenceSlide4(1)"></button>
+          <button class="dot" onclick="goEvidenceSlide4(2)"></button>
+          <button class="dot" onclick="goEvidenceSlide4(3)"></button>
         </div>
       </div>
     </div>
